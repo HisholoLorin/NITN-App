@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Pineapple App",
+    "slug": "Pineapple_App",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "slug": "Tabernacle_ChMS",
+      "eas": {
+        "projectId": "e643ff2e-972e-4815-a915-cdb3f7c1c0d6"
+      }
+    }
+  }
+}
