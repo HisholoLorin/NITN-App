@@ -1,1 +1,1 @@
-# internship-react-native-app
+# Pineapple App for my final year project
