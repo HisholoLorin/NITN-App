@@ -6,7 +6,6 @@ import NavLink from '../../../components/atoms/navLink/Index';
 
 export const FormContainer = styled(Container)`
   padding: 30px;
-  padding-top: 70px;
   justify-content: top;
 `;
 
@@ -37,8 +36,8 @@ export const Description = styled.Text`
 `
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-const imageWidth = screenWidth * 0.5; // 80% of screen width
-const imageHeight = screenHeight * 0.2; // 30% of screen height
+const imageWidth = screenWidth * 0.5;
+const imageHeight = screenHeight * 0.25;
 
 
 export const LoginImage = styled.Image`

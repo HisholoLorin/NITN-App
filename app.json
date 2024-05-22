@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Pineapple App",
-    "slug": "Pineapple_App",
+    "name": "NIT App",
+    "slug": "NIT_App",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,12 +23,6 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "slug": "Tabernacle_ChMS",
-      "eas": {
-        "projectId": "e643ff2e-972e-4815-a915-cdb3f7c1c0d6"
-      }
     }
   }
 }
