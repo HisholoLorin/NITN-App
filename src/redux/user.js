@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Alert, Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { navigate, reset } from "../navigations/navigationRef";
-import Pineapple from "../api/Pineapple";
+import Api from "../api/API";
 import { Keyboard } from "react-native";
 
 //Helper Functions
@@ -27,7 +27,7 @@ import { isMobileNumber, isEmail, isDob } from "../helper/auth";
 export const getUserDetails = createAsyncThunk("getUserDetails", async () => {
   console.log("User Details trigger");
   try {
-    const response = await Pineapple.get(getEndPoint(USER_DETAILS));
+    const response = await Api.get(getEndPoint(USER_DETAILS));
     return response.data;
   } catch (err) {
     const response = await temporarySessionEvent(err, USER_DETAILS);
@@ -51,7 +51,7 @@ export const updateProfilePicture = createAsyncThunk(
     });
     try {
       dispatch(runLoader());
-      const response = await Pineapple.put(
+      const response = await Api.put(
         getEndPoint(UPDATE_PROFILE_PICTURE),
         image,
         { headers: { "Content-Type": "multipart/form-data" } }
@@ -69,12 +69,10 @@ export const updateProfilePicture = createAsyncThunk(
 
 export const deleteProfilePicture = createAsyncThunk(
   "deleteProfilePicture",
-  async ({},{ dispatch }) => {
+  async ({}, { dispatch }) => {
     try {
       dispatch(runLoader());
-      const response = await Pineapple.delete(
-        getEndPoint(DELETE_PROFILE_PICTURE)
-      );
+      const response = await Api.delete(getEndPoint(DELETE_PROFILE_PICTURE));
       console.log(response.data);
       return response.data;
     } catch (err) {

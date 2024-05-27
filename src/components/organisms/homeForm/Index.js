@@ -14,15 +14,14 @@ import { getUserDetails } from "../../../redux/user";
 
 const HomeForm = ({ navigation }) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUserDetails());
-  }, []);
+
+  // useEffect(() => {
+  //   dispatch(getUserDetails());
+  // }, []);
+
   return (
     <FormContainer>
-      <Title>Home</Title>
-      <Spacer>
-        
-      </Spacer>
+      <Spacer></Spacer>
     </FormContainer>
   );
 };

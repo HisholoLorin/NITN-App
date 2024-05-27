@@ -19,13 +19,11 @@ const ResetPasswordForm = ({ route }) => {
   const [password, setPassword] = useState("");
   const [retypePassword, setRetypePassword] = useState("");
   const dispatch = useDispatch();
-  const { otpId } = route.params;
   const { error } = useSelector((state) => state.AuthReducer);
 
   const navigateTo = () => {
     dispatch(
       changePassword({
-        otpId,
         password,
         retypePassword,
       })
@@ -35,7 +33,7 @@ const ResetPasswordForm = ({ route }) => {
   return (
     <FormContainer>
       <Title>New Password</Title>
-      <SubTitle>Enter your new password for your Tabernacle account</SubTitle>
+      <SubTitle>Enter your new password for your account</SubTitle>
 
       <PasswordInput
         placeholder="Enter your password"

@@ -42,13 +42,13 @@ const LoginForm = (props) => {
 
       <TabContainer>
         <TabButton
-          image="../../../../assets/staff.png"
+          source={require("../../../../assets/staff.png")}
           text="Staffs"
           active={selectedOption === "staffs"}
           onPress={() => setSelectedOption("staffs")}
         />
         <TabButton
-          image="../../../../assets/student.png"
+          source={require("../../../../assets/student.png")}
           text="Students"
           active={selectedOption === "students"}
           onPress={() => setSelectedOption("students")}

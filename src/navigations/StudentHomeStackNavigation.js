@@ -7,10 +7,10 @@ import BackButton from "../components/atoms/backButton/Index";
 import DrawerButton from "../components/atoms/drawerButton/Index";
 
 // Screens
-import HomeScreen from "../screens/drawer/homeStack/HomeScreen";
+import StudentHomeScreen from "../screens/drawer/studentHomeStack/StudentHomeScreen";
 
 //Helper
-import { previousScreen } from "../navigations/navigationRef";
+import { previousScreen } from "./navigationRef";
 
 const HomeStack = createStackNavigator();
 
@@ -18,15 +18,15 @@ const HomeStackNavigation = ({ navigation }) => {
   const { userDetails } = useSelector((state) => state.UserReducer);
   return (
     <HomeStack.Navigator
-      initialRouteName="Home"
+      initialRouteName="StudentHome"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
         headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
       <HomeStack.Screen
-        name="Home"
-        component={HomeScreen}
+        name="StudentHome"
+        component={StudentHomeScreen}
         options={{
           headerLeft: () => (
             <DrawerButton
@@ -34,7 +34,7 @@ const HomeStackNavigation = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             />
           ),
-          title: "Members",
+          title: "Home",
         }}
       />
 

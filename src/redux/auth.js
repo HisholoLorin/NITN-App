@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import { navigate, reset } from "../navigations/navigationRef";
 //API
-import Pineapple from "../api/Pineapple";
+import Api from "../api/API";
 
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -55,125 +55,128 @@ export const logout = createAsyncThunk("logout", async () => {
 export const login = createAsyncThunk(
   "login",
   async ({ username, password }, { dispatch, rejectWithValue }) => {
-    try {
-      dispatch(runLoader());
-      Keyboard.dismiss();
-      if (username.length === 0)
-        return rejectWithValue("Username cannot be blank");
-      else if (password.length === 0)
-        return rejectWithValue("Password cannot be blank");
-      else {
-        const response = await Pineapple.post(
-          getEndPoint(LOGIN),
-          {
-            username,
-            password,
-          },
-          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-        );
-        await saveToken(response.data);
-        reset("Drawer");
-      }
-    } catch (err) {
-      console.log(err.response);
-      if (!err.response) return rejectWithValue("No Internet Connection");
-      else return rejectWithValue(err.response.data.detail);
-    } finally {
-      dispatch(stopLoader());
-    }
+    reset("Drawer");
+    // try {
+    //   dispatch(runLoader());
+    //   Keyboard.dismiss();
+    //   if (username.length === 0)
+    //     return rejectWithValue("Username cannot be blank");
+    //   else if (password.length === 0)
+    //     return rejectWithValue("Password cannot be blank");
+    //   else {
+    //     const response = await Api.post(
+    //       getEndPoint(LOGIN),
+    //       {
+    //         username,
+    //         password,
+    //       },
+    //       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    //     );
+    //     await saveToken(response.data);
+    //     reset("Drawer");
+    //   }
+    // } catch (err) {
+    //   console.log(err.response);
+    //   if (!err.response) return rejectWithValue("No Internet Connection");
+    //   else return rejectWithValue(err.response.data.detail);
+    // } finally {
+    //   dispatch(stopLoader());
+    // }
   }
 );
 
 export const forgotPassword = createAsyncThunk(
   "forgotPassword",
-  async ({ username }, { dispatch, rejectWithValue }) => {
-    try {
-      dispatch(runLoader());
-      Keyboard.dismiss();
-      if (username.length === 0)
-        return rejectWithValue("Username cannot be blank");
-      const response = await Pineapple.post(getEndPoint(FORGOT_PASSWORD), {
-        username: username,
-      });
-      console.log(response.data);
-      const otpId = response.data.otpId;
-      navigate("OTP", { username, mode: "ForgotPassword", otpId });
-    } catch (err) {
-      console.log(err.response.data);
-      if (!err.response) return "No Internet Connection";
-      else return rejectWithValue(err.response.data.detail);
-    } finally {
-      dispatch(stopLoader());
-    }
+  async ({ email }, { dispatch, rejectWithValue }) => {
+    console.log("call");
+    navigate("OTP", { email });
+    // try {
+    //   dispatch(runLoader());
+    //   Keyboard.dismiss();
+    //   if (username.length === 0)
+    //     return rejectWithValue("Username cannot be blank");
+    //   const response = await Api.post(getEndPoint(FORGOT_PASSWORD), {
+    //     username: username,
+    //   });
+    //   console.log(response.data);
+    //   const otpId = response.data.otpId;
+    //   navigate("OTP", { username, mode: "ForgotPassword", otpId });
+    // } catch (err) {
+    //   console.log(err.response.data);
+    //   if (!err.response) return "No Internet Connection";
+    //   else return rejectWithValue(err.response.data.detail);
+    // } finally {
+    //   dispatch(stopLoader());
+    // }
   }
 );
 
 export const verifyOTP = createAsyncThunk(
   "verifyOTP",
-  async ({ otpId, otp, mode }, { dispatch, rejectWithValue }) => {
-    try {
-      dispatch(runLoader());
-      Keyboard.dismiss();
+  async ({ otp, email }, { dispatch, rejectWithValue }) => {
+    navigate("ResetPassword");
+    // try {
+    //   dispatch(runLoader());
+    //   Keyboard.dismiss();
 
-      otp = otp.join("");
-      if (otp.length !== 4) return rejectWithValue("OTP must be 4 digits.");
+    //   otp = otp.join("");
+    //   if (otp.length !== 4) return rejectWithValue("OTP must be 4 digits.");
 
-      otp = Number(otp);
-      let response;
-      switch (mode) {
-        case "ForgotPassword":
-          response = await Pineapple.post(
-            getEndPoint(VERIFY_OTP_FOR_FORGOT_PASSWORD),
-            { otpId, otp }
-          );
-          navigate("ResetPassword", { otpId });
-          break;
-        case "Signup":
-          response = await Pineapple.post(getEndPoint(VERIFY_OTP_FOR_SIGNUP), {
-            otpId,
-            otp,
-          });
-          console.log(response.data);
-          await saveToken(response.data);
-          reset("Drawer");
-          break;
-      }
-    } catch (err) {
-      if (!err.response) return rejectWithValue("No Internet Connection");
-      else return rejectWithValue(err.response.data.detail);
-    } finally {
-      dispatch(stopLoader());
-    }
+    //   otp = Number(otp);
+    //   let response;
+    //   switch (mode) {
+    //     case "ForgotPassword":
+    //       response = await Api.post(
+    //         getEndPoint(VERIFY_OTP_FOR_FORGOT_PASSWORD),
+    //         { otp }
+    //       );
+    //       navigate("ResetPassword", { otpId });
+    //       break;
+    //     case "Signup":
+    //       response = await Api.post(getEndPoint(VERIFY_OTP_FOR_SIGNUP), {
+    //         otp,
+    //       });
+    //       console.log(response.data);
+    //       await saveToken(response.data);
+    //       reset("Drawer");
+    //       break;
+    //   }
+    // } catch (err) {
+    //   if (!err.response) return rejectWithValue("No Internet Connection");
+    //   else return rejectWithValue(err.response.data.detail);
+    // } finally {
+    //   dispatch(stopLoader());
+    // }
   }
 );
 
 export const changePassword = createAsyncThunk(
   "changePassword",
   async (
-    { otpId, password, retypePassword },
+    {  password, retypePassword },
     { dispatch, rejectWithValue }
   ) => {
-    if (!isPassword(password)) return rejectWithValue("Invalid Password");
-    else if (password !== retypePassword)
-      return rejectWithValue("Password does not match.");
-    try {
-      dispatch(runLoader());
-      Keyboard.dismiss();
-      response = await Pineapple.post(getEndPoint(CHANGE_PASSWORD), {
-        otpId,
-        password,
-        retypePassword,
-      });
-      reset("Login");
-      Alert.alert("", "Password Changed Successfully. Please Login.", [
-        { text: "OK" },
-      ]);
-    } catch (err) {
-      if (!err.response) return rejectWithValue("No Internet Connection.");
-      else return rejectWithValue(err.response.data.detail);
-    } finally {
-      dispatch(stopLoader());
-    }
+  //   if (!isPassword(password)) return rejectWithValue("Invalid Password");
+  //   else if (password !== retypePassword)
+  //     return rejectWithValue("Password does not match.");
+  //   try {
+  //     dispatch(runLoader());
+  //     Keyboard.dismiss();
+  //     response = await Api.post(getEndPoint(CHANGE_PASSWORD), {
+  //       otpId,
+  //       password,
+  //       retypePassword,
+  //     });
+  //     reset("Login");
+  //     Alert.alert("", "Password Changed Successfully. Please Login.", [
+  //       { text: "OK" },
+  //     ]);
+  //   } catch (err) {
+  //     if (!err.response) return rejectWithValue("No Internet Connection.");
+  //     else return rejectWithValue(err.response.data.detail);
+  //   } finally {
+  //     dispatch(stopLoader());
+  //   }
   }
 );
 
@@ -192,7 +195,7 @@ export const signup = createAsyncThunk(
       else if (password !== retypePassword)
         return rejectWithValue("Password does not match");
       else {
-        const response = await Pineapple.post(getEndPoint(SIGNUP), {
+        const response = await Api.post(getEndPoint(SIGNUP), {
           username: fullname,
           email,
           password,

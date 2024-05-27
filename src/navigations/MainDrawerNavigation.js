@@ -2,9 +2,8 @@ import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // Stacks
-import AccountStackNavigation from "./AccountStackNavigation";
-import SettingStackNavigation from "./SettingStackNavigation";
-import HomeStackNavigation from "./HomeStackNavigation";
+import ProfileStackNavigation from "./ProfileStackNavigation";
+import StudentBottomTabNavigation from "./StudentBottomTabNavigation";
 
 // Screens
 import DrawerContent from "../screens/drawer/drawerContent/Index";
@@ -32,9 +31,9 @@ const MainDrawerNavigation = () => {
       drawerContent={(props) => <DrawerContent {...props} />}
     >
       {/* Drawer Screens */}
-      <Drawer.Screen name="HomeStackNavigation" component={HomeStackNavigation} />
-      <Drawer.Screen name="AccountStack" component={AccountStackNavigation} />
-      <Drawer.Screen name="SettingStack" component={SettingStackNavigation} />
+      <Drawer.Screen name="StudentBottomTab" component={StudentBottomTabNavigation} />
+      <Drawer.Screen name="ProfileStack" component={ProfileStackNavigation} />
+
     </Drawer.Navigator>
   );
 };

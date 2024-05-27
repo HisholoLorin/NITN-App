@@ -13,8 +13,7 @@ export const FormContainer = styled(Container)`
 export const TabContainer = styled.View`
   display: flex;
   flex-direction: row;
-  margin-bottom: 24px;
-  margin-top: 16px;
+  margin-bottom: 20px;
 `;
 
 
@@ -36,12 +35,12 @@ export const Description = styled.Text`
 `
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-const imageWidth = screenWidth * 0.5;
-const imageHeight = screenHeight * 0.25;
+const imageWidth = screenWidth * 0.4;
+const imageHeight = screenHeight * 0.2;
 
 
 export const LoginImage = styled.Image`
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   align-self: center;
   width: ${imageWidth}px;
   height: ${imageHeight}px;

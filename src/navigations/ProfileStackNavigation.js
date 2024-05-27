@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens
-import AccountScreen from "../screens/drawer/accountStack/AccountScreen";
+import ProfileScreen from "../screens/drawer/profileStack/ProfileScreen";
 
 //Components
 import BackButton from "../components/atoms/backButton/Index";
@@ -10,25 +10,24 @@ import BackButton from "../components/atoms/backButton/Index";
 //Helper
 import { previousScreen } from "./navigationRef";
 
-const AccountStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 
-const AccountStackNavigation = () => {
+const ProfileStackNavigation = () => {
   return (
-    <AccountStack.Navigator
-      initialRouteName="Account"
+    <ProfileStack.Navigator
+      initialRouteName="Profile"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
         headerLeft: ({}) => <BackButton onPress={previousScreen} />,
       }}
     >
-      <AccountStack.Screen
-        name="Account"
-        component={AccountScreen}
-        options={() => ({ title: null })}
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={() => ({ title: "Profile" })}
       />
-     
-    </AccountStack.Navigator>
+    </ProfileStack.Navigator>
   );
 };
 
-export default AccountStackNavigation;
+export default ProfileStackNavigation;

@@ -6,7 +6,6 @@ import AppView from "../../components/atoms/AppView";
 
 
 const OTPScreen = (props) => {
-  //autoDetectOTP();
   return (
     <AppView {...props}>
       <KeyboardAwareScrollView

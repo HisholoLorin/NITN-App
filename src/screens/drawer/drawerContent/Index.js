@@ -34,7 +34,7 @@ export default ({ navigation }) => {
 
         {/* Account */}
         <DrawerItem
-          label="Account"
+          label="Profile"
           icon={() => (
             <View style={globalStyles.iconContainer}>
               <FontAwesome5
@@ -43,23 +43,8 @@ export default ({ navigation }) => {
               />
             </View>
           )}
-          onPress={() => navigation.navigate("AccountStack")}
+          onPress={() => navigation.navigate("ProfileStack")}
           labelStyle={{ fontSize: 16, marginLeft: "-10%", textAlign: "left" }}
-        />
-
-        {/* Settings */}
-        <DrawerItem
-          label="Settings"
-          icon={() => (
-            <View style={globalStyles.iconContainer}>
-              <MaterialCommunityIcons
-                name="cog-outline"
-                style={IconStyle({ iconAlignment: "center" })}
-              />
-            </View>
-          )}
-          onPress={() => navigation.navigate("SettingStack")}
-          labelStyle={styles.label}
         />
 
       </DrawerContentScrollView>

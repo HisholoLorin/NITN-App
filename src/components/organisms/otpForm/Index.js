@@ -18,26 +18,19 @@ import { FormContainer, EditContainer } from "./Styles";
 
 const OTPForm = (props) => {
   const { navigation, route } = props;
-  const { username, values, otpId, mode } = route.params;
+  const { username } = route.params;
   const [otp, setOTP] = useState(["", "", "", ""]);
   const dispatch = useDispatch();
 
   const verifyOTPAction = () => {
-    dispatch(verifyOTP({ otpId, otp, mode }));
+    dispatch(verifyOTP({ otp, username }));
   };
 
   const { error } = useSelector((state) => state.AuthReducer);
 
   const resendOTP = () => {
-    switch (mode) {
-      case "ForgotPassword":
-        dispatch(forgotPassword({ username }));
-        break;
-      case "Signup":
-        dispatch(signup({ ...values }));
-        break;
-    }
-    setOTP("");
+    dispatch(forgotPassword({ username }));
+    setOTP(["", "", "", ""]);
   };
 
   return (
@@ -47,7 +40,7 @@ const OTPForm = (props) => {
       <EditContainer
         onPress={() => navigation.goBack()}
         icon="pencil"
-        text={values?.email || username}
+        text={username}
         size={18}
       />
       <OTPCodeInput otp={otp} setOTP={setOTP} />
