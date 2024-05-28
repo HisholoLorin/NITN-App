@@ -2,7 +2,7 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens
-import ProfileScreen from "../screens/drawer/profileStack/ProfileScreen";
+import ContactScreen from "../screens/drawer/contactStack/ContactScreen";
 
 //Components
 import BackButton from "../components/atoms/backButton/Index";
@@ -10,23 +10,23 @@ import BackButton from "../components/atoms/backButton/Index";
 //Helper
 import { previousScreen } from "./navigationRef";
 
-const ProfileStack = createStackNavigator();
+const ContactStack = createStackNavigator();
 
-const ProfileStackNavigation = () => {
+const ContactStackNavigation = () => {
   return (
-    <ProfileStack.Navigator
-      initialRouteName="Profile"
+    <ContactStack.Navigator
+      initialRouteName="Contact"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
         headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
-      <ProfileStack.Screen
-        name="Profile"
-        component={ProfileScreen}
+      <ContactStack.Screen
+        name="Contact"
+        component={ContactScreen}
       />
-    </ProfileStack.Navigator>
+    </ContactStack.Navigator>
   );
 };
 
-export default ProfileStackNavigation;
+export default ContactStackNavigation;

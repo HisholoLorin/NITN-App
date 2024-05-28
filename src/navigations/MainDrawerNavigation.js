@@ -3,6 +3,13 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 
 // Stacks
 import ProfileStackNavigation from "./ProfileStackNavigation";
+import ContactStackNavigation from "./ContactStackNavigation";
+import AboutStackNavigation from "./AboutStackNavigation";
+
+import MaintenanceHomeStackNavigation from "./MaintenanceHomeStackNavigation";
+import ManagerHomeStackNavigation from "./ManagerHomeStackNavigation";
+
+//Bottom Tab
 import StudentBottomTabNavigation from "./StudentBottomTabNavigation";
 
 // Screens
@@ -31,9 +38,21 @@ const MainDrawerNavigation = () => {
       drawerContent={(props) => <DrawerContent {...props} />}
     >
       {/* Drawer Screens */}
-      <Drawer.Screen name="StudentBottomTab" component={StudentBottomTabNavigation} />
+      <Drawer.Screen
+        name="StudentBottomTab"
+        component={StudentBottomTabNavigation}
+      />
+      <Drawer.Screen
+        name="MaintenanceHomeStack"
+        component={MaintenanceHomeStackNavigation}
+      />
+      <Drawer.Screen
+        name="ManagerHomeStack"
+        component={ManagerHomeStackNavigation}
+      />
       <Drawer.Screen name="ProfileStack" component={ProfileStackNavigation} />
-
+      <Drawer.Screen name="ContactStack" component={ContactStackNavigation} />
+      <Drawer.Screen name="AboutStack" component={AboutStackNavigation} />
     </Drawer.Navigator>
   );
 };

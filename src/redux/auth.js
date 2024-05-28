@@ -40,9 +40,9 @@ export const logout = createAsyncThunk("logout", async () => {
     {
       text: "Yes",
       onPress: async () => {
-        const refresh = await AsyncStorage.getItem("RefreshToken");
-        await AsyncStorage.removeItem("AccessToken");
-        await AsyncStorage.removeItem("RefreshToken");
+        // const refresh = await AsyncStorage.getItem("RefreshToken");
+        // await AsyncStorage.removeItem("AccessToken");
+        // await AsyncStorage.removeItem("RefreshToken");
         reset("Login");
       },
     },

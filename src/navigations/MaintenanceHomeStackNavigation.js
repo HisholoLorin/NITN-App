@@ -7,26 +7,26 @@ import BackButton from "../components/atoms/backButton/Index";
 import DrawerButton from "../components/atoms/drawerButton/Index";
 
 // Screens
-import StudentHomeScreen from "../screens/drawer/studentBottomTab/studentHomeStack/StudentHomeScreen";
+import MaintenanceHomeScreen from "../screens/drawer/maintenanceHomeStack/MaintenanceHomeScreen";
 
 //Helper
 import { previousScreen } from "./navigationRef";
 
-const StudentHomeStack = createStackNavigator();
+const MaintenanceHomeStack = createStackNavigator();
 
-const StudentHomeStackNavigation = ({ navigation }) => {
+const MaintenanceHomeStackNavigation = ({ navigation }) => {
   const { userDetails } = useSelector((state) => state.UserReducer);
   return (
-    <StudentHomeStack.Navigator
-      initialRouteName="StudentHome"
+    <MaintenanceHomeStack.Navigator
+      initialRouteName="MaintenanceHome"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
         headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
-      <StudentHomeStack.Screen
-        name="StudentHome"
-        component={StudentHomeScreen}
+      <MaintenanceHomeStack.Screen
+        name="MaintenanceHome"
+        component={MaintenanceHomeScreen}
         options={{
           headerLeft: () => (
             <DrawerButton
@@ -38,8 +38,8 @@ const StudentHomeStackNavigation = ({ navigation }) => {
         }}
       />
 
-    </StudentHomeStack.Navigator>
+    </MaintenanceHomeStack.Navigator>
   );
 };
 
-export default StudentHomeStackNavigation;
+export default MaintenanceHomeStackNavigation;

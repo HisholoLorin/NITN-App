@@ -6,14 +6,10 @@ export default globalStyles = StyleSheet.create({
   },
 });
 
-export const IconStyle = ({
-  iconSize,
-  setIconColor,
-  iconAlignment = "left",
-}) => {
+export const IconStyle = ({ iconSize, setIconColor } = {}) => {
   return StyleSheet.create({
     fontSize: iconSize || 20,
-    textAlign: iconAlignment,
+    textAlign: "center",
     color: setIconColor || "#6C6C6C",
   });
 };

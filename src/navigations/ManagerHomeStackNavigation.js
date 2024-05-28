@@ -3,30 +3,30 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useSelector } from "react-redux";
 
 //Components
-import BackButton from "../components/atoms/backButton/Index";
-import DrawerButton from "../components/atoms/drawerButton/Index";
+import BackButton from "../components/atoms/backButton/Index.js";
+import DrawerButton from "../components/atoms/drawerButton/Index.js";
 
 // Screens
-import StudentHomeScreen from "../screens/drawer/studentBottomTab/studentHomeStack/StudentHomeScreen";
+import ManagerHomeScreen from "../screens/drawer/managerHomeStack/ManagerHomeScreen.js";
 
 //Helper
-import { previousScreen } from "./navigationRef";
+import { previousScreen } from "./navigationRef.js";
 
-const StudentHomeStack = createStackNavigator();
+const ManagerHomeStack = createStackNavigator();
 
-const StudentHomeStackNavigation = ({ navigation }) => {
+const ManagerHomeStackNavigation = ({ navigation }) => {
   const { userDetails } = useSelector((state) => state.UserReducer);
   return (
-    <StudentHomeStack.Navigator
-      initialRouteName="StudentHome"
+    <ManagerHomeStack.Navigator
+      initialRouteName="ManagerHome"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
         headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
-      <StudentHomeStack.Screen
-        name="StudentHome"
-        component={StudentHomeScreen}
+      <ManagerHomeStack.Screen
+        name="ManagerHome"
+        component={ManagerHomeScreen}
         options={{
           headerLeft: () => (
             <DrawerButton
@@ -37,9 +37,8 @@ const StudentHomeStackNavigation = ({ navigation }) => {
           title: "Home",
         }}
       />
-
-    </StudentHomeStack.Navigator>
+    </ManagerHomeStack.Navigator>
   );
 };
 
-export default StudentHomeStackNavigation;
+export default ManagerHomeStackNavigation;
