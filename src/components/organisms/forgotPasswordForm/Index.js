@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Dimensions } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 //Components
-import EmailInput from "../../molecules/emailInput/Index";
+import CustomInput from "../../molecules/customInput/Index";
 import PrimaryButton from "../../molecules/primaryButton/Index";
 import Title from "../../atoms/title/Index";
 import SubTitle from "../../atoms/subTitle/Index";
@@ -24,14 +24,16 @@ const ForgotPasswordForm = (props) => {
   return (
     <FormContainer>
       <Title>Forgot Password?</Title>
-      <SubTitle>
-        Please enter your email associated with your account.
-      </SubTitle>
+      <SubTitle>Please enter your email associated with your account.</SubTitle>
 
-      <EmailInput
-        placeholder="Enter your email"
-        value={email}
+      {/* Email */}
+      <CustomInput
+        icon={() => (
+          <MaterialCommunityIcons name="email-outline" size={20} color="#999" />
+        )}
+        placeholder="Email"
         onChangeText={setEmail}
+        keyboardType="email-address"
       />
       {error && <Error>{error}</Error>}
       <PrimaryButton

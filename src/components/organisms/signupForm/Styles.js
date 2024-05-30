@@ -20,4 +20,8 @@ export const Description = styled.Text`
   color: #636363;
 `
 
-
+export const TabContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+`;

@@ -17,7 +17,7 @@ const PasswordInput = (props) => {
     };
     return (
         <InputContainer>
-            <StyledIcon name="lock-outline" size={24} />
+            <StyledIcon name="lock-outline" size={20} />
             <Input
                 {...props}
                 autoCapitalize="none"
@@ -26,9 +26,9 @@ const PasswordInput = (props) => {
             />
             <TouchableOpacity
                 onPress={togglePasswordVisibility}
-                style={{ position: 'absolute', top: 12, right: 10 }}
+                style={{ position: 'absolute',right: 10 }}
             >
-                <StyledIcon name={hidePassword ? 'eye-off-outline' : 'eye-outline'} size={24}/>
+                <StyledIcon name={hidePassword ? 'eye-off-outline' : 'eye-outline'} size={20}/>
             </TouchableOpacity>
         </InputContainer>
     );

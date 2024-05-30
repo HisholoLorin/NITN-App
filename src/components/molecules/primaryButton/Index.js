@@ -1,21 +1,20 @@
-import Button from '../../atoms/button/Index';
+import * as Animatable from "react-native-animatable";
 
-import {
-    Container
-} from './Styles'
+import { Container, ButtonText, Button } from "./Styles";
 
-
-const PrimaryButton = props => {
+const PrimaryButton = ({ onPress, text }) => {
   return (
     <Container>
-      <Button
-        {...props}
-        buttonColor="green"
-        textColor="#FFFFFF"
-      />    
+      <Animatable.View
+        animation="pulse"
+        iterationCount="infinite"
+        useNativeDriver
+      >
+        <Button onPress={onPress}>
+          <ButtonText>{text}</ButtonText>
+        </Button>
+      </Animatable.View>
     </Container>
   );
 };
 export default PrimaryButton;
-
-

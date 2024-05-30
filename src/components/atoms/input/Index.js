@@ -1,45 +1,39 @@
-import {
-  StyledTextInput,
-  Label,
-  InputGroup
-} from './Styles'
-
+import { StyledTextInput, InputGroup } from "./Styles";
 
 const Input = (props) => {
   const {
-    label,
     placeholder,
-    placeholderTextColor,
     value,
     onChangeText,
     autoCapitalize,
     keyboardType,
     fontSize,
-    textColor,
+    color,
     secureTextEntry,
     maxLength,
     selection,
     contextMenuHidden = false,
+    editable,
   } = props;
 
   return (
-      <InputGroup>
-         <Label>{label ? label : 'password'}</Label>
-        <StyledTextInput
-           placeholder={placeholder}
-           placeholderTextColor={placeholderTextColor}
-           value={value}
-           onChangeText={onChangeText}
-           autoCapitalize={autoCapitalize}
-           keyboardType={keyboardType}
-           textColor={textColor}
-           fontSize={fontSize}
-           secureTextEntry={secureTextEntry}
-           maxLength={maxLength}
-           selection={selection}
-           contextMenuHidden={contextMenuHidden}
-        />
-      </InputGroup>
+    <InputGroup>
+      <StyledTextInput
+        placeholder={placeholder}
+        placeholderTextColor="#999"
+        value={value}
+        onChangeText={onChangeText}
+        autoCapitalize={autoCapitalize}
+        keyboardType={keyboardType}
+        color={color}
+        fontSize={fontSize}
+        secureTextEntry={secureTextEntry}
+        maxLength={maxLength}
+        selection={selection}
+        contextMenuHidden={contextMenuHidden}
+        editable={editable}
+      />
+    </InputGroup>
   );
 };
 

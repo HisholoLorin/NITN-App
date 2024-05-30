@@ -1,77 +1,75 @@
 import React, { useState } from "react";
 
 //Components
-import EmailInput from "../../molecules/emailInput/Index";
-import PasswordInput from "../../molecules/passwordInput/Index";
 import PrimaryButton from "../../molecules/primaryButton/Index";
-import NameInput from "../../molecules/nameInput/Index";
 import NavLink from "../../atoms/navLink/Index";
 import Title from "../../atoms/title/Index";
 import SubTitle from "../../atoms/subTitle/Index";
 import Error from "../../atoms/Error";
+import StudentForm from "./Student";
+import TabButton from "../../atoms/tabButton/Index";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
 import { signup } from "../../../redux/auth";
 
 //Styled Components
-import { LoginTextContainer, Description, FormContainer } from "./Styles";
-
-//Helper
-import { capitalizedFirstLetter } from "../../../helper/auth";
+import {
+  LoginTextContainer,
+  Description,
+  FormContainer,
+  TabContainer,
+} from "./Styles";
 
 const SignupForm = (props) => {
   const { navigation } = props;
-  const [fullname, setFullname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [retypePassword, setRetypePassword] = useState("");
-
+  const [studentForm, setStudentForm] = useState({});
+  const [staffForm, setStaffForm] = useState({});
+  const [selectedOption, setSelectedOption] = useState("Students");
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.AuthReducer);
 
+  const handleSignup = () => {
+    switch(selectedOption){
+      case "Students":
+        dispatch(signup({...studentForm, type : selectedOption}, ));
+        break;
+      case "Institute Personnel":
+        dispatch(signup({...studentForm, type : selectedOption}, ));
+        break;
+    }
+  }
+
   return (
     <FormContainer>
-      <Title>Create Account</Title>
-      <SubTitle>Please fill the form with the your details</SubTitle>
+      <Title>Register</Title>
+      <SubTitle>Please sign up to continue</SubTitle>
 
-      <NameInput
-        placeholder="Enter your fullname"
-        value={fullname}
-        onChangeText={(value) => setFullname(capitalizedFirstLetter(value))}
-      />
-      <EmailInput
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <PasswordInput
-        placeholder="Enter your password"
-        value={password}
-        onChangeText={setPassword}
-      />
-      <PasswordInput
-        label="Confirm Password"
-        placeholder="Re-Enter your password"
-        value={retypePassword}
-        onChangeText={setRetypePassword}
-      />
+      <TabContainer>
+        <TabButton
+          source={require("../../../../assets/institutePersonnel.png")}
+          text="Institute Personnel"
+          active={selectedOption === "Institute Personnel"}
+          onPress={() => setSelectedOption("Institute Personnel")}
+        />
+        <TabButton
+          source={require("../../../../assets/student.png")}
+          text="Students"
+          active={selectedOption === "Students"}
+          onPress={() => setSelectedOption("Students")}
+        />
+      </TabContainer>
+
+      {selectedOption == "Students" && (
+        <StudentForm
+          studentForm={studentForm}
+          setStudentForm={setStudentForm}
+        />
+      )}
 
       {error && <Error>{error}</Error>}
 
-      <PrimaryButton
-        text="Continue"
-        onPress={() =>
-          dispatch(
-            signup({
-              fullname,
-              email,
-              password,
-              retypePassword,
-            })
-          )
-        }
-      />
+      <PrimaryButton text="Continue" onPress={handleSignup} />
 
       <LoginTextContainer>
         <Description>Already have an account? </Description>

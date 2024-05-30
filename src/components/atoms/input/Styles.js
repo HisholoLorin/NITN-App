@@ -1,14 +1,12 @@
 import { TextInput } from 'react-native';
 import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
+
+const {width} = Dimensions.get("window");
 
 export const StyledTextInput = styled(TextInput)`
-  font-size: 16px;
-`;
-
-export const Label = styled.Text`
-    font-size: 11px;
-    color: #6C6C6C;
-    text-transform: uppercase;
+  font-size: 14px;
+  width: ${width}px;
 `;
 
 export const InputGroup = styled.View`

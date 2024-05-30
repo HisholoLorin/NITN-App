@@ -152,38 +152,59 @@ export const verifyOTP = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
   "changePassword",
-  async (
-    {  password, retypePassword },
-    { dispatch, rejectWithValue }
-  ) => {
-  //   if (!isPassword(password)) return rejectWithValue("Invalid Password");
-  //   else if (password !== retypePassword)
-  //     return rejectWithValue("Password does not match.");
-  //   try {
-  //     dispatch(runLoader());
-  //     Keyboard.dismiss();
-  //     response = await Api.post(getEndPoint(CHANGE_PASSWORD), {
-  //       otpId,
-  //       password,
-  //       retypePassword,
-  //     });
-  //     reset("Login");
-  //     Alert.alert("", "Password Changed Successfully. Please Login.", [
-  //       { text: "OK" },
-  //     ]);
-  //   } catch (err) {
-  //     if (!err.response) return rejectWithValue("No Internet Connection.");
-  //     else return rejectWithValue(err.response.data.detail);
-  //   } finally {
-  //     dispatch(stopLoader());
-  //   }
+  async ({ password, retypePassword }, { dispatch, rejectWithValue }) => {
+    //   if (!isPassword(password)) return rejectWithValue("Invalid Password");
+    //   else if (password !== retypePassword)
+    //     return rejectWithValue("Password does not match.");
+    //   try {
+    //     dispatch(runLoader());
+    //     Keyboard.dismiss();
+    //     response = await Api.post(getEndPoint(CHANGE_PASSWORD), {
+    //       otpId,
+    //       password,
+    //       retypePassword,
+    //     });
+    //     reset("Login");
+    //     Alert.alert("", "Password Changed Successfully. Please Login.", [
+    //       { text: "OK" },
+    //     ]);
+    //   } catch (err) {
+    //     if (!err.response) return rejectWithValue("No Internet Connection.");
+    //     else return rejectWithValue(err.response.data.detail);
+    //   } finally {
+    //     dispatch(stopLoader());
+    //   }
   }
 );
 
 export const signup = createAsyncThunk(
   "signup",
   async ({ ...values }, { dispatch, rejectWithValue }) => {
-    const { fullname, email, password, retypePassword } = values;
+    console.log(values);
+    const { type } = values;
+    switch (type) {
+      case "students":
+        const {
+          username,
+          registrationNo,
+          mobileNo,
+          email,
+          password,
+          confirmPassword,
+          dateOfBirth,
+          gender,
+          bloodType,
+          medicalConditions,
+          ethnicity,
+          address,
+          guardianMobileNumber,
+          deptName,
+          batch,
+          hostelName,
+        } = values;
+
+      case "staffs":
+    }
     try {
       dispatch(runLoader());
       Keyboard.dismiss();
@@ -196,10 +217,7 @@ export const signup = createAsyncThunk(
         return rejectWithValue("Password does not match");
       else {
         const response = await Api.post(getEndPoint(SIGNUP), {
-          username: fullname,
-          email,
-          password,
-          retypePassword,
+          ...values,
         });
         console.log(response.data);
         const otpId = response.data.otpId;
