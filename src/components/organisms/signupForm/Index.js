@@ -20,25 +20,26 @@ import {
   FormContainer,
   TabContainer,
 } from "./Styles";
+import InstitutePersonnelForm from "./InstitutePersonnel";
 
 const SignupForm = (props) => {
   const { navigation } = props;
   const [studentForm, setStudentForm] = useState({});
-  const [staffForm, setStaffForm] = useState({});
+  const [institutePersonnelForm, setInstitutePersonnelForm] = useState({});
   const [selectedOption, setSelectedOption] = useState("Students");
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.AuthReducer);
 
   const handleSignup = () => {
-    switch(selectedOption){
+    switch (selectedOption) {
       case "Students":
-        dispatch(signup({...studentForm, type : selectedOption}, ));
+        dispatch(signup({ ...studentForm, type: selectedOption }));
         break;
       case "Institute Personnel":
-        dispatch(signup({...studentForm, type : selectedOption}, ));
+        dispatch(signup({ ...institutePersonnelForm, type: selectedOption }));
         break;
     }
-  }
+  };
 
   return (
     <FormContainer>
@@ -64,6 +65,13 @@ const SignupForm = (props) => {
         <StudentForm
           studentForm={studentForm}
           setStudentForm={setStudentForm}
+        />
+      )}
+
+      {selectedOption == "Institute Personnel" && (
+        <InstitutePersonnelForm
+          institutePersonnelForm={institutePersonnelForm}
+          setInstitutePersonnelForm={setInstitutePersonnelForm}
         />
       )}
 

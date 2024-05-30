@@ -22,97 +22,88 @@ import {
   Description,
   LoginImage,
 } from "./Styles";
+import InstitutePersonnelLoginForm from "./InstitutePersonnel";
+import StudentLoginForm from "./Student";
 
 const LoginForm = (props) => {
   const { navigation } = props;
 
-  const [activeTab, setActiveTab] = useState("student");
-  const [password, setPassword] = useState("");
-
-  const [formData, setFormData] = useState({
-    staffIdNo: "",
-    maintenanceIdNo: "",
-    regNo: "",
-    password: "",
-  });
-
-  const handleInputChange = (key, value) => {
-    setFormData({ ...formData, [key]: value });
-  };
-
-  const getCurrentPassword = () => {
-    if (activeTab === "student") return formData.studentPassword;
-    else return formData.staffPassword;
-  };
-
+  const [studentLoginForm, setStudentLoginForm] = useState({});
+  const [institutePersonnelLoginForm, setInstitutePersonnelLoginForm] =
+    useState({});
+  const [selectedOption, setSelectedOption] = useState("Students");
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.AuthReducer);
+
+  const handleLogin = () => {
+    switch (selectedOption) {
+      case "Students":
+        dispatch(login({ ...studentLoginForm, type: selectedOption }));
+        break;
+      case "Institute Personnel":
+        dispatch(
+          login({ ...institutePersonnelLoginForm, type: selectedOption })
+        );
+        break;
+    }
+  };
   return (
-    (
-      <FormContainer>
-        <PasswordInput
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
+    <FormContainer>
+      <LoginImage source={require("../../../../assets/NITN_Logo.png")} />
+      <Title>Login</Title>
+      <SubTitle>Please log in to continue</SubTitle>
+
+      <TabContainer>
+        <TabButton
+          source={require("../../../../assets/institutePersonnel.png")}
+          text="Institute Personnel"
+          active={selectedOption === "Institute Personnel"}
+          onPress={() => setSelectedOption("Institute Personnel")}
         />
-      </FormContainer>
-    )
-    // null && (
-    //   <FormContainer>
-    //     <LoginImage source={require("../../../../assets/NITN_Logo.png")} />
-    //     <Title>Login</Title>
-    //     <SubTitle>Please log in to continue</SubTitle>
+        <TabButton
+          source={require("../../../../assets/student.png")}
+          text="Students"
+          active={selectedOption === "Students"}
+          onPress={() => setSelectedOption("Students")}
+        />
+      </TabContainer>
 
-    //     <TabContainer>
-    //       <TabButton
-    //         source={require("../../../../assets/staff.png")}
-    //         text="Staffs"
-    //         active={selectedOption === "staffs"}
-    //         onPress={() => setSelectedOption("staffs")}
-    //       />
-    //       <TabButton
-    //         source={require("../../../../assets/student.png")}
-    //         text="Students"
-    //         active={selectedOption === "students"}
-    //         onPress={() => setSelectedOption("students")}
-    //       />
-    //     </TabContainer>
+      {selectedOption == "Students" && (
+        <StudentLoginForm
+          studentLoginForm={studentLoginForm}
+          setStudentLoginForm={setStudentLoginForm}
+        />
+      )}
 
-    //     <UserInput
-    //       placeholder="Enter your username or email"
-    //       value={username}
-    //       onChangeText={setUsername}
-    //     />
-    //     <PasswordInput
-    //       placeholder="Enter your password"
-    //       value={password}
-    //       onChangeText={setPassword}
-    //     />
-    //     {error && <Error>{error}</Error>}
-    //     <ForgotPasswordNavLink
-    //       navigation={navigation}
-    //       color="#EF9F27"
-    //       size={16}
-    //       text="Forgot Password"
-    //       routeName="ForgotPassword"
-    //     />
-    //     <PrimaryButton
-    //       text="Login"
-    //       onPress={() => dispatch(login({ username, password }))}
-    //     />
+      {selectedOption == "Institute Personnel" && (
+        <InstitutePersonnelLoginForm
+          institutePersonnelLoginForm={institutePersonnelLoginForm}
+          setInstitutePersonnelLoginForm={setInstitutePersonnelLoginForm}
+        />
+      )}
+      {error && <Error>{error}</Error>}
 
-    //     <SignupTextContainer>
-    //       <Description>Don't have an account? </Description>
-    //       <NavLink
-    //         navigation={navigation}
-    //         color="#EF9F27"
-    //         size={15}
-    //         text="Signup"
-    //         routeName="Signup"
-    //       />
-    //     </SignupTextContainer>
-    //   </FormContainer>
-    // )
+      <PrimaryButton text="Login" onPress={handleLogin} />
+
+      <ForgotPasswordNavLink
+        navigation={navigation}
+        color="#EF9F27"
+        size={16}
+        text="Forgot Password?"
+        routeName="ForgotPassword"
+      />
+
+      <SignupTextContainer>
+        <Description>Don't have an account? </Description>
+        <NavLink
+          navigation={navigation}
+          color="#EF9F27"
+          size={15}
+          text="Signup"
+          routeName="Signup"
+        />
+      </SignupTextContainer>
+    </FormContainer>
   );
 };
 

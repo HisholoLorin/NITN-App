@@ -26,7 +26,7 @@ export const SignupTextContainer = styled.View`
   flex-direction: row;
   align-self: center;
   position: relative;
-  margin-top: 30px;
+  margin-top: 10px;
 `
 
 export const Description = styled.Text`
@@ -35,7 +35,7 @@ export const Description = styled.Text`
 `
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
-const imageWidth = screenWidth * 0.4;
+const imageWidth = screenWidth * 0.41;
 const imageHeight = screenHeight * 0.2;
 
 
