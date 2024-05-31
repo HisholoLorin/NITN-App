@@ -2,9 +2,9 @@ import * as Animatable from "react-native-animatable";
 
 import { Container, ButtonText, Button } from "./Styles";
 
-const PrimaryButton = ({ onPress, text }) => {
+const PrimaryButton = ({ onPress, text, style }) => {
   return (
-    <Container>
+    <Container style={style}>
       <Animatable.View
         animation="pulse"
         iterationCount="infinite"

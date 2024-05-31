@@ -1,12 +1,13 @@
 //Components
 import AppView from "../../../components/atoms/AppView";
+import StudentForm from "../../../components/organisms/studentForm/Index";
 
-const HomeScrreen = (props) => {
+const StudentFormScreen = (props) => {
   return (
     <AppView {...props}>
-
+      <StudentForm {...props}/>
     </AppView>
   );
 };
 
-export default HomeScrreen;
+export default StudentFormScreen;

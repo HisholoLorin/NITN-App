@@ -83,28 +83,6 @@ const InstitutePersonnelForm = ({
         keyboardType="email-address"
       />
 
-      {/* Password */}
-      <PasswordInput
-        placeholder="Password"
-        onChangeText={(value) =>
-          setInstitutePersonnelForm({
-            ...institutePersonnelForm,
-            password: value,
-          })
-        }
-      />
-
-      {/* Confirm Password */}
-      <PasswordInput
-        placeholder="Confirm Password"
-        onChangeText={(value) =>
-          setInstitutePersonnelForm({
-            ...institutePersonnelForm,
-            confirmPassword: value,
-          })
-        }
-      />
-
       {/* Date of Birth */}
       <CustomDatePicker
         state={institutePersonnelForm?.dateOfBirth}
@@ -161,6 +139,28 @@ const InstitutePersonnelForm = ({
           setInstitutePersonnelForm({
             ...institutePersonnelForm,
             department: value,
+          })
+        }
+      />
+
+      {/* Password */}
+      <PasswordInput
+        placeholder="Password"
+        onChangeText={(value) =>
+          setInstitutePersonnelForm({
+            ...institutePersonnelForm,
+            password: value,
+          })
+        }
+      />
+
+      {/* Confirm Password */}
+      <PasswordInput
+        placeholder="Confirm Password"
+        onChangeText={(value) =>
+          setInstitutePersonnelForm({
+            ...institutePersonnelForm,
+            confirmPassword: value,
           })
         }
       />

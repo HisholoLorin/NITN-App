@@ -73,22 +73,6 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
         keyboardType="email-address"
       />
 
-      {/* Password */}
-      <PasswordInput
-        placeholder="Password"
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, password: value })
-        }
-      />
-
-      {/* Confirm Password */}
-      <PasswordInput
-        placeholder="Confirm Password"
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, confirmPassword: value })
-        }
-      />
-
       {/* Date of Birth */}
       <CustomDatePicker
         state={studentForm?.dateOfBirth}
@@ -210,6 +194,22 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
         placeholder="Hostel Name"
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, hostelName: value })
+        }
+      />
+
+      {/* Password */}
+      <PasswordInput
+        placeholder="Password"
+        onChangeText={(value) =>
+          setStudentForm({ ...studentForm, password: value })
+        }
+      />
+
+      {/* Confirm Password */}
+      <PasswordInput
+        placeholder="Confirm Password"
+        onChangeText={(value) =>
+          setStudentForm({ ...studentForm, confirmPassword: value })
         }
       />
     </>
