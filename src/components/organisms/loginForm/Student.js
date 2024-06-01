@@ -7,13 +7,14 @@ import PasswordInput from "../../molecules/passwordInput/Index";
 const StudentLoginForm = ({ studentLoginForm, setStudentLoginForm }) => {
   return (
     <>
-      {/* Username */}
+      {/* Registration Number */}
       <CustomInput
         icon={() => <MaterialCommunityIcons name="email-outline" size={20} color="#999" />}
         placeholder="Email"
         onChangeText={(value) =>
           setStudentLoginForm({ ...studentLoginForm, email: value })
         }
+        
       />
 
       {/* Password */}

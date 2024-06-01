@@ -44,16 +44,20 @@ const StudentForm = ({ navigation }) => {
   }, []);
 
   const handlePress = (title, description, createdAt) => {
-    navigation.navigate('DetailsPage', { title, description, createdAt });
+    navigation.navigate("StudentFormDetails", {
+      title,
+      description,
+      createdAt,
+    });
   };
 
   const formData = {
     title: "Electric Switch",
     description: "Switch socket not working.",
-    createdAt: "31 May, 2024"
+    createdAt: "31 May, 2024",
   };
 
-  const combinedText = `Title: ${formData.title} Description: ${formData.description} Created at: ${formData.createdAt}`;
+  const combinedText = `Title: ${formData.title}\n Description: ${formData.description}\n Created at: ${formData.createdAt}`;
   const truncatedText = truncateText(combinedText);
 
   return (
@@ -66,15 +70,21 @@ const StudentForm = ({ navigation }) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          <View style={styles.inputContainer}>
+          <TouchableOpacity
+            onPress={() =>
+              handlePress(
+                formData.title,
+                formData.description,
+                formData.createdAt
+              )
+            }
+            style={styles.inputContainer}
+          >
             <Text style={styles.value}>{truncatedText}</Text>
-            <TouchableOpacity
-              style={styles.iconContainer}
-              onPress={() => handlePress(formData.title, formData.description, formData.createdAt)}
-            >
+            <View style={styles.iconContainer}>
               <MaterialIcons name="arrow-forward-ios" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
         </ScrollView>
       </FormContainer>
     </SafeAreaView>
