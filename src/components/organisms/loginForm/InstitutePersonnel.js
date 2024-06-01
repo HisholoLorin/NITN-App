@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 //Components
 import CustomInput from "../../molecules/customInput/Index";
@@ -10,10 +10,13 @@ const InstitutePersonnelLoginForm = ({
 }) => {
   return (
     <>
-      {/* Identification Number */}
+      {/* Email */}
       <CustomInput
-        icon={() => <MaterialCommunityIcons name="email-outline" size={20} color="#999" />}
+        icon={() => (
+          <MaterialCommunityIcons name="email-outline" size={20} color="#999" />
+        )}
         placeholder="Email"
+        value={institutePersonnelLoginForm?.email}
         onChangeText={(value) =>
           setInstitutePersonnelLoginForm({
             ...institutePersonnelLoginForm,
@@ -25,6 +28,7 @@ const InstitutePersonnelLoginForm = ({
       {/* Password */}
       <PasswordInput
         placeholder="Password"
+        value={institutePersonnelLoginForm?.password}
         onChangeText={(value) =>
           setInstitutePersonnelLoginForm({
             ...institutePersonnelLoginForm,

@@ -6,7 +6,7 @@ const {width} = Dimensions.get("window");
 
 export const StyledTextInput = styled(TextInput)`
   font-size: 14px;
-  width: ${width}px;
+  width: ${width * 0.65}px;
 `;
 
 export const InputGroup = styled.View`

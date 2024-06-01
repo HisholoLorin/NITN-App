@@ -14,7 +14,9 @@ import OTPScreen from "../screens/authentication/OTPScreen";
 import BackButton from "../components/atoms/backButton/Index";
 
 // Navigations
-import MainDrawerNavigation from "./MainDrawerNavigation";
+import StudentDrawerNavigation from "./StudentDrawerNavigation";
+import MaintenanceDrawerNavigation from "./MaintenanceDrawerNavigation";
+import ManagerDrawerNavigation from "./ManagerDrawerNavigation";
 
 // Reference to navigation for programmatic access
 import { navigationRef } from "./navigationRef";
@@ -66,8 +68,18 @@ const RootNavigation = () => {
           options={() => ({ title: null })}
         />
         <RootStack.Screen
-          name="Drawer"
-          component={MainDrawerNavigation}
+          name="StudentDrawer"
+          component={StudentDrawerNavigation}
+          options={{ headerShown: false }}
+        />
+        <RootStack.Screen
+          name="MaintenanceDrawer"
+          component={MaintenanceDrawerNavigation}
+          options={{ headerShown: false }}
+        />
+        <RootStack.Screen
+          name="ManagerDrawer"
+          component={ManagerDrawerNavigation}
           options={{ headerShown: false }}
         />
       </RootStack.Navigator>

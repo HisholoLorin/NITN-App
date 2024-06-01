@@ -18,10 +18,11 @@ const InstitutePersonnelForm = ({
       <CustomInput
         icon={() => <SimpleIcon name="user" size={20} color="#999" />}
         placeholder="Username"
+        value={institutePersonnelForm?.userName}
         onChangeText={(value) =>
           setInstitutePersonnelForm({
             ...institutePersonnelForm,
-            username: value,
+            userName: value,
           })
         }
       />
@@ -30,6 +31,7 @@ const InstitutePersonnelForm = ({
       <CustomInput
         icon={() => <AntDesign name="idcard" size={20} color="#999" />}
         placeholder="Identification No"
+        value={institutePersonnelForm?.identificationNo}
         onChangeText={(value) =>
           setInstitutePersonnelForm({
             ...institutePersonnelForm,
@@ -48,6 +50,7 @@ const InstitutePersonnelForm = ({
           />
         )}
         placeholder="Designation"
+        value={institutePersonnelForm?.designation}
         onChangeText={(value) =>
           setInstitutePersonnelForm({
             ...institutePersonnelForm,
@@ -62,6 +65,7 @@ const InstitutePersonnelForm = ({
           <MaterialCommunityIcons name="cellphone" size={20} color="#999" />
         )}
         placeholder="Mobile Number"
+        value={institutePersonnelForm?.mobileNo}
         onChangeText={(value) =>
           setInstitutePersonnelForm({
             ...institutePersonnelForm,
@@ -77,6 +81,7 @@ const InstitutePersonnelForm = ({
           <MaterialCommunityIcons name="email-outline" size={20} color="#999" />
         )}
         placeholder="Email"
+        value={institutePersonnelForm?.email}
         onChangeText={(value) =>
           setInstitutePersonnelForm({ ...institutePersonnelForm, email: value })
         }
@@ -123,6 +128,7 @@ const InstitutePersonnelForm = ({
           <MaterialCommunityIcons name="home-outline" size={20} color="#999" />
         )}
         placeholder="Address"
+        value={institutePersonnelForm?.address}
         onChangeText={(value) =>
           setInstitutePersonnelForm({
             ...institutePersonnelForm,
@@ -135,6 +141,7 @@ const InstitutePersonnelForm = ({
       <CustomInput
         placeholder="Department"
         icon={() => <Entypo name="flow-tree" size={20} color="#999" />}
+        value={institutePersonnelForm?.department}
         onChangeText={(value) =>
           setInstitutePersonnelForm({
             ...institutePersonnelForm,
@@ -146,6 +153,7 @@ const InstitutePersonnelForm = ({
       {/* Password */}
       <PasswordInput
         placeholder="Password"
+        value={institutePersonnelForm?.password}
         onChangeText={(value) =>
           setInstitutePersonnelForm({
             ...institutePersonnelForm,
@@ -157,6 +165,7 @@ const InstitutePersonnelForm = ({
       {/* Confirm Password */}
       <PasswordInput
         placeholder="Confirm Password"
+        value={institutePersonnelForm?.confirmPassword}
         onChangeText={(value) =>
           setInstitutePersonnelForm({
             ...institutePersonnelForm,

@@ -2,25 +2,25 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens
-import ContactScreen from "../screens/drawer/contactStack/ContactScreen";
+import UsersScreen from "../screens/drawer/usersStack/UsersScreen";
 
 //Components
 import BackButton from "../components/atoms/backButton/Index";
 
-const ContactStack = createStackNavigator();
+const UsersStack = createStackNavigator();
 
-const ContactStackNavigation = ({ navigation }) => {
+const UsersStackNavigation = ({ navigation }) => {
   return (
-    <ContactStack.Navigator
-      initialRouteName="Contact"
+    <UsersStack.Navigator
+      initialRouteName="Users"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
         headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
       }}
     >
-      <ContactStack.Screen name="Contact" component={ContactScreen} />
-    </ContactStack.Navigator>
+      <UsersStack.Screen name="Users" component={UsersScreen} />
+    </UsersStack.Navigator>
   );
 };
 
-export default ContactStackNavigation;
+export default UsersStackNavigation;

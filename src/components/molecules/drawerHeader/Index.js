@@ -7,10 +7,10 @@ import Spacer from "../../atoms/spacer/Index";
 import { ProfilePicture, Bold } from "./Styles";
 
 const DrawerHeader = ({ userDetails }) => {
-  const { username, email, image } = userDetails;
+  const { userName, email, image } = userDetails;
 
   // First name and Last name Logic
-  const temp = username?.split(" ");
+  const temp = userName?.split(" ");
   let firstName = null,
     lastName = null;
   if (temp) [firstName, lastName] = [temp[0], temp[temp.length - 1]];

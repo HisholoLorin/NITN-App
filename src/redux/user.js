@@ -37,7 +37,7 @@ export const getUserDetails = createAsyncThunk("getUserDetails", async () => {
 
 export const updateProfilePicture = createAsyncThunk(
   "updateProfilePicture",
-  async ({ result, username }, { dispatch }) => {
+  async ({ result, userName }, { dispatch }) => {
     let random = " {" + (Math.random() + 1).toString(36).substring(7) + "}";
     let image = new FormData();
     const content = result.assets[0];
@@ -46,7 +46,7 @@ export const updateProfilePicture = createAsyncThunk(
         Platform.OS === "ios"
           ? content.uri.replace("file://", "")
           : content.uri,
-      name: username + random + "." + content.mimeType.split("/")[1],
+      name: userName + random + "." + content.mimeType.split("/")[1],
       type: content.mimeType,
     });
     try {
