@@ -9,10 +9,10 @@ const StudentLoginForm = ({ studentLoginForm, setStudentLoginForm }) => {
     <>
       {/* Username */}
       <CustomInput
-        icon={() => <AntDesign name="idcard" size={20} color="#999" />}
-        placeholder="Registration No"
+        icon={() => <MaterialCommunityIcons name="email-outline" size={20} color="#999" />}
+        placeholder="Email"
         onChangeText={(value) =>
-          setStudentLoginForm({ ...studentLoginForm, registrationNo: value })
+          setStudentLoginForm({ ...studentLoginForm, email: value })
         }
       />
 

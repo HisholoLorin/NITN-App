@@ -12,12 +12,12 @@ const InstitutePersonnelLoginForm = ({
     <>
       {/* Identification Number */}
       <CustomInput
-        icon={() => <AntDesign name="idcard" size={20} color="#999" />}
-        placeholder="Identification No"
+        icon={() => <MaterialCommunityIcons name="email-outline" size={20} color="#999" />}
+        placeholder="Email"
         onChangeText={(value) =>
           setInstitutePersonnelLoginForm({
             ...institutePersonnelLoginForm,
-            identificationNo: value,
+            email: value,
           })
         }
       />
