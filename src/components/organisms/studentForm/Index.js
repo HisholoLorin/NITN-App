@@ -7,11 +7,9 @@ import {
   ScrollView,
   RefreshControl,
   SafeAreaView,
-  Button,
-  LayoutAnimation,
-  Platform,
-  UIManager,
+  TouchableOpacity,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 // Components
 import Title from "../../atoms/title/Index";
@@ -24,6 +22,7 @@ import { FormContainer } from "./Styles";
 // Redux
 import { useDispatch } from "react-redux";
 import { getUserDetails } from "../../../redux/user";
+import StickyNote from "./StickyNote";
 
 const { width, height } = Dimensions.get("window");
 
@@ -31,74 +30,10 @@ const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-if (Platform.OS === "android") {
-  if (UIManager.setLayoutAnimationEnabledExperimental) {
-    UIManager.setLayoutAnimationEnabledExperimental(true);
-  }
-}
-
-const TrackingStatus = () => {
-  const [activeIndex, setActive] = useState(0);
-
-  const setActiveIndex = (val) => {
-    LayoutAnimation.easeInEaseOut();
-    setActive(val);
-  };
-
-  const status = ["Status 1", "Status 2", "Status 3", "Status 4"];
-  const activeColor = "#EF9F27";
-  const marginLeft = (100 / (status.length - 1)) * activeIndex - 100 + "%";
-
-  return (
-    <View style={styles.trackingStatusContainer}>
-      <View style={styles.statusContainer}>
-        <View style={styles.line}>
-          <View style={[styles.activeLine, { marginLeft }]} />
-        </View>
-        {status.map((status, index) => (
-          <View style={[styles.dot]} key={status}>
-            <View
-              style={[
-                index <= activeIndex
-                  ? { height: "100%", width: "100%" }
-                  : { height: "40%", width: "40%" },
-                { backgroundColor: activeColor, borderRadius: 20 },
-              ]}
-            />
-          </View>
-        ))}
-        <View style={styles.labelContainer}>
-          {status.map((status, index) => (
-            <Text
-              key={status}
-              numberOfLines={1}
-              style={[
-                index % 2 == 0 ? { top: 20 } : { top: -20 },
-                styles.trackingLabel,
-              ]}
-            >
-              {status}
-            </Text>
-          ))}
-        </View>
-      </View>
-      <View style={styles.btns}>
-        <Button
-          title="prev"
-          onPress={() => setActiveIndex(activeIndex - 1)}
-          disabled={activeIndex <= 0}
-          color={"#6a0dad"}
-        />
-        <Button
-          title="next"
-          onPress={() => setActiveIndex(activeIndex + 1)}
-          disabled={activeIndex >= status.length - 1}
-          color={"#6a0dad"}
-        />
-      </View>
-    </View>
-  );
+const truncateText = (text, length = 30) => {
+  return text.length > length ? text.substring(0, length) + "...." : text;
 };
+
 const StudentForm = ({ navigation }) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
@@ -107,6 +42,19 @@ const StudentForm = ({ navigation }) => {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
+
+  const handlePress = (title, description, createdAt) => {
+    navigation.navigate('DetailsPage', { title, description, createdAt });
+  };
+
+  const formData = {
+    title: "Electric Switch",
+    description: "Switch socket not working.",
+    createdAt: "31 May, 2024"
+  };
+
+  const combinedText = `Title: ${formData.title} Description: ${formData.description} Created at: ${formData.createdAt}`;
+  const truncatedText = truncateText(combinedText);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -119,27 +67,13 @@ const StudentForm = ({ navigation }) => {
           }
         >
           <View style={styles.inputContainer}>
-            <View style={styles.row}>
-              <Text style={styles.label}>UUID:</Text>
-              <Text style={styles.value}>5678654</Text>
-            </View>
-
-            <View style={styles.row}>
-              <Text style={styles.label}>Title:</Text>
-              <Text style={styles.value}>Door</Text>
-            </View>
-
-            <View style={styles.row}>
-              <Text style={styles.label}>Description:</Text>
-              <Text style={styles.value}>Door hinge loose</Text>
-            </View>
-
-            <TrackingStatus />
-
-            <View style={styles.row}>
-              <Text style={styles.label}>Created at:</Text>
-              <Text style={styles.value}>31 May, 2024</Text>
-            </View>
+            <Text style={styles.value}>{truncatedText}</Text>
+            <TouchableOpacity
+              style={styles.iconContainer}
+              onPress={() => handlePress(formData.title, formData.description, formData.createdAt)}
+            >
+              <MaterialIcons name="arrow-forward-ios" size={24} color="black" />
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </FormContainer>
@@ -158,6 +92,9 @@ export const styles = StyleSheet.create({
     padding: width * 0.05,
   },
   inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: height * 0.02,
     padding: width * 0.04,
     borderWidth: 1,
@@ -170,85 +107,13 @@ export const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 3,
   },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: height * 0.01,
-  },
-  label: {
-    fontSize: width * 0.045,
-    color: "#333",
-    fontWeight: "bold",
-    marginRight: width * 0.02,
-  },
   value: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: width * 0.02,
     fontSize: width * 0.045,
-    backgroundColor: "#ccc",
     color: "#555",
-  },
-
-  // Styles for TrackingStatus
-  trackingStatusContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 30,
-    marginVertical: height * 0.02,
   },
-  statusContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",
-    height: 70,
-    justifyContent: "space-between",
-  },
-  dot: {
-    height: 15,
-    width: 15,
-    borderRadius: 10,
-    backgroundColor: "#ccc",
-    overflow: "hidden",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  line: {
-    height: 5,
-    width: "100%",
-    backgroundColor: "#ccc",
-    position: "absolute",
-    borderRadius: 5,
-    overflow: "hidden",
-  },
-  activeLine: {
-    height: "100%",
-    width: "100%",
-    backgroundColor: "#EF9F27",
-    borderRadius: 5,
-  },
-  btns: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    marginTop: 20,
-  },
-  labelContainer: {
-    width: "100%",
-    position: "absolute",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  trackingLabel: {
-    fontSize: 12,
-  },
-  prop: {
-    marginBottom: 20,
-    width: 100,
-    textAlign: "center",
+  iconContainer: {
+    marginLeft: width * 0.02,
   },
 });
 
