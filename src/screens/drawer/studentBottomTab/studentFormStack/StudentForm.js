@@ -1,6 +1,6 @@
 //Components
-import AppView from "../../../components/atoms/AppView";
-import StudentForm from "../../../components/organisms/studentForm/Index";
+import AppView from "../../../../components/atoms/AppView";
+import StudentForm from "../../../../components/organisms/studentForm/Index";
 
 const StudentFormScreen = (props) => {
   return (

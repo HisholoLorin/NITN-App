@@ -16,16 +16,14 @@ import { runLoader, stopLoader } from "./process";
 //EndPoints
 import getEndPoint from "../api/getEndPoint";
 import {
-  LOGIN,
-  SIGNUP,
-  VERIFY_OTP_FOR_SIGNUP,
-  VERIFY_OTP_FOR_FORGOT_PASSWORD,
-  FORGOT_PASSWORD,
-  CHANGE_PASSWORD,
+  STUDENT_SIGNUP,
+  STUDENT_LOGIN,
+  INSTITUTE_PERSONNEL_SIGNUP,
 } from "../constant/endpoint";
 
 //Helper
-import { isMobileNumber, isEmail, isPassword, saveToken } from "../helper/auth";
+import { saveToken, checkSignUp } from "../helper/auth";
+import { convertToShortDateFormatReverse } from "../helper/dateTimeFormats";
 
 //Local login when there is a token in the async storage
 export const localLogin = createAsyncThunk("localLogin", async () => {
@@ -54,34 +52,36 @@ export const logout = createAsyncThunk("logout", async () => {
 
 export const login = createAsyncThunk(
   "login",
-  async ({ username, password }, { dispatch, rejectWithValue }) => {
-    reset("Drawer");
-    // try {
-    //   dispatch(runLoader());
-    //   Keyboard.dismiss();
-    //   if (username.length === 0)
-    //     return rejectWithValue("Username cannot be blank");
-    //   else if (password.length === 0)
-    //     return rejectWithValue("Password cannot be blank");
-    //   else {
-    //     const response = await Api.post(
-    //       getEndPoint(LOGIN),
-    //       {
-    //         username,
-    //         password,
-    //       },
-    //       { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
-    //     );
-    //     await saveToken(response.data);
-    //     reset("Drawer");
-    //   }
-    // } catch (err) {
-    //   console.log(err.response);
-    //   if (!err.response) return rejectWithValue("No Internet Connection");
-    //   else return rejectWithValue(err.response.data.detail);
-    // } finally {
-    //   dispatch(stopLoader());
-    // }
+  async ({ ...values }, { dispatch, rejectWithValue }) => {
+    const { type, registrationNo, identificationNo, password } = values;
+    delete values.type;
+    if (!password) return rejectWithValue("Password can't be blank");
+    try {
+      let response;
+      dispatch(runLoader());
+      Keyboard.dismiss();
+      switch (type) {
+        case "Students":
+          if (!registrationNo)
+            return rejectWithValue("Registration Number can't be blank");
+          response = await Api.post(getEndPoint(STUDENT_LOGIN), values);
+          await saveToken(response.data);
+          reset("Drawer");
+        case "Institute Personnel":
+          break;
+      }
+    } catch (err) {
+      console.log(err.response);
+      if (!err.response)
+        Alert.alert("Alert!", "No Internet Connection", [
+          {
+            text: "Ok",
+          },
+        ]);
+      else console.log(err.response.data);
+    } finally {
+      dispatch(stopLoader());
+    }
   }
 );
 
@@ -180,48 +180,33 @@ export const changePassword = createAsyncThunk(
 export const signup = createAsyncThunk(
   "signup",
   async ({ ...values }, { dispatch, rejectWithValue }) => {
-    console.log(values);
     const { type } = values;
-    switch (type) {
-      case "students":
-        const {
-          username,
-          registrationNo,
-          mobileNo,
-          email,
-          password,
-          confirmPassword,
-          dateOfBirth,
-          gender,
-          bloodType,
-          medicalConditions,
-          ethnicity,
-          address,
-          guardianMobileNumber,
-          deptName,
-          batch,
-          hostelName,
-        } = values;
+    delete values.type;
+    // if (!checkSignUp(values, type)?.isVerified)
+    //   return rejectWithValue(checkSignUp(values)?.message);
 
-      case "staffs":
-    }
     try {
       dispatch(runLoader());
       Keyboard.dismiss();
-      if (fullname.length < 5)
-        return rejectWithValue("Fullname must be more than 5 characters");
-      else if (!isEmail(email)) return rejectWithValue("Invalid Email");
-      else if (!isPassword(password))
-        return rejectWithValue("Invalid Password");
-      else if (password !== retypePassword)
-        return rejectWithValue("Password does not match");
-      else {
-        const response = await Api.post(getEndPoint(SIGNUP), {
-          ...values,
-        });
-        console.log(response.data);
-        const otpId = response.data.otpId;
-        navigate("OTP", { values, mode: "Signup", otpId });
+      let response;
+      switch (type) {
+        case "Students":
+          response = await Api.post(getEndPoint(STUDENT_SIGNUP), {
+            ...values,
+            dateOfBirth: convertToShortDateFormatReverse(dateOfBirth),
+          });
+          await saveToken(response.data);
+          reset("Drawer");
+          break;
+        case "Institute Personnel":
+          // response = await Api.post(getEndPoint(INSTITUTE_PERSONNEL_SIGNUP), {
+          //   ...values,
+          //   dateOfBirth: convertToShortDateFormatReverse(dateOfBirth),
+          //   userType: "maintenance",
+          // });
+          // await saveToken(response.data);
+          reset("Drawer");
+          break;
       }
     } catch (err) {
       if (!err.response) return "No Internet Connection";

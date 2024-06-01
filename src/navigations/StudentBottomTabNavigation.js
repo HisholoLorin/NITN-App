@@ -8,7 +8,7 @@ import DrawerButton from "../components/atoms/drawerButton/Index";
 
 //Stack
 import StudentHomeStackNavigation from "./StudentHomeStackNavigation";
-import StudentForm from "../screens/drawer/studentBottomTab/StudentForm";
+import StudentFormStackNavigation from "./StudentFormStackNavigation";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -62,8 +62,8 @@ const BottomTabNavigation = ({ navigation }) => {
 
       {/* Student Form Tab */}
       <BottomTab.Screen
-        name="StudentForm"
-        component={StudentForm}
+        name="StudentFormStack"
+        component={StudentFormStackNavigation}
         options={{
           tabBarIcon: ({ focused }) =>
             renderTabBarIcon("Form", focused, () => (
@@ -73,11 +73,6 @@ const BottomTabNavigation = ({ navigation }) => {
                 style={focused ? styles.focus : styles.unFocus}
               />
             )),
-          headerShown: true,
-          headerTitle: "Form",
-          headerLeft: () => (
-            <DrawerButton onPress={() => navigation.openDrawer()} />
-          ),
         }}
       />
     </BottomTab.Navigator>

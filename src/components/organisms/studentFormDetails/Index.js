@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 
 const { width, height } = Dimensions.get("window");
 
-const DetailsPage = ({ date, note }) => {
+const StudentFormDetails = ({ date, note }) => {
   return (
     <View style={styles.stickyNoteContainer}>
       <Image
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailsPage;
+export default StudentFormDetails;

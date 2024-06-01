@@ -2,13 +2,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
 export const isMobileNumber = (mobileNumber) => {
-  if (/^\+[0-9]{1,3}-[0-9]{10}$/.test(mobileNumber)) return true;
+  if (/^\d{10}$/.test(mobileNumber)) return true;
   else return false;
 };
 
 export const mobileNumberFormate = (countryCode, mobileNumber) => {
-  return countryCode+"-"+mobileNumber;
-}
+  return countryCode + "-" + mobileNumber;
+};
 
 export const isEmail = (email) => {
   if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return true;
@@ -48,10 +48,92 @@ export const capitalizedFirstLetter = (value) => {
     return item.charAt(0).toUpperCase() + item.slice(1);
   });
   return value.join(" ");
-}
+};
 
-export const saveToken = async ({ access_token , refresh_token }) => {
-  
+export const saveToken = async ({ access_token, refresh_token }) => {
   await AsyncStorage.setItem("AccessToken", access_token);
   await AsyncStorage.setItem("RefreshToken", refresh_token);
+};
+
+export const checkSignUp = (values, type) => {
+  const {
+    username,
+    mobileNo,
+    email,
+    dateOfBirth,
+    gender,
+    address,
+    password,
+    confirmPassword,
+  } = values;
+
+  if (!username || username.length < 5)
+    return {
+      isVerified: false,
+      message: "Username should be atleast 5 characters long",
+    };
+  else if (!email || !isEmail(email))
+    return { isVerified: false, message: "Invalid Email" };
+  else if (!password || !isPassword(password))
+    return { isVerified: false, message: "Invalid Password" };
+  else if (!confirmPassword || password !== confirmPassword)
+    return { isVerified: false, message: "Password doesn't match" };
+  else if (mobileNo && !isMobileNumber(mobileNo))
+    return { isVerified: false, message: "Invalid Mobile Number" };
+  else if (!dateOfBirth)
+    return { isVerified: false, message: "Date of Birth is required" };
+  else if (!gender) return { isVerified: false, message: "Select Gender" };
+  else if (!address)
+    return { isVerified: false, message: "Address is required" };
+
+  switch (type) {
+    case "Students":
+      const {
+        registrationNo,
+        guardianMobileNumber,
+        deptName,
+        batch,
+        bloodType,
+        medicalConditions,
+        ethnicity,
+        hostelName,
+      } = values;
+      console.log(registrationNo);
+      if (registrationNo === undefined)
+        return {
+          isVerified: false,
+          message: "Registration Number is required",
+        };
+      else if (!guardianMobileNumber || !isMobileNumber(guardianMobileNumber))
+        return {
+          isVerified: false,
+          message: "Invalid Guardian Mobile Number",
+        };
+      else if (!deptName)
+        return { isVerified: false, message: "Department Name is required" };
+      else if (!batch)
+        return { isVerified: false, message: "Batch is required" };
+      else if (!bloodType)
+        return { isVerified: false, message: "Blood Type is required" };
+      else if (!medicalConditions)
+        return { isVerified: false, message: "Medical Conditions is required" };
+      else if (!ethnicity)
+        return { isVerified: false, message: "Ethnicity is required" };
+      else if (!hostelName)
+        return { isVerified: false, message: "Hostel Name is required" };
+      console.log("Iam here");
+    // return { isVerified: true };
+    case "Institute Personnel":
+      const { identificationNo, designation, department } = values;
+      if (!identificationNo)
+        return {
+          isVerified: false,
+          message: "Identification Number is required",
+        };
+      else if (!designation)
+        return { isVerified: false, message: "Designation is required" };
+      else if (!department)
+        return { isVerified: false, message: "Department is required" };
+      else return { isVerified: true };
+  }
 };

@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const instance = axios.create({
-  baseURL: "https://Api-predict.me",
+  baseURL: "http://10.14.72.147:8000/api/",
 });
 
 //first function is call automatically when we make a request
