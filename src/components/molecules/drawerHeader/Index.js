@@ -4,9 +4,9 @@ import { View, Text } from "react-native";
 import Spacer from "../../atoms/spacer/Index";
 
 //Styled
-import { Container, ProfilePicture, Bold } from "./Styles";
+import { Container, ProfilePicture, Bold, Usertype } from "./Styles";
 
-const DrawerHeader = ({ userDetails }) => {
+const DrawerHeader = ({ userDetails, usertype }) => {
   const { user, student } = userDetails || {};
   const { userName } = user || {};
   const { image } = student || {};
@@ -35,6 +35,7 @@ const DrawerHeader = ({ userDetails }) => {
           {firstName + " "}
           <Bold style={{ color: "#6C6C6C" }}>{lastName}</Bold>
         </Bold>
+        <Usertype>{usertype}</Usertype>
       </Spacer>
     </Container>
   );

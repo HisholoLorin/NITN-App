@@ -20,7 +20,7 @@ import { LogoutButton, LogoutContainer, Logout } from "./Styles";
 //Styles
 import globalStyles, { IconStyle } from "../../../components/globalStyles";
 
-export default ({ navigation, isManager }) => {
+export default ({ navigation, usertype }) => {
   const { userDetails } = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   handleLogout = () => {
@@ -29,7 +29,7 @@ export default ({ navigation, isManager }) => {
   };
   return (
     <View style={{ flex: 1 }}>
-      <DrawerHeader userDetails={userDetails} />
+      <DrawerHeader userDetails={userDetails} usertype={usertype}/>
 
       {/* Profile */}
       <DrawerItem
@@ -44,7 +44,7 @@ export default ({ navigation, isManager }) => {
       />
 
       {/* Users */}
-      {isManager && (
+      {usertype === "Manager" && (
         <DrawerItem
           label="Users"
           icon={() => (

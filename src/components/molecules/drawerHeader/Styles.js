@@ -20,4 +20,8 @@ export const ProfilePicture = styled.Image`
 
 export const Bold = styled.Text`
     fontWeight : bold;
-`
+`;
+
+export const Usertype = styled.Text`
+    color: #6C6C6C;
+`;

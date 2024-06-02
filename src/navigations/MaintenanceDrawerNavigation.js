@@ -29,7 +29,7 @@ const MaintenanceDrawerNavigation = () => {
         },
       }}
       drawerContent={(props) => (
-        <DrawerContent {...props} isManager={false} />
+        <DrawerContent {...props} usertype="Maintenance" />
       )}
     >
       <MaintenanceDrawer.Screen

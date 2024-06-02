@@ -10,6 +10,7 @@ import BackButton from "../components/atoms/backButton/Index";
 
 //helper
 import { previousScreen } from "./navigationRef";
+import Title from "../components/atoms/title/Index";
 
 const UsersStack = createStackNavigator();
 
@@ -23,7 +24,11 @@ const UsersStackNavigation = ({ navigation }) => {
       }}
     >
       <UsersStack.Screen name="Users" component={UsersScreen} />
-      <UsersStack.Screen name="User Profile" component={UserProfile} />
+      <UsersStack.Screen
+        name="UserProfile"
+        component={UserProfile}
+        options={{ title: "User Profile" }}
+      />
     </UsersStack.Navigator>
   );
 };

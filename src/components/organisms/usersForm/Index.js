@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 0.5,
     borderRadius: 8,
-    paddingHorizontal: 8,
+    paddingHorizontal: "5%",
   },
 });
 

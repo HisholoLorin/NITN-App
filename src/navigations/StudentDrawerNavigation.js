@@ -32,7 +32,7 @@ const StudentDrawerNavigation = () => {
           fontWeight: "none",
         },
       }}
-      drawerContent={(props) => <DrawerContent {...props} isManager={false} />}
+      drawerContent={(props) => <DrawerContent {...props} usertype="Student" />}
     >
       <StudentDrawer.Screen
         name="StudentBottomTab"
