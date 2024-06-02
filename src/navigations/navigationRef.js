@@ -15,6 +15,12 @@ export const navigate = (name, params) => {
   }
 };
 
+export const previousScreen = () => {
+  if (navigationRef.isReady()) {
+    navigationRef.goBack();
+  }
+}
+
 // Function to reset the navigation stack to a specific screen
 export const reset = (name, params) => {
   if (navigationRef.isReady()) {

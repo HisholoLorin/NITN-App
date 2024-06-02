@@ -9,6 +9,9 @@ import DrawerButton from "../components/atoms/drawerButton/Index";
 // Screens
 import MaintenanceHomeScreen from "../screens/drawer/maintenanceHomeStack/MaintenanceHomeScreen";
 
+//helper
+import { previousScreen } from "./navigationRef";
+
 const MaintenanceHomeStack = createStackNavigator();
 
 const MaintenanceHomeStackNavigation = ({ navigation }) => {
@@ -18,7 +21,7 @@ const MaintenanceHomeStackNavigation = ({ navigation }) => {
       initialRouteName="MaintenanceHome"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
-        headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
+        headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
       <MaintenanceHomeStack.Screen
@@ -34,7 +37,6 @@ const MaintenanceHomeStackNavigation = ({ navigation }) => {
           title: "Home",
         }}
       />
-
     </MaintenanceHomeStack.Navigator>
   );
 };

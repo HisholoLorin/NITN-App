@@ -16,6 +16,9 @@ import Error from "../../atoms/Error";
 //Styled
 import { FormContainer, EditContainer } from "./Styles";
 
+//helper
+import { previousScreen } from "../../../navigations/navigationRef";
+
 const OTPForm = (props) => {
   const { navigation, route } = props;
   const { userName } = route.params;
@@ -38,7 +41,7 @@ const OTPForm = (props) => {
       <Title>OTP Verification</Title>
       <SubTitle>Please enter the 4 digit OTP code sent to your email</SubTitle>
       <EditContainer
-        onPress={() => navigation.goBack()}
+        onPress={previousScreen}
         icon="pencil"
         text={userName}
         size={18}
