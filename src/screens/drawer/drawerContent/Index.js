@@ -13,10 +13,9 @@ import { logout } from "../../../redux/auth";
 
 //Component
 import DrawerHeader from "../../../components/molecules/drawerHeader/Index";
-import Divider from "../../../components/atoms/divider/Index";
 
 //Styled
-import { Container, LogoutContainer, Logout } from "./Styles";
+import { LogoutButton, LogoutContainer, Logout } from "./Styles";
 
 //Styles
 import globalStyles, { IconStyle } from "../../../components/globalStyles";
@@ -30,69 +29,63 @@ export default ({ navigation, isManager }) => {
   };
   return (
     <View style={{ flex: 1 }}>
-      <DrawerContentScrollView>
-        <Container>
-          <DrawerHeader userDetails={userDetails} />
-        </Container>
+      <DrawerHeader userDetails={userDetails} />
 
-        <Divider top={10} bottom={20} marginHorizontal={20} />
-
-        {/* Profile */}
-        <DrawerItem
-          label="Profile"
-          icon={() => (
-            <View style={globalStyles.iconContainer}>
-              <FontAwesome5 name="user-circle" style={IconStyle()} />
-            </View>
-          )}
-          onPress={() => navigation.navigate("ProfileStack")}
-          labelStyle={styles.label}
-        />
-
-        {/* Users */}
-        {isManager && (
-          <DrawerItem
-            label="Users"
-            icon={() => (
-              <View style={globalStyles.iconContainer}>
-                <MaterialIcons
-                  name="groups"
-                  style={IconStyle({ iconSize: 25 })}
-                />
-              </View>
-            )}
-            onPress={() => navigation.navigate("UsersStack")}
-            labelStyle={styles.label}
-          />
+      {/* Profile */}
+      <DrawerItem
+        label="Profile"
+        icon={() => (
+          <View style={globalStyles.iconContainer}>
+            <FontAwesome5 name="user-circle" style={IconStyle()} />
+          </View>
         )}
+        onPress={() => navigation.navigate("ProfileStack")}
+        labelStyle={styles.label}
+      />
 
-        {/* Contact */}
+      {/* Users */}
+      {isManager && (
         <DrawerItem
-          label="Contact"
+          label="Users"
           icon={() => (
             <View style={globalStyles.iconContainer}>
-              <FontAwesome name="phone-square" style={IconStyle()} />
+              <MaterialIcons
+                name="groups"
+                style={IconStyle({ iconSize: 25 })}
+              />
             </View>
           )}
-          onPress={() => navigation.navigate("ContactStack")}
+          onPress={() => navigation.navigate("UsersStack")}
           labelStyle={styles.label}
         />
+      )}
 
-        {/* About */}
-        <DrawerItem
-          label="About"
-          icon={() => (
-            <View style={globalStyles.iconContainer}>
-              <FontAwesome5 name="question-circle" style={IconStyle()} />
-            </View>
-          )}
-          onPress={() => navigation.navigate("AboutStack")}
-          labelStyle={styles.label}
-        />
-      </DrawerContentScrollView>
+      {/* Contact */}
+      <DrawerItem
+        label="Contact"
+        icon={() => (
+          <View style={globalStyles.iconContainer}>
+            <FontAwesome name="phone-square" style={IconStyle()} />
+          </View>
+        )}
+        onPress={() => navigation.navigate("ContactStack")}
+        labelStyle={styles.label}
+      />
+
+      {/* About */}
+      <DrawerItem
+        label="About"
+        icon={() => (
+          <View style={globalStyles.iconContainer}>
+            <FontAwesome5 name="question-circle" style={IconStyle()} />
+          </View>
+        )}
+        onPress={() => navigation.navigate("AboutStack")}
+        labelStyle={styles.label}
+      />
 
       {/* Logout */}
-      <TouchableOpacity onPress={handleLogout}>
+      <LogoutButton onPress={handleLogout}>
         <LogoutContainer>
           <SimpleLineIcons
             name="logout"
@@ -100,7 +93,7 @@ export default ({ navigation, isManager }) => {
           />
           <Logout>Logout</Logout>
         </LogoutContainer>
-      </TouchableOpacity>
+      </LogoutButton>
     </View>
   );
 };
