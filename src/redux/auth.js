@@ -34,9 +34,22 @@ import user from "./user";
 export const localLogin = createAsyncThunk("localLogin", async () => {
   const accessToken = await AsyncStorage.getItem("AccessToken");
   const usertype = await AsyncStorage.getItem("UserType");
+  console.log(usertype);
   if (accessToken) {
     await temporarySessionEvent();
-    reset("StudentDrawer", usertype);
+    switch (usertype) {
+      case "maintenance":
+        reset("MaintenanceDrawer");
+        break;
+      case "management":
+        reset("ManagerDrawer");
+        break;
+      case "student":
+        reset("StudentDrawer");
+        break;
+      default:
+        reset("Login");
+    }
   } else reset("Login");
 });
 

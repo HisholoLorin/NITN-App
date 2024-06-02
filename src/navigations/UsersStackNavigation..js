@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 // Screens
 import UsersScreen from "../screens/drawer/usersStack/UsersScreen";
+import UserProfile from "../screens/drawer/usersStack/UserProfileScreen";
 
 //Components
 import BackButton from "../components/atoms/backButton/Index";
@@ -22,6 +23,7 @@ const UsersStackNavigation = ({ navigation }) => {
       }}
     >
       <UsersStack.Screen name="Users" component={UsersScreen} />
+      <UsersStack.Screen name="User Profile" component={UserProfile} />
     </UsersStack.Navigator>
   );
 };
