@@ -1,5 +1,6 @@
 //Components
 import {
+  Alert,
   Dimensions,
   Image,
   ScrollView,
@@ -8,11 +9,11 @@ import {
   View,
 } from "react-native";
 import AppView from "../../../components/atoms/AppView";
-import * as Animatable from "react-native-animatable";
 
 const { width, height } = Dimensions.get("window");
 
 const ContactScreen = (props) => {
+
   return (
     <AppView {...props}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -33,7 +34,8 @@ const ContactScreen = (props) => {
               style={styles.image}
             />
             <Text style={styles.text}>
-              Electrician <Text style={styles.contact}>0912837465</Text>
+              Electrician{" "}
+                <Text style={styles.contact}>0912837465</Text>
             </Text>
           </View>
 

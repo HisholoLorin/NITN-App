@@ -58,11 +58,12 @@ const StudentFormDetails = ({ route }) => {
       <Timeline
         data={timelineData}
         circleSize={20}
-        circleColor="green"
-        lineColor="green"
+        circleColor="red"
+        lineColor="red"
         timeContainerStyle={{ display: "none" }} // Hide the time on the left
         renderDetail={renderDetail}
       />
+
     </View>
   );
 };
