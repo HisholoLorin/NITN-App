@@ -8,6 +8,9 @@ import UserProfile from "../screens/drawer/usersStack/UserProfileScreen";
 //Components
 import BackButton from "../components/atoms/backButton/Index";
 
+//helper
+import { previousScreen } from "./navigationRef";
+
 const UsersStack = createStackNavigator();
 
 const UsersStackNavigation = ({ navigation }) => {
@@ -16,7 +19,7 @@ const UsersStackNavigation = ({ navigation }) => {
       initialRouteName="Users"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
-        headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
+        headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
       <UsersStack.Screen name="Users" component={UsersScreen} />

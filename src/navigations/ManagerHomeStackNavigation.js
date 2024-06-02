@@ -9,6 +9,9 @@ import DrawerButton from "../components/atoms/drawerButton/Index.js";
 // Screens
 import ManagerHomeScreen from "../screens/drawer/managerHomeStack/ManagerHomeScreen.js";
 
+//helper
+import { previousScreen } from "./navigationRef";
+
 const ManagerHomeStack = createStackNavigator();
 
 const ManagerHomeStackNavigation = ({ navigation }) => {
@@ -18,7 +21,7 @@ const ManagerHomeStackNavigation = ({ navigation }) => {
       initialRouteName="ManagerHome"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
-        headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
+        headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
       <ManagerHomeStack.Screen

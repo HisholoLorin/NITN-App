@@ -8,6 +8,9 @@ import ProfileScreen from "../screens/drawer/profileStack/ProfileScreen";
 import BackButton from "../components/atoms/backButton/Index";
 import EditButton from "../components/atoms/editButton/Index";
 
+//helper
+import { previousScreen } from "./navigationRef";
+
 const ProfileStack = createStackNavigator();
 
 const ProfileStackNavigation = ({ navigation }) => {

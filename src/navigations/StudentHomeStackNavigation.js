@@ -9,6 +9,9 @@ import DrawerButton from "../components/atoms/drawerButton/Index";
 // Screens
 import StudentHomeScreen from "../screens/drawer/studentBottomTab/studentHomeStack/StudentHomeScreen";
 
+//helper
+import { previousScreen } from "./navigationRef";
+
 const StudentHomeStack = createStackNavigator();
 
 const StudentHomeStackNavigation = ({ navigation }) => {
@@ -18,7 +21,7 @@ const StudentHomeStackNavigation = ({ navigation }) => {
       initialRouteName="StudentHome"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
-        headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
+        headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
       <StudentHomeStack.Screen
@@ -34,7 +37,6 @@ const StudentHomeStackNavigation = ({ navigation }) => {
           title: "Home",
         }}
       />
-
     </StudentHomeStack.Navigator>
   );
 };

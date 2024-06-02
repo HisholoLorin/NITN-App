@@ -7,6 +7,9 @@ import ContactScreen from "../screens/drawer/contactStack/ContactScreen";
 //Components
 import BackButton from "../components/atoms/backButton/Index";
 
+//helper
+import { previousScreen } from "./navigationRef";
+
 const ContactStack = createStackNavigator();
 
 const ContactStackNavigation = ({ navigation }) => {
@@ -15,7 +18,7 @@ const ContactStackNavigation = ({ navigation }) => {
       initialRouteName="Contact"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
-        headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
+        headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
       <ContactStack.Screen name="Contact" component={ContactScreen} />

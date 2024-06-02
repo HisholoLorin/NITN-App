@@ -10,6 +10,9 @@ import DrawerButton from "../components/atoms/drawerButton/Index";
 import StudentFormScreen from "../screens/drawer/studentBottomTab/studentFormStack/StudentForm";
 import StudentFormDetailsScreen from "../screens/drawer/studentBottomTab/studentFormStack/StudentFormDetails";
 
+//helper
+import { previousScreen } from "./navigationRef";
+
 const StudentFormStack = createStackNavigator();
 
 const StudentFormStackNavigation = ({ navigation }) => {
@@ -19,7 +22,7 @@ const StudentFormStackNavigation = ({ navigation }) => {
       initialRouteName="StudentHome"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
-        headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
+        headerLeft: () => <BackButton onPress={previousScreen} />,
       }}
     >
       <StudentFormStack.Screen
