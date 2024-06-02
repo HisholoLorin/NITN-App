@@ -20,20 +20,6 @@ const StudentDrawer = createDrawerNavigator();
  * This component creates the main student navigation drawer for the app.
  */
 const StudentDrawerNavigation = () => {
-  // const { route } = props;
-  // const { usertype } = route.params || {};
-  // let initialRouteName ;
-  // switch (usertype) {
-  //   case "maintenance":
-  //     initialRouteName = "MaintenanceHomeStack";
-  //     break;
-  //   case "management":
-  //     initialRouteName = "ManagerHomeStack";
-  //     break;
-  //   default:
-  //     initialRouteName = "BottomTab";
-  //     break;
-  // }
   return (
     <StudentDrawer.Navigator
       initialRouteName={"StudentBottomTab"}

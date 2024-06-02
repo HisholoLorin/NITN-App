@@ -11,23 +11,18 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 
-//Components
-import Title from "../../atoms/title/Index";
-import Spacer from "../../atoms/spacer/Index";
-import PrimaryButton from "../../molecules/primaryButton/Index";
-
-//Styled Components
-import { FormContainer } from "./Styles";
-
 //Redux
 import { useDispatch } from "react-redux";
 import { getUserDetails } from "../../../redux/user";
 
 const { width, height } = Dimensions.get("window");
 
-const HomeForm = ({ navigation }) => {
+const StudentHomeForm = ({ navigation }) => {
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    dispatch(getUserDetails({ type: "student" }));
+  }, []);
+  
   const CustomCheckBox = ({ isChecked, onPress }) => {
     return (
       <TouchableOpacity onPress={onPress} style={styles.checkBoxContainer}>
@@ -102,7 +97,7 @@ const HomeForm = ({ navigation }) => {
     },
   ];
   const [selectedItem, setSelectedItem] = useState(null);
-  console.log(selectedItem)
+  console.log(selectedItem);
 
   const toggleSelection = (itemName) => {
     setSelectedItem((prev) => (prev === itemName ? null : itemName));
@@ -229,4 +224,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeForm;
+export default StudentHomeForm;

@@ -1,11 +1,11 @@
 //Components
 import AppView from "../../../../components/atoms/AppView";
-import HomeForm from "../../../../components/organisms/homeForm/Index";
+import StudentHomeForm from "../../../../components/organisms/studentHomeForm/Index";
 
 const HomeScrreen = (props) => {
   return (
     <AppView {...props}>
-      <HomeForm {...props} />
+      <StudentHomeForm {...props} />
     </AppView>
   );
 };

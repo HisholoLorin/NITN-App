@@ -7,8 +7,9 @@ import Spacer from "../../atoms/spacer/Index";
 import { ProfilePicture, Bold } from "./Styles";
 
 const DrawerHeader = ({ userDetails }) => {
-  const { userName, email, image } = userDetails;
-
+  const { user, student } = userDetails || {};
+  const { userName } = user || {};
+  const { image } = student || {};
   // First name and Last name Logic
   const temp = userName?.split(" ");
   let firstName = null,
@@ -35,8 +36,6 @@ const DrawerHeader = ({ userDetails }) => {
           <Bold style={{ color: "#6C6C6C" }}>{lastName}</Bold>
         </Bold>
       </Spacer>
-
-      <Text style={{ color: "#6C6C6C" }}>{email}</Text>
     </>
   );
 };

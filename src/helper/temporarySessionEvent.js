@@ -26,7 +26,7 @@ const decodeToken = (refreshToken) => {
 export const isTokenExpired = (refreshToken) => {
   const tokenPayload = decodeToken(refreshToken);
   const currentTime = Math.floor(Date.now() / 1000);
-  return tokenPayload.exp > currentTime + 60;
+  return currentTime + 60 > tokenPayload.exp;
 };
 
 export default async () => {
