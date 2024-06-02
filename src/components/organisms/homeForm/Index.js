@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState, useRef } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   Dimensions,
   Image,
@@ -27,6 +28,7 @@ const { width, height } = Dimensions.get("window");
 
 const HomeForm = ({ navigation }) => {
   const dispatch = useDispatch();
+  const animationRef = useRef(null);
 
   const CustomCheckBox = ({ isChecked, onPress }) => {
     return (
@@ -116,10 +118,18 @@ const HomeForm = ({ navigation }) => {
     }
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      if (animationRef.current) {
+        animationRef.current.fadeInUp(1300); // Adjust the duration as needed
+      }
+    }, [])
+  );
+
   return (
     <>
       <View style={styles.container}>
-        <Animatable.View animation="fadeInUp" useNativeDriver>
+        <Animatable.View ref={animationRef} animation="fadeInUp" useNativeDriver>
           <ScrollView contentContainerStyle={styles.grid}>
             {items.map((item) => (
               <GridItem

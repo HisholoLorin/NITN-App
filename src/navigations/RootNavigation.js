@@ -27,7 +27,7 @@ const RootNavigation = () => {
     // Navigation container for the entire app
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Drawer"
         screenOptions={{
           headerBackTitleVisible: true, // Hide the default back button title
           headerLeft: ({ onPress }) => (
