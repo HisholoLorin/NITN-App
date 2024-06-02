@@ -1,5 +1,4 @@
-import { useCallback, useState, useRef } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import {
   Dimensions,
   Image,
@@ -12,24 +11,18 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 
-//Components
-import Title from "../../atoms/title/Index";
-import Spacer from "../../atoms/spacer/Index";
-import PrimaryButton from "../../molecules/primaryButton/Index";
-
-//Styled Components
-import { FormContainer } from "./Styles";
-
 //Redux
 import { useDispatch } from "react-redux";
 import { getUserDetails } from "../../../redux/user";
 
 const { width, height } = Dimensions.get("window");
 
-const HomeForm = ({ navigation }) => {
+const StudentHomeForm = ({ navigation }) => {
   const dispatch = useDispatch();
-  const animationRef = useRef(null);
-
+  useEffect(() => {
+    dispatch(getUserDetails({ type: "student" }));
+  }, []);
+  
   const CustomCheckBox = ({ isChecked, onPress }) => {
     return (
       <TouchableOpacity onPress={onPress} style={styles.checkBoxContainer}>
@@ -104,7 +97,7 @@ const HomeForm = ({ navigation }) => {
     },
   ];
   const [selectedItem, setSelectedItem] = useState(null);
-  console.log(selectedItem)
+  console.log(selectedItem);
 
   const toggleSelection = (itemName) => {
     setSelectedItem((prev) => (prev === itemName ? null : itemName));
@@ -118,18 +111,10 @@ const HomeForm = ({ navigation }) => {
     }
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      if (animationRef.current) {
-        animationRef.current.fadeInUp(1300); // Adjust the duration as needed
-      }
-    }, [])
-  );
-
   return (
     <>
       <View style={styles.container}>
-        <Animatable.View ref={animationRef} animation="fadeInUp" useNativeDriver>
+        <Animatable.View animation="fadeInUp" useNativeDriver>
           <ScrollView contentContainerStyle={styles.grid}>
             {items.map((item) => (
               <GridItem
@@ -239,4 +224,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeForm;
+export default StudentHomeForm;

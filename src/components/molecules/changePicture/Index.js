@@ -21,7 +21,7 @@ import {
 const ChangePicture = ({ onPress }) => {
   const dispatch = useDispatch();
   const { userDetails } = useSelector((state) => state.UserReducer);
-  const { username, image } = userDetails;
+  const { userName, image } = userDetails;
 
   const camera = async () => {
     try {
@@ -32,7 +32,7 @@ const ChangePicture = ({ onPress }) => {
         aspect: [1, 1],
         UIImagePickerControllerQualityType: 4,
       });
-      dispatch(updateProfilePicture({ result, username }));
+      dispatch(updateProfilePicture({ result, userName }));
     } catch (error) {
       console.log(error);
     } finally {
@@ -51,7 +51,7 @@ const ChangePicture = ({ onPress }) => {
       });
 
       //`data:${result.assets[0].type};base64,${result.assets[0].base64}`;
-      dispatch(updateProfilePicture({ result, username }));
+      dispatch(updateProfilePicture({ result, userName }));
     } catch (error) {
       console.log(error);
     } finally {
@@ -65,7 +65,7 @@ const ChangePicture = ({ onPress }) => {
         text: "Yes",
         onPress: () => {
           try {
-            dispatch(deleteProfilePicture({ username }));
+            dispatch(deleteProfilePicture({ userName }));
           } catch (error) {
             console.log(error);
           } finally {

@@ -21,12 +21,12 @@ import { Container, LogoutContainer, Logout } from "./Styles";
 //Styles
 import globalStyles, { IconStyle } from "../../../components/globalStyles";
 
-export default ({ navigation }) => {
+export default ({ navigation, isManager }) => {
   const { userDetails } = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   handleLogout = () => {
     navigation.closeDrawer();
-    dispatch(logout())
+    dispatch(logout());
   };
   return (
     <View style={{ flex: 1 }}>
@@ -48,6 +48,23 @@ export default ({ navigation }) => {
           onPress={() => navigation.navigate("ProfileStack")}
           labelStyle={styles.label}
         />
+
+        {/* Users */}
+        {isManager && (
+          <DrawerItem
+            label="Users"
+            icon={() => (
+              <View style={globalStyles.iconContainer}>
+                <MaterialIcons
+                  name="groups"
+                  style={IconStyle({ iconSize: 25 })}
+                />
+              </View>
+            )}
+            onPress={() => navigation.navigate("UsersStack")}
+            labelStyle={styles.label}
+          />
+        )}
 
         {/* Contact */}
         <DrawerItem

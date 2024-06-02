@@ -6,7 +6,7 @@ export default (type, params) => {
     case endpoint.LOGOUT:
       return "/user/logout/";
     case endpoint.REFRESH_TOKEN:
-      return "/user/refresh";
+      return "/user/refresh/";
     case endpoint.FORGOT_PASSWORD:
       return "/user/forgot-password/request-otp/";
     case endpoint.CHANGE_PASSWORD:

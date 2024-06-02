@@ -7,24 +7,18 @@ import ProfileScreen from "../screens/drawer/profileStack/ProfileScreen";
 //Components
 import BackButton from "../components/atoms/backButton/Index";
 
-//Helper
-import { previousScreen } from "./navigationRef";
-
 const ProfileStack = createStackNavigator();
 
-const ProfileStackNavigation = () => {
+const ProfileStackNavigation = ({ navigation }) => {
   return (
     <ProfileStack.Navigator
       initialRouteName="Profile"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
-        headerLeft: () => <BackButton onPress={previousScreen} />,
+        headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
       }}
     >
-      <ProfileStack.Screen
-        name="Profile"
-        component={ProfileScreen}
-      />
+      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
     </ProfileStack.Navigator>
   );
 };

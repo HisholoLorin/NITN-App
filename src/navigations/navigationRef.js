@@ -7,10 +7,6 @@ import { BackHandler } from "react-native";
 // Creating a navigation reference
 export const navigationRef = createNavigationContainerRef();
 
-//Fuction to go back to previous screen
-export const previousScreen = () => {
-  navigationRef.canGoBack() ? navigationRef.goBack() : BackHandler.exitApp();
-};
 
 // Function to navigate to a screen
 export const navigate = (name, params) => {

@@ -34,8 +34,9 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
       <CustomInput
         icon={() => <SimpleIcon name="user" size={20} color="#999" />}
         placeholder="Username"
+        value={studentForm?.userName}
         onChangeText={(value) =>
-          setStudentForm({ ...studentForm, username: value })
+          setStudentForm({ ...studentForm, userName: value })
         }
       />
 
@@ -43,6 +44,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
       <CustomInput
         icon={() => <AntDesign name="idcard" size={20} color="#999" />}
         placeholder="Registration No"
+        value={studentForm?.registrationNo}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, registrationNo: value })
         }
@@ -55,6 +57,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
           <MaterialCommunityIcons name="cellphone" size={20} color="#999" />
         )}
         placeholder="Mobile Number"
+        value={studentForm?.mobileNo}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, mobileNo: value })
         }
@@ -67,6 +70,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
           <MaterialCommunityIcons name="email-outline" size={20} color="#999" />
         )}
         placeholder="Email"
+        value={studentForm?.email}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, email: value })
         }
@@ -111,6 +115,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
       <CustomInput
         icon={() => <MaterialIcons name="bloodtype" size={20} color="#999" />}
         placeholder="Blood Type"
+        value={studentForm?.bloodType}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, bloodType: value })
         }
@@ -122,6 +127,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
           <FontAwesome5 name="briefcase-medical" size={20} color="#999" />
         )}
         placeholder="Medical Conditions"
+        value={studentForm?.medicalConditions}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, medicalConditions: value })
         }
@@ -131,6 +137,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
       <CustomInput
         icon={() => <FontAwesome6 name="people-group" size={20} color="#999" />}
         placeholder="Ethnicity"
+        value={studentForm.ethnicity}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, ethnicity: value })
         }
@@ -142,6 +149,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
           <MaterialCommunityIcons name="home-outline" size={20} color="#999" />
         )}
         placeholder="Address"
+        value={studentForm?.address}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, address: value })
         }
@@ -153,6 +161,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
           <MaterialCommunityIcons name="cellphone" size={20} color="#999" />
         )}
         placeholder="Guardian's Mobile Number"
+        value={studentForm?.guardianMobileNumber}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, guardianMobileNumber: value })
         }
@@ -183,15 +192,18 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
           />
         )}
         placeholder="Batch"
+        value={studentForm?.batch}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, batch: value })
         }
+        keyboardType="number-pad"
       />
 
       {/* Hostel Name */}
       <CustomInput
         icon={() => <FontAwesome5 name="building" size={20} color="#999" />}
         placeholder="Hostel Name"
+        value={studentForm?.hostelName}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, hostelName: value })
         }
@@ -200,6 +212,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
       {/* Password */}
       <PasswordInput
         placeholder="Password"
+        value={studentForm?.password}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, password: value })
         }
@@ -208,6 +221,7 @@ const StudentForm = ({ studentForm, setStudentForm }) => {
       {/* Confirm Password */}
       <PasswordInput
         placeholder="Confirm Password"
+        value={studentForm?.confirmPassword}
         onChangeText={(value) =>
           setStudentForm({ ...studentForm, confirmPassword: value })
         }

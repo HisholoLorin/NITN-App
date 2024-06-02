@@ -50,14 +50,19 @@ export const capitalizedFirstLetter = (value) => {
   return value.join(" ");
 };
 
-export const saveToken = async ({ access_token, refresh_token }) => {
-  await AsyncStorage.setItem("AccessToken", access_token);
-  await AsyncStorage.setItem("RefreshToken", refresh_token);
+export const saveToken = async ({ access, refresh, usertype } = {}) => {
+  await AsyncStorage.setItem("AccessToken", access);
+  await AsyncStorage.setItem("RefreshToken", refresh);
+  await AsyncStorage.setItem("UserType", usertype ? usertype : "student");
+};
+
+const validateField = (condition, message) => {
+  if (condition) return { isVerified: false, message };
 };
 
 export const checkSignUp = (values, type) => {
   const {
-    username,
+    userName,
     mobileNo,
     email,
     dateOfBirth,
@@ -65,75 +70,81 @@ export const checkSignUp = (values, type) => {
     address,
     password,
     confirmPassword,
+    // Students
+    registrationNo,
+    guardianMobileNumber,
+    deptName,
+    batch,
+    bloodType,
+    medicalConditions,
+    ethnicity,
+    hostelName,
+    // Institute Personnel
+    identificationNo,
+    designation,
+    department,
   } = values;
 
-  if (!username || username.length < 5)
-    return {
-      isVerified: false,
-      message: "Username should be atleast 5 characters long",
-    };
-  else if (!email || !isEmail(email))
-    return { isVerified: false, message: "Invalid Email" };
-  else if (!password || !isPassword(password))
-    return { isVerified: false, message: "Invalid Password" };
-  else if (!confirmPassword || password !== confirmPassword)
-    return { isVerified: false, message: "Password doesn't match" };
-  else if (mobileNo && !isMobileNumber(mobileNo))
-    return { isVerified: false, message: "Invalid Mobile Number" };
-  else if (!dateOfBirth)
-    return { isVerified: false, message: "Date of Birth is required" };
-  else if (!gender) return { isVerified: false, message: "Select Gender" };
-  else if (!address)
-    return { isVerified: false, message: "Address is required" };
+  const studentValidations = () => [
+    validateField(
+      !userName || userName.length < 5,
+      "Username should be at least 5 characters long"
+    ),
+    validateField(!registrationNo, "Registration Number is required"),
+    validateField(
+      !mobileNo && !isMobileNumber(mobileNo),
+      "Invalid Mobile Number"
+    ),
+    validateField(!email || !isEmail(email), "Invalid Email"),
+    validateField(!dateOfBirth, "Date of Birth is required"),
+    validateField(!gender, "Select Gender"),
+    validateField(!bloodType, "Blood Type is required"),
+    validateField(!medicalConditions, "Medical Conditions is required"),
+    validateField(!ethnicity, "Ethnicity is required"),
+    validateField(!address, "Address is required"),
+    validateField(
+      !guardianMobileNumber || !isMobileNumber(guardianMobileNumber),
+      "Invalid Guardian Mobile Number"
+    ),
+    validateField(!deptName, "Department Name is required"),
+    validateField(!batch, "Batch is required"),
+    validateField(!hostelName, "Hostel Name is required"),
+    validateField(!password || !isPassword(password), "Invalid Password"),
+    validateField(
+      !confirmPassword || password !== confirmPassword,
+      "Password doesn't match"
+    ),
+  ];
 
-  switch (type) {
-    case "Students":
-      const {
-        registrationNo,
-        guardianMobileNumber,
-        deptName,
-        batch,
-        bloodType,
-        medicalConditions,
-        ethnicity,
-        hostelName,
-      } = values;
-      console.log(registrationNo);
-      if (registrationNo === undefined)
-        return {
-          isVerified: false,
-          message: "Registration Number is required",
-        };
-      else if (!guardianMobileNumber || !isMobileNumber(guardianMobileNumber))
-        return {
-          isVerified: false,
-          message: "Invalid Guardian Mobile Number",
-        };
-      else if (!deptName)
-        return { isVerified: false, message: "Department Name is required" };
-      else if (!batch)
-        return { isVerified: false, message: "Batch is required" };
-      else if (!bloodType)
-        return { isVerified: false, message: "Blood Type is required" };
-      else if (!medicalConditions)
-        return { isVerified: false, message: "Medical Conditions is required" };
-      else if (!ethnicity)
-        return { isVerified: false, message: "Ethnicity is required" };
-      else if (!hostelName)
-        return { isVerified: false, message: "Hostel Name is required" };
-      console.log("Iam here");
-    // return { isVerified: true };
-    case "Institute Personnel":
-      const { identificationNo, designation, department } = values;
-      if (!identificationNo)
-        return {
-          isVerified: false,
-          message: "Identification Number is required",
-        };
-      else if (!designation)
-        return { isVerified: false, message: "Designation is required" };
-      else if (!department)
-        return { isVerified: false, message: "Department is required" };
-      else return { isVerified: true };
+  const personnelValidations = () => [
+    validateField(
+      !userName || userName.length < 5,
+      "Username should be at least 5 characters long"
+    ),
+    validateField(!identificationNo, "Identification Number is required"),
+    validateField(!designation, "Designation is required"),
+    validateField(
+      !mobileNo && !isMobileNumber(mobileNo),
+      "Invalid Mobile Number"
+    ),
+    validateField(!email || !isEmail(email), "Invalid Email"),
+    validateField(!dateOfBirth, "Date of Birth is required"),
+    validateField(!gender, "Select Gender"),
+    validateField(!address, "Address is required"),
+    validateField(!department, "Department is required"),
+    validateField(!password || !isPassword(password), "Invalid Password"),
+    validateField(
+      !confirmPassword || password !== confirmPassword,
+      "Password doesn't match"
+    ),
+  ];
+
+  const validations =
+    type === "Students" ? studentValidations() : personnelValidations();
+
+  for (let validation of validations) {
+    if (validation) return validation;
   }
+
+  return { isVerified: true };
 };

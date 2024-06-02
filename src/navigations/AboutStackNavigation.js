@@ -7,24 +7,18 @@ import AboutScreen from "../screens/drawer/aboutStack/AboutScreen";
 //Components
 import BackButton from "../components/atoms/backButton/Index";
 
-//Helper
-import { previousScreen } from "./navigationRef";
-
 const AboutStack = createStackNavigator();
 
-const AboutStackNavigation = () => {
+const AboutStackNavigation = ({ navigation }) => {
   return (
     <AboutStack.Navigator
       initialRouteName="About"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
-        headerLeft: () => <BackButton onPress={previousScreen} />,
+        headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
       }}
     >
-      <AboutStack.Screen
-        name="About"
-        component={AboutScreen}
-      />
+      <AboutStack.Screen name="About" component={AboutScreen} />
     </AboutStack.Navigator>
   );
 };

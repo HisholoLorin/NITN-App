@@ -13,4 +13,5 @@ export const Logout = styled.Text`
     margin-left : 7%;
     color: red;
     font-size: 16px;
+    
 `;

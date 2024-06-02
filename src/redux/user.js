@@ -11,9 +11,9 @@ import temporarySessionEvent from "../helper/temporarySessionEvent";
 //EndPoints
 import getEndPoint from "../api/getEndPoint";
 import {
-  USER_DETAILS,
-  UPDATE_PROFILE_PICTURE,
-  DELETE_PROFILE_PICTURE,
+  STUDENT_DETAILS,
+  MAINTENANCE_DETAILS,
+  MANAGER_DETAILS,
 } from "../constant/endpoint";
 
 //Action
@@ -24,20 +24,34 @@ import { isMobileNumber, isEmail, isDob } from "../helper/auth";
 
 //1st parameter : prefix for the generated action types
 //2nd parameter : a function that returns a promise of the value we want to fetch
-export const getUserDetails = createAsyncThunk("getUserDetails", async () => {
-  console.log("User Details trigger");
-  try {
-    const response = await Api.get(getEndPoint(USER_DETAILS));
-    return response.data;
-  } catch (err) {
-    const response = await temporarySessionEvent(err, USER_DETAILS);
-    return response.data;
+export const getUserDetails = createAsyncThunk(
+  "getUserDetails",
+  async ({ type }) => {
+    console.log("User Details trigger");
+    try {
+      await temporarySessionEvent();
+      let response;
+      switch (type) {
+        case "student":
+          response = await Api.get(getEndPoint(STUDENT_DETAILS));
+          return response.data;
+        case "maintenance":
+          response = await Api.get(getEndPoint(MAINTENANCE_DETAILS));
+          return response.data;
+        case "management":
+          response = await Api.get(getEndPoint(MANAGER_DETAILS));
+          return response.data;
+      }
+    } catch (err) {
+      console.log(response.data);
+      //return response.data;
+    }
   }
-});
+);
 
 export const updateProfilePicture = createAsyncThunk(
   "updateProfilePicture",
-  async ({ result, username }, { dispatch }) => {
+  async ({ result, userName }, { dispatch }) => {
     let random = " {" + (Math.random() + 1).toString(36).substring(7) + "}";
     let image = new FormData();
     const content = result.assets[0];
@@ -46,7 +60,7 @@ export const updateProfilePicture = createAsyncThunk(
         Platform.OS === "ios"
           ? content.uri.replace("file://", "")
           : content.uri,
-      name: username + random + "." + content.mimeType.split("/")[1],
+      name: userName + random + "." + content.mimeType.split("/")[1],
       type: content.mimeType,
     });
     try {

@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 
 import { navigate, reset } from "../navigations/navigationRef";
+
 //API
 import Api from "../api/API";
 
@@ -19,17 +20,23 @@ import {
   STUDENT_SIGNUP,
   STUDENT_LOGIN,
   INSTITUTE_PERSONNEL_SIGNUP,
+  INSTITUTE_PERSONNEL_LOGIN,
+  LOGOUT,
 } from "../constant/endpoint";
 
 //Helper
+import temporarySessionEvent from "../helper/temporarySessionEvent";
 import { saveToken, checkSignUp } from "../helper/auth";
 import { convertToShortDateFormatReverse } from "../helper/dateTimeFormats";
+import user from "./user";
 
 //Local login when there is a token in the async storage
 export const localLogin = createAsyncThunk("localLogin", async () => {
   const accessToken = await AsyncStorage.getItem("AccessToken");
+  const usertype = await AsyncStorage.getItem("UserType");
   if (accessToken) {
-    reset("Drawer");
+    await temporarySessionEvent();
+    reset("StudentDrawer", usertype);
   } else reset("Login");
 });
 
@@ -38,10 +45,19 @@ export const logout = createAsyncThunk("logout", async () => {
     {
       text: "Yes",
       onPress: async () => {
-        // const refresh = await AsyncStorage.getItem("RefreshToken");
-        // await AsyncStorage.removeItem("AccessToken");
-        // await AsyncStorage.removeItem("RefreshToken");
-        reset("Login");
+        const refresh = await AsyncStorage.getItem("RefreshToken");
+        console.log(refresh);
+        try {
+          const response = await Api.post(getEndPoint(LOGOUT), {
+            refresh,
+          });
+          console.log(response.data);
+          await AsyncStorage.removeItem("AccessToken");
+          await AsyncStorage.removeItem("RefreshToken");
+          reset("Login");
+        } catch (error) {
+          console.log(error?.response?.data);
+        }
       },
     },
     {
@@ -53,8 +69,9 @@ export const logout = createAsyncThunk("logout", async () => {
 export const login = createAsyncThunk(
   "login",
   async ({ ...values }, { dispatch, rejectWithValue }) => {
-    const { type, registrationNo, identificationNo, password } = values;
+    const { type, email, password } = values;
     delete values.type;
+    if (!email) return rejectWithValue("Email can't be blank");
     if (!password) return rejectWithValue("Password can't be blank");
     try {
       let response;
@@ -62,12 +79,22 @@ export const login = createAsyncThunk(
       Keyboard.dismiss();
       switch (type) {
         case "Students":
-          if (!registrationNo)
-            return rejectWithValue("Registration Number can't be blank");
           response = await Api.post(getEndPoint(STUDENT_LOGIN), values);
+          console.log(response.data);
           await saveToken(response.data);
-          reset("Drawer");
+          reset("StudentDrawer");
+          break;
         case "Institute Personnel":
+          response = await Api.post(
+            getEndPoint(INSTITUTE_PERSONNEL_LOGIN),
+            values
+          );
+          console.log(response.data);
+          const { usertype } = response.data;
+          await saveToken(response.data);
+          usertype === "maintenance"
+            ? reset("MaintenanceDrawer")
+            : reset("ManagerDrawer");
           break;
       }
     } catch (err) {
@@ -93,14 +120,14 @@ export const forgotPassword = createAsyncThunk(
     // try {
     //   dispatch(runLoader());
     //   Keyboard.dismiss();
-    //   if (username.length === 0)
+    //   if (userName.length === 0)
     //     return rejectWithValue("Username cannot be blank");
     //   const response = await Api.post(getEndPoint(FORGOT_PASSWORD), {
-    //     username: username,
+    //     userName: userName,
     //   });
     //   console.log(response.data);
     //   const otpId = response.data.otpId;
-    //   navigate("OTP", { username, mode: "ForgotPassword", otpId });
+    //   navigate("OTP", { userName, mode: "ForgotPassword", otpId });
     // } catch (err) {
     //   console.log(err.response.data);
     //   if (!err.response) return "No Internet Connection";
@@ -138,7 +165,7 @@ export const verifyOTP = createAsyncThunk(
     //       });
     //       console.log(response.data);
     //       await saveToken(response.data);
-    //       reset("Drawer");
+    //       reset("StudentDrawer");
     //       break;
     //   }
     // } catch (err) {
@@ -180,10 +207,10 @@ export const changePassword = createAsyncThunk(
 export const signup = createAsyncThunk(
   "signup",
   async ({ ...values }, { dispatch, rejectWithValue }) => {
-    const { type } = values;
+    const { type, dateOfBirth } = values;
     delete values.type;
-    // if (!checkSignUp(values, type)?.isVerified)
-    //   return rejectWithValue(checkSignUp(values)?.message);
+    const validation = checkSignUp(values, type);
+    if (!validation?.isVerified) return rejectWithValue(validation?.message);
 
     try {
       dispatch(runLoader());
@@ -196,20 +223,26 @@ export const signup = createAsyncThunk(
             dateOfBirth: convertToShortDateFormatReverse(dateOfBirth),
           });
           await saveToken(response.data);
-          reset("Drawer");
+          reset("StudentDrawer");
           break;
         case "Institute Personnel":
-          // response = await Api.post(getEndPoint(INSTITUTE_PERSONNEL_SIGNUP), {
-          //   ...values,
-          //   dateOfBirth: convertToShortDateFormatReverse(dateOfBirth),
-          //   userType: "maintenance",
-          // });
-          // await saveToken(response.data);
-          reset("Drawer");
+          response = await Api.post(getEndPoint(INSTITUTE_PERSONNEL_SIGNUP), {
+            ...values,
+            dateOfBirth: convertToShortDateFormatReverse(dateOfBirth),
+            userType: "maintenance",
+          });
+          await saveToken(response.data);
+          console.log(response?.data);
+          reset("MaintenanceDrawer");
           break;
       }
     } catch (err) {
-      if (!err.response) return "No Internet Connection";
+      if (!err.response)
+        Alert.alert("Alert!", "No Internet Connection", [
+          {
+            text: "Ok",
+          },
+        ]);
       else console.log(err.response.data);
     } finally {
       dispatch(stopLoader());
