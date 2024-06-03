@@ -20,7 +20,7 @@ const status = ["Status 1", "Status 2", "Status 3", "Status 4"];
 const activeColor = "#6a0dad";
 const { width, height } = Dimensions.get("window");
 
-export default function TrackingStatus() {
+export default ({stage}) => {
   const [activeIndex, setActive] = useState(0);
 
   const setActiveIndex = (val) => {

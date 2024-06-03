@@ -1,11 +1,15 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
-import TrackingStatus from "./TrackingStatus";
+import StatusProgress from "./StatusProgress";
 
 const { width, height } = Dimensions.get("window");
 
 const StudentFormDetails = ({ route }) => {
-  const { title = "No title provided", description = "No description provided" } = route.params;
+  const {
+    title = "No title provided",
+    description = "No description provided",
+    stage
+  } = route.params;
 
   return (
     <View style={styles.container}>
@@ -16,7 +20,7 @@ const StudentFormDetails = ({ route }) => {
       <Text style={styles.value}>{description}</Text>
 
       <Text style={styles.label}>Status Progress:</Text>
-      <TrackingStatus />
+      <StatusProgress stage={stage}/>
     </View>
   );
 };
