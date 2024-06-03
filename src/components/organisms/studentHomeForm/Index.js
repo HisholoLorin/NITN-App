@@ -18,6 +18,7 @@ import { useFocusEffect } from "@react-navigation/native";
 //Redux
 import { useDispatch } from "react-redux";
 import { getUserDetails } from "../../../redux/user";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 const MAX_CHARACTERS = 50;
@@ -58,6 +59,11 @@ const StudentHomeForm = ({ navigation }) => {
 
   const items = [
     {
+      name: "Ceiling Fan",
+      label: "Ceiling Fan",
+      image: require("../../../../assets/ceiling-fan.png"),
+    },
+    {
       name: "Door",
       label: "Door",
       image: require("../../../../assets/door.png"),
@@ -88,11 +94,6 @@ const StudentHomeForm = ({ navigation }) => {
       image: require("../../../../assets/water-tap.png"),
     },
     {
-      name: "Window",
-      label: "Window",
-      image: require("../../../../assets/window.png"),
-    },
-    {
       name: "Tubelight",
       label: "Tubelight",
       image: require("../../../../assets/tubelight.png"),
@@ -115,7 +116,7 @@ const StudentHomeForm = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       if (animationRef.current) {
-        animationRef.current.fadeInUp(1300); // Adjust the duration as needed
+        animationRef.current.slideInUp(1300); // Adjust the duration as needed
       }
     }, [])
   );
@@ -138,7 +139,7 @@ const StudentHomeForm = ({ navigation }) => {
   return (
     <>
       <View style={styles.container}>
-        <Animatable.View ref={animationRef} animation="fadeInUp" useNativeDriver>
+        <Animatable.View ref={animationRef} animation="slideInUp" useNativeDriver>
           <ScrollView contentContainerStyle={styles.grid}>
             {items.map((item) => (
               <GridItem
@@ -245,6 +246,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: width * 0.05,
     overflow: "hidden",
+    padding: width * 0.04
   },
   grid: {
     flexDirection: "row",
@@ -252,7 +254,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   gridItem: {
-    width: width * 0.3,
+    width: width * 0.27,
     alignItems: "center",
     justifyContent: "center",
     padding: width * 0.03,
