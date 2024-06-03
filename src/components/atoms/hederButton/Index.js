@@ -1,12 +1,12 @@
 import React from "react";
 import { TouchableOpacity, Text } from "react-native";
 
-const EditButton = ({ onPress }) => {
+const HeaderButton = ({ onPress, text }) => {
   return (
     <TouchableOpacity onPress={onPress} style={{ paddingRight: 20 }}>
-      <Text style={{fontSize : 18}}>Edit</Text>
+      <Text style={{fontSize : 18}}>{text}</Text>
     </TouchableOpacity>
   );
 };
 
-export default EditButton;
+export default HeaderButton;

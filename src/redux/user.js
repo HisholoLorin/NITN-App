@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Alert, Platform } from "react-native";
+import { Alert, Platform, Keyboard } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { navigate, reset } from "../navigations/navigationRef";
 import Api from "../api/API";
-import { Keyboard } from "react-native";
 
 //Helper Functions
 import temporarySessionEvent from "../helper/temporarySessionEvent";
@@ -102,13 +101,16 @@ const userSlice = createSlice({
   name: "UserActions",
   initialState: {
     userDetails: {},
-    plan: {},
+    edit: false,
     error: null,
   },
   reducers: {
     clearError: (state) => {
       state.error = null;
     },
+    setEdit : (state, action) => {
+      state.edit = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -136,5 +138,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { clearError } = userSlice.actions;
+export const { clearError, setEdit } = userSlice.actions;
 export default userSlice.reducer;

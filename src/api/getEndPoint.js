@@ -27,7 +27,7 @@ export default (type, params) => {
     case endpoint.STUDENT_DELETE_PICTURE:
       return "/student/delete/pic/";
     case endpoint.STUDENT_FORM_LIST:
-      return "/student/list/form/";
+      return `/student/list/form/?page=${params}`;
     case endpoint.STUDENT_CREATE_FORM:
       return "/student/create/form/";
     case endpoint.STUDENT_DELETE_FORM:

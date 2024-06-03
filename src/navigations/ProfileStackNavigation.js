@@ -6,23 +6,35 @@ import ProfileScreen from "../screens/drawer/profileStack/ProfileScreen";
 
 //Components
 import BackButton from "../components/atoms/backButton/Index";
-import EditButton from "../components/atoms/editButton/Index";
+import HeaderButton from "../components/atoms/hederButton/Index";
 
 //helper
 import { previousScreen } from "./navigationRef";
 
+//Redux
+import { useSelector, useDispatch } from "react-redux";
+import { setEdit } from "../redux/user";
+
 const ProfileStack = createStackNavigator();
 
 const ProfileStackNavigation = ({ navigation }) => {
+  const { edit } = useSelector((state) => state.UserReducer);
+  const dispatch = useDispatch();
   return (
     <ProfileStack.Navigator
       initialRouteName="Profile"
       screenOptions={{
         headerBackTitleVisible: true, // Hide the default back button title
-        headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
-        headerRight: () => (
-          <EditButton onPress={() => navigation.navigate("EditProfile")} />
-        ),
+        headerLeft: () => <BackButton onPress={previousScreen} />,
+        headerRight: () =>
+          edit ? (
+            <HeaderButton
+              text="Cancel"
+              onPress={() => dispatch(setEdit(false))}
+            />
+          ) : (
+            <HeaderButton text="Edit" onPress={() => dispatch(setEdit(true))} />
+          ),
       }}
     >
       <ProfileStack.Screen name="Profile" component={ProfileScreen} />
