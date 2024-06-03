@@ -13,11 +13,11 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
+import { useFocusEffect } from "@react-navigation/native";
 
 //Redux
 import { useDispatch } from "react-redux";
 import { getUserDetails } from "../../../redux/user";
-import { useFocusEffect } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 const MAX_CHARACTERS = 50;

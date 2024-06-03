@@ -32,7 +32,7 @@ export default ({ navigation, usertype }) => {
       <DrawerHeader userDetails={userDetails} usertype={usertype}/>
 
       {/* Profile */}
-      <DrawerItem
+      {usertype !== "Manager" && <DrawerItem
         label="Profile"
         icon={() => (
           <View style={globalStyles.iconContainer}>
@@ -41,7 +41,7 @@ export default ({ navigation, usertype }) => {
         )}
         onPress={() => navigation.navigate("ProfileStack")}
         labelStyle={styles.label}
-      />
+      />}
 
       {/* Users */}
       {usertype === "Manager" && (

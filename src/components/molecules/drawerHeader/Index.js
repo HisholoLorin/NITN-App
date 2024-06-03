@@ -20,13 +20,13 @@ const DrawerHeader = ({ userDetails, usertype }) => {
     <Container>
       <Spacer>
         {/* Profile Picture */}
-        <ProfilePicture
+        {usertype !== "Manager" && <ProfilePicture
           source={
             image
               ? { uri: image }
               : require("../../../../assets/profilePhoto.jpg")
           }
-        />
+        />}
       </Spacer>
 
       <Spacer bottom={1}>

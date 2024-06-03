@@ -35,7 +35,7 @@ const StudentFormStackNavigation = ({ navigation }) => {
               onPress={() => navigation.openDrawer()}
             />
           ),
-          title: "Home",
+          title: "Form",
         }}
       />
 

@@ -5,7 +5,11 @@ import StatusProgress from "./StatusProgress";
 const { width, height } = Dimensions.get("window");
 
 const StudentFormDetails = ({ route }) => {
-  const { title = "No title provided", description = "No description provided" } = route.params;
+  const {
+    title = "No title provided",
+    description = "No description provided",
+    stage
+  } = route.params;
 
   return (
     <View style={styles.container}>
@@ -16,7 +20,7 @@ const StudentFormDetails = ({ route }) => {
       <Text style={styles.value}>{description}</Text>
 
       <Text style={styles.label}>Status Progress:</Text>
-      <StatusProgress />
+      <StatusProgress stage={stage}/>
     </View>
   );
 };
