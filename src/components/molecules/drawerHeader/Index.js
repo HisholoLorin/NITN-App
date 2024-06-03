@@ -20,20 +20,24 @@ const DrawerHeader = ({ userDetails, usertype }) => {
     <Container>
       <Spacer>
         {/* Profile Picture */}
-        {usertype !== "Manager" && <ProfilePicture
-          source={
-            image
-              ? { uri: image }
-              : require("../../../../assets/profilePhoto.jpg")
-          }
-        />}
+        {usertype !== "Manager" && (
+          <ProfilePicture
+            source={
+              image
+                ? { uri: image }
+                : require("../../../../assets/profilePhoto.jpg")
+            }
+          />
+        )}
       </Spacer>
 
       <Spacer bottom={1}>
         {/* User Name */}
         <Bold style={{ fontSize: 21 }}>
           {firstName + " "}
-          <Bold style={{ color: "#6C6C6C" }}>{lastName}</Bold>
+          {firstName !== lastName && (
+            <Bold style={{ color: "#6C6C6C" }}>{lastName}</Bold>
+          )}
         </Bold>
         <Usertype>{usertype}</Usertype>
       </Spacer>

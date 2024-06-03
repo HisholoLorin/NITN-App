@@ -31,7 +31,7 @@ export default (type, params) => {
     case endpoint.STUDENT_CREATE_FORM:
       return "/student/create/form/";
     case endpoint.STUDENT_DELETE_FORM:
-      return `/student/delete/form/${params}`;
+      return `/student/delete/form/${params}/`;
     //Institute Personnel
     case endpoint.INSTITUTE_PERSONNEL_LOGIN:
       return "/maintenance/login/";

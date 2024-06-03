@@ -13,6 +13,7 @@ import {
   STUDENT_DETAILS,
   MAINTENANCE_DETAILS,
   MANAGER_DETAILS,
+  CONTACT,
 } from "../constant/endpoint";
 
 //Action
@@ -97,10 +98,26 @@ export const deleteProfilePicture = createAsyncThunk(
   }
 );
 
+export const contact = createAsyncThunk("contact", async (_, { dispatch }) => {
+  try {
+    dispatch(runLoader());
+    await temporarySessionEvent();
+    const response = await Api.get(getEndPoint(CONTACT));
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    console.log(err.response.data);
+  } finally {
+    dispatch(stopLoader());
+  }
+});
+
 const userSlice = createSlice({
   name: "UserActions",
   initialState: {
     userDetails: {},
+    contactList: null,
+    next: null,
     edit: false,
     error: null,
   },
@@ -108,9 +125,9 @@ const userSlice = createSlice({
     clearError: (state) => {
       state.error = null;
     },
-    setEdit : (state, action) => {
+    setEdit: (state, action) => {
       state.edit = action.payload;
-    }
+    },
   },
   extraReducers(builder) {
     builder
@@ -134,6 +151,11 @@ const userSlice = createSlice({
       })
       .addCase(deleteProfilePicture.rejected, (state, action) => {
         state.error = action?.payload;
+      })
+      //Contact
+      .addCase(contact.fulfilled, (state, action) => {
+        state.contactList = action?.payload?.results;
+        state.next = action?.payload?.next;
       });
   },
 });

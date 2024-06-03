@@ -1,8 +1,12 @@
 import React, { useCallback, useRef } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { useFocusEffect } from "@react-navigation/native";
+
+//Redux
+import { useDispatch } from "react-redux";
+import { deleteForm } from "../../../redux/form";
 
 //Styled
 import {
@@ -22,9 +26,11 @@ const MainForm = ({
   title,
   description,
   timeSinceCreated,
-  staged,
+  stage,
   navigation,
 }) => {
+  const dispatch = useDispatch();
+
   const animationRef = useRef(null);
   useFocusEffect(
     useCallback(() => {
@@ -34,19 +40,33 @@ const MainForm = ({
     }, [])
   );
 
+  const handleDelete = () => {
+    Alert.alert("", "Are you sure you want to delete this form?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          dispatch(deleteForm({ uuid }));
+        },
+      },
+      {
+        text: "No",
+      },
+    ]);
+  };
+
   return (
     <Animatable.View
       ref={animationRef}
       animation="bounceInRight"
       useNativeDriver
-      style={{padding : 5}}
+      style={{ padding: 5 }}
     >
       <FormContainer
         onPress={() =>
           navigation.navigate("StudentFormDetails", {
-            uuid,
             title,
             description,
+            stage,
           })
         }
       >
@@ -55,7 +75,7 @@ const MainForm = ({
           <Description>{description && truncatedText(description)}</Description>
           <Date>{timeSinceCreated}</Date>
         </View>
-        <IconContainer>
+        <IconContainer onPress={handleDelete}>
           <MaterialCommunityIcons name="delete" size={24} color="red" />
         </IconContainer>
       </FormContainer>

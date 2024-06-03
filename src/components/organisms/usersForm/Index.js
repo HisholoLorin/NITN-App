@@ -46,7 +46,6 @@ const UsersForm = ({ navigation }) => {
         data={[
           { usertype: "Student" },
           { usertype: "Maintenance" },
-          { usertype: "Management" },
         ]}
         maxHeight={300}
         labelField="usertype"

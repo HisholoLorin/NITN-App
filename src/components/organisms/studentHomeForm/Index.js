@@ -18,9 +18,36 @@ import { useFocusEffect } from "@react-navigation/native";
 //Redux
 import { useDispatch } from "react-redux";
 import { getUserDetails } from "../../../redux/user";
+import { createForm } from "../../../redux/form";
 
 const { width, height } = Dimensions.get("window");
 const MAX_CHARACTERS = 50;
+
+const CustomCheckBox = ({ isChecked, onPress }) => {
+  return (
+    <TouchableOpacity onPress={onPress} style={styles.checkBoxContainer}>
+      <View style={[styles.checkBox, isChecked && styles.checked]}>
+        {isChecked && <Ionicons name="checkmark" size={15} color="white" />}
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const GridItem = ({ item, selected, toggleSelection }) => (
+  <TouchableOpacity
+    style={styles.gridItem}
+    onPress={() => toggleSelection(item.name)}
+  >
+    <View style={styles.checkBoxWrapper}>
+      <CustomCheckBox
+        isChecked={selected}
+        onPress={() => toggleSelection(item.name)}
+      />
+    </View>
+    <Image source={item.image} style={styles.icon} />
+    <Text style={styles.gridText}>{item.label}</Text>
+  </TouchableOpacity>
+);
 
 const StudentHomeForm = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -29,32 +56,6 @@ const StudentHomeForm = ({ navigation }) => {
   useEffect(() => {
     dispatch(getUserDetails({ type: "student" }));
   }, []);
-
-  const CustomCheckBox = ({ isChecked, onPress }) => {
-    return (
-      <TouchableOpacity onPress={onPress} style={styles.checkBoxContainer}>
-        <View style={[styles.checkBox, isChecked && styles.checked]}>
-          {isChecked && <Ionicons name="checkmark" size={15} color="white" />}
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  const GridItem = ({ item, selected, toggleSelection }) => (
-    <TouchableOpacity
-      style={styles.gridItem}
-      onPress={() => toggleSelection(item.name)}
-    >
-      <View style={styles.checkBoxWrapper}>
-        <CustomCheckBox
-          isChecked={selected}
-          onPress={() => toggleSelection(item.name)}
-        />
-      </View>
-      <Image source={item.image} style={styles.icon} />
-      <Text style={styles.gridText}>{item.label}</Text>
-    </TouchableOpacity>
-  );
 
   const items = [
     {
@@ -132,13 +133,18 @@ const StudentHomeForm = ({ navigation }) => {
     console.log("Title:", selectedItem);
     console.log("Description:", description);
     setModalVisible(false);
+    dispatch(createForm({title: selectedItem, description}));
     setDescription("");
   };
 
   return (
     <>
       <View style={styles.container}>
-        <Animatable.View ref={animationRef} animation="slideInUp" useNativeDriver>
+        <Animatable.View
+          ref={animationRef}
+          animation="slideInUp"
+          useNativeDriver
+        >
           <ScrollView contentContainerStyle={styles.grid}>
             {items.map((item) => (
               <GridItem
@@ -245,7 +251,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: width * 0.05,
     overflow: "hidden",
-    padding: width * 0.04
+    padding: width * 0.04,
   },
   grid: {
     flexDirection: "row",
@@ -301,7 +307,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalView: {
-    width: width * 0.9, 
+    width: width * 0.9,
     maxWidth: 400,
     backgroundColor: "white",
     borderRadius: 20,
@@ -357,7 +363,8 @@ const styles = StyleSheet.create({
   charCount: {
     alignSelf: "flex-start",
     marginBottom: height * 0.01,
-    color: "grey",}
+    color: "grey",
+  },
 });
 
 export default StudentHomeForm;
