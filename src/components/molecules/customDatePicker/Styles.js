@@ -13,3 +13,11 @@ export const Container = styled.View`
     paddingHorizontal: ${width * 0.03}px;
     marginBottom: ${height * 0.03}px;
 `;
+
+export const TransparentBlock = styled.View`
+    backgroundColor: rgba(255, 255, 255, 0.1);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    zIndex: 1;
+`;

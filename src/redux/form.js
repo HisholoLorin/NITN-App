@@ -18,14 +18,17 @@ import { runLoader, stopLoader } from "./process";
 
 export const fetchFormList = createAsyncThunk(
   "fetchFormList",
-  async ({ page }) => {
+  async ({ page }, { dispatch }) => {
     try {
+      dispatch(runLoader());
       await temporarySessionEvent();
       const response = await Api.get(getEndPoint(STUDENT_FORM_LIST, page));
       console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error.response.data);
+    } finally {
+      dispatch(stopLoader());
     }
   }
 );

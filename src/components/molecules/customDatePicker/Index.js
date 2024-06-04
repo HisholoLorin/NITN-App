@@ -1,16 +1,16 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import { TouchableWithoutFeedback } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 //Styled Components
-import { Container } from "./Styles";
+import { Container, TransparentBlock } from "./Styles";
 import Input from "../../atoms/input/Index";
 
 //Helper
 import { convertToShortDateFormat } from "../../../helper/dateTimeFormats";
 
-const CustomDatePicker = ({ state, setState }) => {
+const CustomDatePicker = ({ state, setState, edit }) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [date, setDate] = useState(new Date());
 
@@ -23,15 +23,15 @@ const CustomDatePicker = ({ state, setState }) => {
     setState(convertToShortDateFormat(formattedDate));
   };
   return (
-    <TouchableWithoutFeedback onPress={() => setShowDatePicker(true)}>
-      <Container>
-        <FontAwesome name="calendar" size={20} color="#999" />
-
+    <Container>
+      <FontAwesome name="calendar" size={20} color="#999" />
+      {edit === false && <TransparentBlock />}
+      <TouchableOpacity onPress={() => setShowDatePicker(true)}>
         <Input
           placeholder="Date of Birth"
           value={state}
           editable={false}
-          color="#000"
+          color={edit === false ? "#999" : "#000"}
         />
 
         {showDatePicker && (
@@ -43,8 +43,8 @@ const CustomDatePicker = ({ state, setState }) => {
             maximumDate={new Date()}
           />
         )}
-      </Container>
-    </TouchableWithoutFeedback>
+      </TouchableOpacity>
+    </Container>
   );
 };
 

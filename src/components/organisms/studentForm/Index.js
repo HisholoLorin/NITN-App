@@ -2,9 +2,9 @@ import React, { useState, useEffect, useCallback } from "react";
 import { RefreshControl, FlatList } from "react-native";
 
 // Components
-import Spacer from "../../atoms/spacer/Index";
 import MainForm from "../../molecules/mainForm/Index";
 import PaginateLoader from "../../atoms/paginateLoader/Index";
+import FormEmpty from "../../molecules/formEmpty/Index";
 
 // Styled Components
 import { FormContainer } from "./Styles";
@@ -35,20 +35,18 @@ const StudentForm = ({ navigation }) => {
     dispatch(fetchFormList({ page: page + 1 }));
     setPage(page + 1);
   };
+  console.log(formList);
 
   return (
     <FormContainer>
-      {formList && (
+      {formList && formList.length != 0 ? (
         <FlatList
           data={formList}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           renderItem={({ item }) => (
-            <MainForm
-              {...item}
-              navigation={navigation}
-            />
+            <MainForm {...item} navigation={navigation} />
           )}
           keyExtractor={(item) => item?.uuid}
           ListFooterComponent={next ? PaginateLoader : null}
@@ -56,6 +54,8 @@ const StudentForm = ({ navigation }) => {
           onEndReached={next ? onEndReached : null}
           onEndReachedThreshold={0}
         />
+      ) : (
+        <FormEmpty />
       )}
     </FormContainer>
   );

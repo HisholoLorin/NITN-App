@@ -1,17 +1,17 @@
 import { Picker } from "@react-native-picker/picker";
 
 //Styled Components
-import { Container, IconContainer } from "./Styles";
+import { Container, IconContainer, TransparentBlock } from "./Styles";
 
 const isPlaceholder = (value) => {
   return value == "";
 };
 
-const CustomPicker = ({ state, setState, data, icon, placeholder }) => {
+const CustomPicker = ({ state, setState, data, icon, placeholder, edit }) => {
   return (
     <Container>
       <IconContainer>{icon()}</IconContainer>
-
+      {edit === false && <TransparentBlock />}
       <Picker
         selectedValue={state}
         onValueChange={setState}
@@ -31,7 +31,7 @@ const CustomPicker = ({ state, setState, data, icon, placeholder }) => {
                 label={label}
                 value={value ? value : label}
                 style={{ fontSize: 14 }}
-                color="#000"
+                color={edit === false ? "#999" : "#000"}
               />
             );
           })}

@@ -17,6 +17,7 @@ import {
 import CustomInput from "../../../components/molecules/customInput/Index";
 import CustomPicker from "../../../components/molecules/customPicker/Index";
 import CustomDatePicker from "../../../components/molecules/customDatePicker/Index";
+import PrimaryButton from "../../molecules/primaryButton/Index";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
@@ -84,6 +85,10 @@ const ProfileForm = () => {
       address,
     });
   }, []);
+
+  const handlePress = () => {
+    console.log("Save Changes");
+  };
 
   return (
     <>
@@ -168,6 +173,7 @@ const ProfileForm = () => {
               dateOfBirth: value,
             })
           }
+          edit={edit}
         />
 
         {/* Gender */}
@@ -191,6 +197,7 @@ const ProfileForm = () => {
             { label: "Male", value: "male" },
             { label: "Female", value: "female" },
           ]}
+          edit={edit}
         />
 
         {/* Blood Type */}
@@ -273,7 +280,7 @@ const ProfileForm = () => {
             })
           }
           data={department}
-          editable={edit}
+          edit={edit}
         />
 
         {/* Batch */}
@@ -304,6 +311,8 @@ const ProfileForm = () => {
           }
           editable={edit}
         />
+
+        {edit && <PrimaryButton text="Save Changes" onPress={handlePress}/>}
       </ViewContainer>
     </>
   );

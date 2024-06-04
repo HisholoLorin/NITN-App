@@ -18,3 +18,11 @@ export const IconContainer = styled.View`
     justifyContent: center;
     left: ${width * 0.02}px;
 `;
+
+export const TransparentBlock = styled.View`
+    backgroundColor: rgba(255, 255, 255, 0.1);
+    position: absolute;
+    height: 100%;
+    width: ${width}px;
+    zIndex: 1;
+`;
