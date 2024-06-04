@@ -44,7 +44,7 @@ export default (type, params) => {
       return "/maintenance/update/pic/";
     case endpoint.MAINTENANCE_DELETE_PICTURE:
       return "/maintenance/delete/pic/";
-    case endpoint.MAINTENANCE_UPATE_PROFILE:
+    case endpoint.MAINTENANCE_UPDATE_PROFILE:
       return "/maintenance/update/account/";
     case endpoint.MAINTENANCE_FORM_LIST:
       return "/maintenance/list/forms/";

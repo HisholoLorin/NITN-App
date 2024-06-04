@@ -1,29 +1,20 @@
 import React from "react";
-import { View, TouchableWithoutFeedback } from "react-native";
-import SimpleIcon from "react-native-vector-icons/SimpleLineIcons";
-import { useState, useEffect } from "react";
-
-import {
-  AntDesign,
-  Entypo,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  FontAwesome5,
-  FontAwesome6,
-  FontAwesome,
-} from "@expo/vector-icons";
+import { View, TouchableWithoutFeedback, BackHandler } from "react-native";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { BottomSheetModal, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 
 //Components
-import CustomInput from "../../../components/molecules/customInput/Index";
-import CustomPicker from "../../../components/molecules/customPicker/Index";
-import CustomDatePicker from "../../../components/molecules/customDatePicker/Index";
 import PrimaryButton from "../../molecules/primaryButton/Index";
+import ChangePicture from "../../molecules/changePicture/Index";
+import StudentEdit from "./StudentEdit";
+import MaintenanceEdit from "./MaintenanceEdit";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
+import { updateProfile } from "../../../redux/user";
 
 //Helper
-import { convertToShortDateFormat } from "../../../helper/dateTimeFormats";
+import { previousScreen } from "../../../navigations/navigationRef";
 
 //Styled Components
 import {
@@ -35,59 +26,102 @@ import {
 } from "./Styles";
 
 const ProfileForm = () => {
-  const department = [
-    { label: "B.Tech, CE" },
-    { label: "B.Tech, CSE" },
-    { label: "B.Tech, ECE" },
-    { label: "B.Tech, EEE" },
-    { label: "B.Tech, EIE" },
-    { label: "B.Tech, ME" },
-    { label: "M.Tech, CSE" },
-    { label: "M.Tech, EEE" },
-    { label: "M.Sc, SH" },
-  ];
+  const dispatch = useDispatch();
   const [studentForm, setStudentForm] = useState({});
+  const [maintenanceForm, setMaintenanceForm] = useState(false);
   const { userDetails } = useSelector((state) => state.UserReducer);
   const { edit } = useSelector((state) => state.UserReducer);
+  const { user, student, maintenance } = userDetails || {};
+  const { userName, mobileNo, email } = user || {};
   const {
-    user: { userName, mobileNo, email } = {},
-    student: {
-      image,
-      registrationNo,
-      hostelName,
-      deptName,
-      batch,
-      dateOfBirth,
-      gender,
-      bloodType,
-      medicalConditions,
-      guardianMobileNumber,
-      ethnicity,
-      address,
-    } = {},
-  } = userDetails || {};
+    image,
+    registrationNo,
+    hostelName,
+    deptName,
+    batch,
+    dateOfBirth,
+    gender,
+    bloodType,
+    medicalConditions,
+    guardianMobileNumber,
+    ethnicity,
+    address,
+  } = student || {};
+  const { identificationNo, designation, department } = maintenance || {};
 
   useEffect(() => {
-    setStudentForm({
-      userName,
-      mobileNo,
-      email,
-      registrationNo,
-      hostelName,
-      deptName,
-      batch,
-      dateOfBirth,
-      gender,
-      bloodType,
-      medicalConditions,
-      guardianMobileNumber,
-      ethnicity,
-      address,
-    });
+    student &&
+      setStudentForm({
+        userName,
+        mobileNo,
+        email,
+        registrationNo,
+        hostelName,
+        deptName,
+        batch,
+        dateOfBirth,
+        gender,
+        bloodType,
+        medicalConditions,
+        guardianMobileNumber,
+        ethnicity,
+        address,
+      });
+      maintenance &&
+      setMaintenanceForm({
+        userName,
+        mobileNo,
+        email,
+        dateOfBirth: maintenance?.dateOfBirth,
+        image: maintenance?.image,
+        gender: maintenance?.gender,
+        address: maintenance?.address,
+        identificationNo,
+        designation,
+        department,
+      });
   }, []);
 
+  const bottomSheetModalRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+
   const handlePress = () => {
-    console.log("Save Changes");
+    setCurrentIndex(0);
+    bottomSheetModalRef.current?.present();
+  };
+
+  const renderBackdrop = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        {...props}
+        onPress={onBackPress}
+      />
+    ),
+    []
+  );
+
+  const onBackPress = () => {
+    if (bottomSheetModalRef) {
+      bottomSheetModalRef.current?.close();
+      setCurrentIndex(-1);
+      return BackHandler.addEventListener("hardwareBackPress", () => {
+        previousScreen();
+        return true;
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (currentIndex !== -1) {
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+    }
+  }, [currentIndex]);
+
+  const handleSave = () => {
+    student && dispatch(updateProfile({ data: studentForm }));
+    maintenance && dispatch(updateProfile({ data: maintenanceForm }));
   };
 
   return (
@@ -102,217 +136,44 @@ const ProfileForm = () => {
                 : require("../../../../assets/profilePhoto.jpg")
             }
           />
-          <TouchableWithoutFeedback onPress={() => {}}>
+          <TouchableWithoutFeedback onPress={handlePress}>
             <CameraIcon name="camera" />
           </TouchableWithoutFeedback>
         </View>
       </ProfilePictureContainer>
 
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={currentIndex}
+        snapPoints={["25%"]}
+        backgroundStyle={{
+          borderTopRightRadius: 30,
+          borderTopLeftRadius: 30,
+        }}
+        backdropComponent={renderBackdrop}
+        onDismiss={onBackPress}
+      >
+        <ChangePicture onPress={onBackPress} image={image} />
+      </BottomSheetModal>
+
       <ViewContainer>
-        {/* Username */}
-        <CustomInput
-          icon={() => <SimpleIcon name="user" size={20} color="#999" />}
-          placeholder="Username"
-          value={studentForm?.userName}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, userName: value })
-          }
-          editable={edit}
-        />
+        {student && (
+          <StudentEdit
+            studentForm={studentForm}
+            setStudentForm={setStudentForm}
+            edit={edit}
+          />
+        )}
 
-        {/* Registration Number */}
-        <CustomInput
-          icon={() => <AntDesign name="idcard" size={20} color="#999" />}
-          placeholder="Registration No"
-          value={studentForm?.registrationNo}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, registrationNo: value })
-          }
-          keyboardType="number-pad"
-          editable={edit}
-        />
+        {maintenance && (
+          <MaintenanceEdit
+            maintenanceForm={maintenanceForm}
+            setMaintenanceForm={setMaintenanceForm}
+            edit={edit}
+          />
+        )}
 
-        {/* Mobile Number */}
-        <CustomInput
-          icon={() => (
-            <MaterialCommunityIcons name="cellphone" size={20} color="#999" />
-          )}
-          placeholder="Mobile Number"
-          value={studentForm?.mobileNo}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, mobileNo: value })
-          }
-          keyboardType="number-pad"
-          editable={edit}
-        />
-
-        {/* Email */}
-        <CustomInput
-          icon={() => (
-            <MaterialCommunityIcons
-              name="email-outline"
-              size={20}
-              color="#999"
-            />
-          )}
-          placeholder="Email"
-          value={studentForm?.email}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, email: value })
-          }
-          keyboardType="email-address"
-          editable={edit}
-        />
-
-        {/* Date of Birth */}
-        <CustomDatePicker
-          state={convertToShortDateFormat(studentForm?.dateOfBirth)}
-          setState={(value) =>
-            setStudentForm({
-              ...studentForm,
-              dateOfBirth: value,
-            })
-          }
-          edit={edit}
-        />
-
-        {/* Gender */}
-        <CustomPicker
-          placeholder="Gender"
-          icon={() => (
-            <MaterialCommunityIcons
-              name="gender-male-female"
-              size={20}
-              color="#999"
-            />
-          )}
-          state={studentForm?.gender}
-          setState={(value) =>
-            setStudentForm({
-              ...studentForm,
-              gender: value,
-            })
-          }
-          data={[
-            { label: "Male", value: "male" },
-            { label: "Female", value: "female" },
-          ]}
-          edit={edit}
-        />
-
-        {/* Blood Type */}
-        <CustomInput
-          icon={() => <MaterialIcons name="bloodtype" size={20} color="#999" />}
-          placeholder="Blood Type"
-          value={studentForm?.bloodType}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, bloodType: value })
-          }
-          editable={edit}
-        />
-
-        {/* Medical Conditions */}
-        <CustomInput
-          icon={() => (
-            <FontAwesome5 name="briefcase-medical" size={20} color="#999" />
-          )}
-          placeholder="Medical Conditions"
-          value={studentForm?.medicalConditions}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, medicalConditions: value })
-          }
-          editable={edit}
-        />
-
-        {/* Ethnicity */}
-        <CustomInput
-          icon={() => (
-            <FontAwesome6 name="people-group" size={20} color="#999" />
-          )}
-          placeholder="Ethnicity"
-          value={studentForm.ethnicity}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, ethnicity: value })
-          }
-          editable={edit}
-        />
-
-        {/* Address */}
-        <CustomInput
-          icon={() => (
-            <MaterialCommunityIcons
-              name="home-outline"
-              size={20}
-              color="#999"
-            />
-          )}
-          placeholder="Address"
-          value={studentForm?.address}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, address: value })
-          }
-          editable={edit}
-        />
-
-        {/* Guardian's Name */}
-        <CustomInput
-          icon={() => (
-            <MaterialCommunityIcons name="cellphone" size={20} color="#999" />
-          )}
-          placeholder="Guardian's Mobile Number"
-          value={studentForm?.guardianMobileNumber}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, guardianMobileNumber: value })
-          }
-          keyboardType="number-pad"
-          editable={edit}
-        />
-
-        {/* Department */}
-        <CustomPicker
-          placeholder="Department"
-          icon={() => <Entypo name="flow-tree" size={20} color="#999" />}
-          state={studentForm?.deptName}
-          setState={(value) =>
-            setStudentForm({
-              ...studentForm,
-              deptName: value,
-            })
-          }
-          data={department}
-          edit={edit}
-        />
-
-        {/* Batch */}
-        <CustomInput
-          icon={() => (
-            <MaterialCommunityIcons
-              name="file-document-multiple-outline"
-              size={20}
-              color="#999"
-            />
-          )}
-          placeholder="Batch"
-          value={studentForm?.batch}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, batch: value })
-          }
-          keyboardType="number-pad"
-          editable={edit}
-        />
-
-        {/* Hostel Name */}
-        <CustomInput
-          icon={() => <FontAwesome5 name="building" size={20} color="#999" />}
-          placeholder="Hostel Name"
-          value={studentForm?.hostelName}
-          onChangeText={(value) =>
-            setStudentForm({ ...studentForm, hostelName: value })
-          }
-          editable={edit}
-        />
-
-        {edit && <PrimaryButton text="Save Changes" onPress={handlePress}/>}
+        {edit && <PrimaryButton text="Save Changes" onPress={handleSave} />}
       </ViewContainer>
     </>
   );
