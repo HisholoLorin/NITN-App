@@ -87,7 +87,7 @@ const LoginForm = (props) => {
 
       <ForgotPasswordNavLink
         navigation={navigation}
-        color="#EF9F27"
+        color="#F06449"
         size={16}
         text="Forgot Password?"
         routeName="ForgotPassword"
@@ -97,7 +97,7 @@ const LoginForm = (props) => {
         <Description>Don't have an account? </Description>
         <NavLink
           navigation={navigation}
-          color="#EF9F27"
+          color="#F06449"
           size={15}
           text="Signup"
           routeName="Signup"

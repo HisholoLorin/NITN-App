@@ -5,10 +5,10 @@ const { width, height } = Dimensions.get('window');
 
 export const Container = styled.View`
     padding-horizontal: ${width * 0.05}px;
-    padding-top: ${height * 0.08}px;
+    padding-top: ${height * 0.12}px;
     padding-bottom: ${height * 0.05}px;
     border-bottom-right-radius: 30px;
-    background-color: #F8AC3B;
+    background-color: #001F54;
     marginBottom: ${height * 0.02}px;
 `;
 
@@ -23,5 +23,5 @@ export const Bold = styled.Text`
 `;
 
 export const Usertype = styled.Text`
-    color: #6C6C6C;
+    color: #fff;
 `;

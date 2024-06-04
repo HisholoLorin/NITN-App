@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  TouchableOpacity,
   LayoutAnimation,
   Platform,
   StyleSheet,
@@ -8,6 +7,7 @@ import {
   UIManager,
   View,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
 
 if (Platform.OS === "android") {
@@ -16,8 +16,8 @@ if (Platform.OS === "android") {
   }
 }
 
-const status = ["Status 1", "Status 2", "Status 3", "Status 4"];
-const activeColor = "#6a0dad";
+const status = ["Issued", "         Received", "      Dispatched", "Completed"];
+const activeColor = "#F06449";
 const { width, height } = Dimensions.get("window");
 
 export default ({stage}) => {
@@ -37,7 +37,7 @@ export default ({stage}) => {
           <View style={[styles.activeLine, { marginLeft }]} />
         </View>
         {status.map((status, index) => (
-          <TouchableOpacity
+          <TouchableOpacity /* Change to <TouchableOpacity> in Maintenance */
             key={status}
             onPress={() => setActiveIndex(index)}
             style={styles.dot}
@@ -58,7 +58,7 @@ export default ({stage}) => {
               key={status}
               numberOfLines={1}
               style={[
-                index % 2 === 0 ? { top: 20 } : { top: -20 },
+                index % 2 === 0 ? { top: 30 } : { top: -30 },
                 styles.label,
               ]}
             >
@@ -115,6 +115,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   label: {
-    fontSize: width * 0.03,
+    fontSize: width * 0.035,
   },
 });

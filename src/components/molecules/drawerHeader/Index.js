@@ -33,7 +33,7 @@ const DrawerHeader = ({ userDetails, usertype }) => {
 
       <Spacer bottom={1}>
         {/* User Name */}
-        <Bold style={{ fontSize: 21 }}>
+        <Bold style={{ fontSize: 21, color: "#F06449" }}>
           {firstName + " "}
           {firstName !== lastName && (
             <Bold style={{ color: "#6C6C6C" }}>{lastName}</Bold>

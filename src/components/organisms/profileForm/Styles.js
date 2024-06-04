@@ -37,7 +37,7 @@ export const ProfileBackground = styled.View`
   position: absolute;
   height: 120%;
   width: 100%;
-  backgroundColor: purple;
+  backgroundColor: #F06449;
   borderBottomLeftRadius: 40px;
   borderBottomRightRadius: 40px;
 `;

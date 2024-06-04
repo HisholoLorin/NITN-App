@@ -20,7 +20,7 @@ const BottomTabNavigation = ({ navigation }) => {
       <Text
         style={
           focused
-            ? [styles.focus, { fontSize: 12 }]
+            ? [styles.focus, { fontSize: 14 }]
             : [styles.unFocus, { fontSize: 12 }]
         }
       >
@@ -53,7 +53,7 @@ const BottomTabNavigation = ({ navigation }) => {
             renderTabBarIcon("Home", focused, () => (
               <Ionicons
                 name="home"
-                size={20}
+                size={focused ? 27 : 20}
                 style={focused ? styles.focus : styles.unFocus}
               />
             )),
@@ -69,7 +69,7 @@ const BottomTabNavigation = ({ navigation }) => {
             renderTabBarIcon("Form", focused, () => (
               <Ionicons
                 name="document-text-sharp"
-                size={20}
+                size={focused ? 27 : 20}
                 style={focused ? styles.focus : styles.unFocus}
               />
             )),
@@ -81,11 +81,11 @@ const BottomTabNavigation = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   focus: {
-    color: "#F8AC3B",
+    color: "#F06449",
     fontWeight: "bold",
   },
   unFocus: {
-    color: "#4E2B69",
+    color: "#001F54",
     fontWeight: "bold",
   },
 });

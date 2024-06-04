@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   checked: {
-    backgroundColor: "#000",
+    backgroundColor: "#001F54",
   },
   checkBoxWrapper: {
     position: "absolute",
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
 
   /* Issue Complain Button*/
   issueComplainButton: {
-    backgroundColor: "#6a0dad",
+    backgroundColor: "#001F54",
     padding: width * 0.05,
     borderRadius: width * 0.05,
     shadowColor: "#000",
@@ -348,7 +348,7 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.03,
   },
   button: {
-    backgroundColor: "#6a0dad",
+    backgroundColor: "#001F54",
     borderRadius: 10,
     paddingVertical: height * 0.025,
     paddingHorizontal: width * 0.03,
