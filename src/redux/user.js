@@ -14,6 +14,12 @@ import {
   MAINTENANCE_DETAILS,
   MANAGER_DETAILS,
   CONTACT,
+  STUDENT_UPDATE_PICTURE,
+  STUDENT_DELETE_PICTURE,
+  STUDENT_UPDATE_PROFILE,
+  MAINTENANCE_UPDATE_PICTURE,
+  MAINTENANCE_DELETE_PICTURE,
+  MAINTENANCE_UPDATE_PROFILE,
 } from "../constant/endpoint";
 
 //Action
@@ -34,14 +40,16 @@ export const getUserDetails = createAsyncThunk(
       switch (type) {
         case "student":
           response = await Api.get(getEndPoint(STUDENT_DETAILS));
-          return response.data;
+          break;
         case "maintenance":
           response = await Api.get(getEndPoint(MAINTENANCE_DETAILS));
-          return response.data;
+          break;
         case "management":
           response = await Api.get(getEndPoint(MANAGER_DETAILS));
-          return response.data;
+          break;
       }
+      console.log(response.data);
+      return response.data;
     } catch (err) {
       console.log(response.data);
       //return response.data;
@@ -49,29 +57,74 @@ export const getUserDetails = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  "updateProfile",
+  async ({ data }, { dispatch }) => {
+    try {
+      Keyboard.dismiss();
+      dispatch(runLoader());
+      const usertype = await AsyncStorage.getItem("UserType");
+      await temporarySessionEvent();
+      let response;
+      switch (usertype) {
+        case "student":
+          response = await Api.put(getEndPoint(STUDENT_UPDATE_PROFILE), {...data});
+          break;
+        case "maintenance":
+          response = await Api.put(
+            getEndPoint(MAINTENANCE_UPDATE_PROFILE),
+            {...data}
+          );
+          break;
+      }
+      dispatch(getUserDetails({ type: usertype }));
+      console.log(response.data);
+    } catch (err) {
+      console.log(err.response.data);
+    } finally {
+      dispatch(stopLoader());
+      dispatch(setEdit(false));
+    }
+  }
+);
+
 export const updateProfilePicture = createAsyncThunk(
   "updateProfilePicture",
-  async ({ result, userName }, { dispatch }) => {
-    let random = " {" + (Math.random() + 1).toString(36).substring(7) + "}";
+  async ({ result, onPress }, { dispatch }) => {
     let image = new FormData();
     const content = result.assets[0];
+    const fileName = content.uri.replace(/^.*[\\\/]/, "");
     image.append("image", {
       uri:
         Platform.OS === "ios"
           ? content.uri.replace("file://", "")
           : content.uri,
-      name: userName + random + "." + content.mimeType.split("/")[1],
+      name: fileName,
       type: content.mimeType,
     });
+    onPress();
     try {
       dispatch(runLoader());
-      const response = await Api.put(
-        getEndPoint(UPDATE_PROFILE_PICTURE),
-        image,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      console.log(response.data);
-      return response.data;
+      const usertype = await AsyncStorage.getItem("UserType");
+      await temporarySessionEvent();
+      let response;
+      switch (usertype) {
+        case "student":
+          response = await Api.put(getEndPoint(STUDENT_UPDATE_PICTURE), image, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          break;
+        case "maintenance":
+          response = await Api.put(
+            getEndPoint(MAINTENANCE_UPDATE_PICTURE),
+            image,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+          break;
+      }
+      dispatch(getUserDetails({ type: usertype }));
     } catch (err) {
       const response = await temporarySessionEvent(err, PROFILE_PICTURE_UPDATE);
       return response.data;
@@ -83,15 +136,24 @@ export const updateProfilePicture = createAsyncThunk(
 
 export const deleteProfilePicture = createAsyncThunk(
   "deleteProfilePicture",
-  async ({}, { dispatch }) => {
+  async (_, { dispatch }) => {
     try {
       dispatch(runLoader());
-      const response = await Api.delete(getEndPoint(DELETE_PROFILE_PICTURE));
+      const usertype = await AsyncStorage.getItem("UserType");
+      await temporarySessionEvent();
+      let response;
+      switch (usertype) {
+        case "student":
+          response = await Api.delete(getEndPoint(STUDENT_DELETE_PICTURE));
+          break;
+        case "maintenance":
+          response = await Api.delete(getEndPoint(MAINTENANCE_DELETE_PICTURE));
+          break;
+      }
+      dispatch(getUserDetails({ type: usertype }));
       console.log(response.data);
-      return response.data;
     } catch (err) {
-      const response = await temporarySessionEvent(err, DELETE_PROFILE_PICTURE);
-      return response.data;
+      console.log(err.response.data);
     } finally {
       dispatch(stopLoader());
     }

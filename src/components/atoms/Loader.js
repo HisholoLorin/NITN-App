@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgb(255,255,255)",
     height: Dimensions.get('window').height + 100,
     zIndex: 1,
   },

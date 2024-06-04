@@ -18,11 +18,8 @@ import {
   deleteProfilePicture,
 } from "../../../redux/user";
 
-const ChangePicture = ({ onPress }) => {
+const ChangePicture = ({ onPress, image }) => {
   const dispatch = useDispatch();
-  const { userDetails } = useSelector((state) => state.UserReducer);
-  const { userName, image } = userDetails;
-
   const camera = async () => {
     try {
       //await ImagePicker.requestCameraPermissionsAsync();
@@ -32,11 +29,9 @@ const ChangePicture = ({ onPress }) => {
         aspect: [1, 1],
         UIImagePickerControllerQualityType: 4,
       });
-      dispatch(updateProfilePicture({ result, userName }));
+      dispatch(updateProfilePicture({ result, onPress }));
     } catch (error) {
       console.log(error);
-    } finally {
-      onPress();
     }
   };
 
@@ -50,12 +45,9 @@ const ChangePicture = ({ onPress }) => {
         UIImagePickerControllerQualityType: 4,
       });
 
-      //`data:${result.assets[0].type};base64,${result.assets[0].base64}`;
-      dispatch(updateProfilePicture({ result, userName }));
+      dispatch(updateProfilePicture({ result, onPress }));
     } catch (error) {
       console.log(error);
-    } finally {
-      onPress();
     }
   };
 
@@ -65,7 +57,7 @@ const ChangePicture = ({ onPress }) => {
         text: "Yes",
         onPress: () => {
           try {
-            dispatch(deleteProfilePicture({ userName }));
+            dispatch(deleteProfilePicture());
           } catch (error) {
             console.log(error);
           } finally {
