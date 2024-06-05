@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Alert } from "react-native";
 import Api from "../api/API";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //Helper Functions
 import temporarySessionEvent from "../helper/temporarySessionEvent";
@@ -11,6 +12,7 @@ import {
   STUDENT_FORM_LIST,
   STUDENT_CREATE_FORM,
   STUDENT_DELETE_FORM,
+  MANAGER_FORM_LIST,
 } from "../constant/endpoint";
 
 //Action
@@ -21,12 +23,28 @@ export const fetchFormList = createAsyncThunk(
   async ({ page }, { dispatch }) => {
     try {
       dispatch(runLoader());
+      const usertype = await AsyncStorage.getItem("UserType");
       await temporarySessionEvent();
-      const response = await Api.get(getEndPoint(STUDENT_FORM_LIST, page));
+      console.log(usertype);
+      let response;
+      switch (usertype) {
+        case "student":
+          response = await Api.get(getEndPoint(STUDENT_FORM_LIST, page));
+          break;
+        case "management":
+          response = await Api.get(getEndPoint(MANAGER_FORM_LIST, page));
+          break;
+      }
       console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error.response.data);
+      if (!err.response)
+        Alert.alert("Alert!", "No Internet Connection", [
+          {
+            text: "Ok",
+          },
+        ]);
     } finally {
       dispatch(stopLoader());
     }
@@ -52,6 +70,12 @@ export const createForm = createAsyncThunk(
       dispatch(fetchFormList({ page: 1 }));
     } catch (error) {
       console.log(error.response.data);
+      if (!err.response)
+        Alert.alert("Alert!", "No Internet Connection", [
+          {
+            text: "Ok",
+          },
+        ]);
     } finally {
       dispatch(stopLoader());
     }
@@ -69,6 +93,12 @@ export const deleteForm = createAsyncThunk(
       dispatch(fetchFormList({ page: 1 }));
     } catch (error) {
       console.log(error.response.data);
+      if (!err.response)
+        Alert.alert("Alert!", "No Internet Connection", [
+          {
+            text: "Ok",
+          },
+        ]);
     } finally {
       dispatch(stopLoader());
     }

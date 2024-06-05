@@ -53,20 +53,14 @@ export default (type, params) => {
     //Manager
     case endpoint.MANAGER_DETAILS:
       return "/management/account/details/";
-    case endpoint.MANAGER_UPDATE_PICTURE:
-      return "/management/update/pic/";
-    case endpoint.MANAGER_DELETE_PICTURE:
-      return "/management/delete/pic/";
-    case endpoint.MANAGER_UPDATE_PROFILE:
-      return "/management/update/account/";
     case endpoint.MANAGER_FORM_LIST:
       return "/management/list/forms/";
     case endpoint.STUDENT_LIST:
       return "/management/list/student/";
     case endpoint.MAINTENANCE_LIST:
       return "/management/list/maintenance/";
-    case endpoint.MANAGER_LIST:
-      return "/management/list/management/";
+    // case endpoint.MANAGER_LIST:
+    //   return "/management/list/management/";
     default:
       return null;
   }

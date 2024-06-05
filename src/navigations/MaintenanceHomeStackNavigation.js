@@ -1,6 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { useSelector } from "react-redux";
 
 //Components
 import BackButton from "../components/atoms/backButton/Index";
@@ -15,7 +14,6 @@ import { previousScreen } from "./navigationRef";
 const MaintenanceHomeStack = createStackNavigator();
 
 const MaintenanceHomeStackNavigation = ({ navigation }) => {
-  const { userDetails } = useSelector((state) => state.UserReducer);
   return (
     <MaintenanceHomeStack.Navigator
       initialRouteName="MaintenanceHome"
@@ -30,7 +28,6 @@ const MaintenanceHomeStackNavigation = ({ navigation }) => {
         options={{
           headerLeft: () => (
             <DrawerButton
-              image={userDetails?.image}
               onPress={() => navigation.openDrawer()}
             />
           ),

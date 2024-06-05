@@ -20,6 +20,8 @@ import {
   MAINTENANCE_UPDATE_PICTURE,
   MAINTENANCE_DELETE_PICTURE,
   MAINTENANCE_UPDATE_PROFILE,
+  STUDENT_LIST,
+  MAINTENANCE_LIST,
 } from "../constant/endpoint";
 
 //Action
@@ -30,32 +32,35 @@ import { isMobileNumber, isEmail, isDob } from "../helper/auth";
 
 //1st parameter : prefix for the generated action types
 //2nd parameter : a function that returns a promise of the value we want to fetch
-export const getUserDetails = createAsyncThunk(
-  "getUserDetails",
-  async ({ type }) => {
-    console.log("User Details trigger");
-    try {
-      await temporarySessionEvent();
-      let response;
-      switch (type) {
-        case "student":
-          response = await Api.get(getEndPoint(STUDENT_DETAILS));
-          break;
-        case "maintenance":
-          response = await Api.get(getEndPoint(MAINTENANCE_DETAILS));
-          break;
-        case "management":
-          response = await Api.get(getEndPoint(MANAGER_DETAILS));
-          break;
-      }
-      console.log(response.data);
-      return response.data;
-    } catch (err) {
-      console.log(response.data);
-      //return response.data;
+export const getUserDetails = createAsyncThunk("getUserDetails", async () => {
+  console.log("User Details trigger");
+  try {
+    await temporarySessionEvent();
+    let response;
+    const usertype = await AsyncStorage.getItem("UserType");
+    switch (usertype) {
+      case "student":
+        response = await Api.get(getEndPoint(STUDENT_DETAILS));
+        break;
+      case "maintenance":
+        response = await Api.get(getEndPoint(MAINTENANCE_DETAILS));
+        break;
+      case "management":
+        response = await Api.get(getEndPoint(MANAGER_DETAILS));
+        break;
     }
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    console.log(response.data);
+    if (!err.response)
+      Alert.alert("Alert!", "No Internet Connection", [
+        {
+          text: "Ok",
+        },
+      ]);
   }
-);
+});
 
 export const updateProfile = createAsyncThunk(
   "updateProfile",
@@ -68,19 +73,26 @@ export const updateProfile = createAsyncThunk(
       let response;
       switch (usertype) {
         case "student":
-          response = await Api.put(getEndPoint(STUDENT_UPDATE_PROFILE), {...data});
+          response = await Api.put(getEndPoint(STUDENT_UPDATE_PROFILE), {
+            ...data,
+          });
           break;
         case "maintenance":
-          response = await Api.put(
-            getEndPoint(MAINTENANCE_UPDATE_PROFILE),
-            {...data}
-          );
+          response = await Api.put(getEndPoint(MAINTENANCE_UPDATE_PROFILE), {
+            ...data,
+          });
           break;
       }
-      dispatch(getUserDetails({ type: usertype }));
+      dispatch(getUserDetails());
       console.log(response.data);
     } catch (err) {
       console.log(err.response.data);
+      if (!err.response)
+        Alert.alert("Alert!", "No Internet Connection", [
+          {
+            text: "Ok",
+          },
+        ]);
     } finally {
       dispatch(stopLoader());
       dispatch(setEdit(false));
@@ -124,10 +136,15 @@ export const updateProfilePicture = createAsyncThunk(
           );
           break;
       }
-      dispatch(getUserDetails({ type: usertype }));
+      dispatch(getUserDetails());
     } catch (err) {
-      const response = await temporarySessionEvent(err, PROFILE_PICTURE_UPDATE);
-      return response.data;
+      console.log(err.response.data);
+      if (!err.response)
+        Alert.alert("Alert!", "No Internet Connection", [
+          {
+            text: "Ok",
+          },
+        ]);
     } finally {
       dispatch(stopLoader());
     }
@@ -150,8 +167,39 @@ export const deleteProfilePicture = createAsyncThunk(
           response = await Api.delete(getEndPoint(MAINTENANCE_DELETE_PICTURE));
           break;
       }
-      dispatch(getUserDetails({ type: usertype }));
+      dispatch(getUserDetails());
       console.log(response.data);
+    } catch (err) {
+      console.log(err.response.data);
+      if (!err.response)
+        Alert.alert("Alert!", "No Internet Connection", [
+          {
+            text: "Ok",
+          },
+        ]);
+    } finally {
+      dispatch(stopLoader());
+    }
+  }
+);
+
+export const getUserList = createAsyncThunk(
+  "getUserList",
+  async ({ page, usertype }, { dispatch }) => {
+    try {
+      dispatch(runLoader());
+      await temporarySessionEvent();
+      let response;
+      switch (usertype) {
+        case "Student":
+          response = await Api.get(getEndPoint(STUDENT_LIST, page));
+          break;
+        case "Maintenance":
+          response = await Api.get(getEndPoint(MAINTENANCE_LIST, page));
+          break;
+      }
+      console.log(response.data);
+      return response.data;
     } catch (err) {
       console.log(err.response.data);
     } finally {
@@ -182,6 +230,7 @@ const userSlice = createSlice({
     next: null,
     edit: false,
     error: null,
+    userList: null,
   },
   reducers: {
     clearError: (state) => {
@@ -218,7 +267,12 @@ const userSlice = createSlice({
       .addCase(contact.fulfilled, (state, action) => {
         state.contactList = action?.payload?.results;
         state.next = action?.payload?.next;
-      });
+      })
+      //User List
+      .addCase(getUserList.fulfilled, (state, action) => {
+        state.userList = action?.payload?.results;
+        state.next = action?.payload?.next;
+      })
   },
 });
 

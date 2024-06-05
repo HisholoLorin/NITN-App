@@ -11,7 +11,7 @@ import Loader from "./src/components/atoms/Loader";
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <StatusBar style="light" backgroundColor="#001F54"/>
+      <StatusBar style="light" backgroundColor="black"/>
       <Provider store={store}>
         <BottomSheetModalProvider>
           <MenuProvider>

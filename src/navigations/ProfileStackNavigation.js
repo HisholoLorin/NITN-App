@@ -13,11 +13,11 @@ import { previousScreen } from "./navigationRef";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
-import { setEdit } from "../redux/user";
+import user, { setEdit } from "../redux/user";
 
 const ProfileStack = createStackNavigator();
 
-const ProfileStackNavigation = ({ navigation }) => {
+const ProfileStackNavigation = () => {
   const { edit } = useSelector((state) => state.UserReducer);
   const dispatch = useDispatch();
   return (

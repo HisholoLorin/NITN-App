@@ -99,7 +99,7 @@ const LoginForm = (props) => {
           navigation={navigation}
           color="#F06449"
           size={15}
-          text="Signup"
+          text="Sign up"
           routeName="Signup"
         />
       </SignupTextContainer>

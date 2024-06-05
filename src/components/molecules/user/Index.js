@@ -5,9 +5,9 @@ import Spacer from "../../atoms/spacer/Index";
 
 import { TextContainer, IconView } from "./Styles";
 
-const User = ({ item, backgroundColor, navigation }) => {
-  const { fullName, uuid } = item;
-  const name = fullName.split(" ");
+const User = ({ user, student, maintenance, backgroundColor, navigation }) => {
+  const { userName } = user || {};
+  const name = userName.split(" ");
   const firstInitial = name[0][0];
   let lastInitial = null;
   if (name.length - 1 != 0) lastInitial = name[name.length - 1][0];
@@ -16,8 +16,9 @@ const User = ({ item, backgroundColor, navigation }) => {
     <Spacer>
       <TouchableOpacity
         style={{ flexDirection: "row" }}
-        key={uuid}
-        onPress={() => navigation.navigate("UserProfile", { ...item })}
+        onPress={() =>
+          navigation.navigate("UserProfile", { user, student, maintenance })
+        }
       >
         <IconView backgroundColor={backgroundColor}>
           <Text
@@ -31,7 +32,7 @@ const User = ({ item, backgroundColor, navigation }) => {
           </Text>
         </IconView>
         <TextContainer>
-          <Text style={{ fontSize: 18 }}>{fullName}</Text>
+          <Text style={{ fontSize: 18 }}>{userName}</Text>
         </TextContainer>
       </TouchableOpacity>
     </Spacer>

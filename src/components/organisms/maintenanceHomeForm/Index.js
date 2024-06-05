@@ -20,7 +20,7 @@ const MaintenanceHormForm = ({ navigation }) => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(getUserDetails({ type: "maintenance" }));
+    dispatch(getUserDetails());
     dispatch(fetchFormList({ page }));
   }, []);
 
