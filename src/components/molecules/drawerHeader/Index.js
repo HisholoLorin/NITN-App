@@ -8,7 +8,7 @@ import { Container, ProfilePicture, Bold, Usertype } from "./Styles";
 
 const DrawerHeader = ({ userDetails, usertype }) => {
   const { user, student } = userDetails || {};
-  const { userName } = user || {};
+  const { userName } = user || userDetails || {};
   const { image } = student || {};
   // First name and Last name Logic
   const temp = userName?.split(" ");

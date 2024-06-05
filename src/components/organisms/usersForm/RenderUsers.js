@@ -7,9 +7,11 @@ import { getColor } from "../../../helper/getColor";
 
 const RenderUsers = ({ item, index, userList, navigation }) => {
   let showInitial = true;
-  const initialLetter = item?.fullName.charAt(0).toUpperCase();
+  const { user, student, maintenance } = item || {};
+  console.log(item);
+  const initialLetter = user?.userName.charAt(0).toUpperCase();
   for (let i = 0; i < userList.length; i++) {
-    if (userList[i].fullName.charAt(0).toUpperCase() === initialLetter) {
+    if (userList[i]?.user?.userName.charAt(0).toUpperCase() === initialLetter) {
       if (i === index) showInitial = true;
       else showInitial = false;
       break;
@@ -19,7 +21,9 @@ const RenderUsers = ({ item, index, userList, navigation }) => {
     <>
       {showInitial && <Text style={{ fontSize: 18 }}>{initialLetter}</Text>}
       <User
-        item={item}
+        user={user}
+        student={student}
+        maintenance={maintenance}
         backgroundColor={getColor(index)}
         navigation={navigation}
       />

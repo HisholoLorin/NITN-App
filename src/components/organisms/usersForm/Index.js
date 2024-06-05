@@ -12,41 +12,30 @@ import { FormContainer, StyledIcon, IconContainer } from "./Styles";
 
 //Redux
 import { useSelector, useDispatch } from "react-redux";
-//import { users } from "../../../../redux/users";
+import { getUserList } from "../../../redux/user";
 
 const UsersForm = ({ navigation }) => {
   const [page, setPage] = useState(1);
-  //const { userList, next } = useSelector((state) => state.UserReducer);
+  const { userList, next } = useSelector((state) => state.UserReducer);
   const [usertype, setUsertype] = useState("Student");
 
-  const userList = [
-    {
-      fullName: "John Doe",
-      uuid: "123",
-    },
-  ];
-  const next = null;
-
   const dispatch = useDispatch();
-
+  console.log(userList);
   useEffect(() => {
-    //!userList && dispatch(users({ page }));
-  }, []);
+    dispatch(getUserList({ page, usertype }));
+  }, [usertype]);
 
   // Pagination
   const onEndReached = () => {
     setPage(page + 1);
-    //dispatch(users({ page: page + 1 }));
+    dispatch(getUserList({ page: page + 1, usertype }));
   };
 
   return (
     <FormContainer>
       <Dropdown
         style={styles.dropdown}
-        data={[
-          { usertype: "Student" },
-          { usertype: "Maintenance" },
-        ]}
+        data={[{ usertype: "Student" }, { usertype: "Maintenance" }]}
         maxHeight={300}
         labelField="usertype"
         valueField="usertype"
@@ -63,15 +52,17 @@ const UsersForm = ({ navigation }) => {
       {userList && (
         <FlatList
           data={userList}
-          renderItem={({ item, index }) => (
-            <RenderUsers
-              item={item}
-              index={index}
-              userList={userList}
-              navigation={navigation}
-            />
-          )}
-          keyExtractor={(item) => item?.uuid}
+          renderItem={({ item, index }) => {
+            return (
+              <RenderUsers
+                item={item}
+                index={index}
+                userList={userList}
+                navigation={navigation}
+              />
+            );
+          }}
+          keyExtractor={(item) => item?.user?.uuid}
           ListFooterComponent={next ? PaginateLoader : null}
           showsVerticalScrollIndicator={false}
           onEndReached={next ? onEndReached : null}

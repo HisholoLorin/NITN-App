@@ -7,8 +7,8 @@ const PaginateLoader = () => {
   return (
     <Container>
       <Image
-        source={require("../../../../assets/Loader/paginateLoader.gif")}
-        style={{ height: 80, width: 80 }}
+        source={require("../../../../assets/Loader/Circle Loader.gif")}
+        style={{ height: 130, width: 130 }}
       />
     </Container>
   );

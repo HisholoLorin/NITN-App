@@ -28,6 +28,7 @@ const MainForm = ({
   timeSinceCreated,
   stage,
   navigation,
+  hasDeleteOption,
 }) => {
   const dispatch = useDispatch();
 
@@ -75,9 +76,9 @@ const MainForm = ({
           <Description>{description && truncatedText(description)}</Description>
           <Date>{timeSinceCreated}</Date>
         </View>
-        <IconContainer onPress={handleDelete}>
+        {hasDeleteOption && <IconContainer onPress={handleDelete}>
           <MaterialCommunityIcons name="delete" size={24} color="red" />
-        </IconContainer>
+        </IconContainer>}
       </FormContainer>
     </Animatable.View>
   );

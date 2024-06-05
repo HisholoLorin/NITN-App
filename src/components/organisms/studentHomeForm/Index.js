@@ -54,7 +54,7 @@ const StudentHomeForm = ({ navigation }) => {
   const animationRef = useRef(null);
 
   useEffect(() => {
-    dispatch(getUserDetails({ type: "student" }));
+    dispatch(getUserDetails());
   }, []);
 
   const items = [
@@ -133,7 +133,7 @@ const StudentHomeForm = ({ navigation }) => {
     console.log("Title:", selectedItem);
     console.log("Description:", description);
     setModalVisible(false);
-    dispatch(createForm({title: selectedItem, description}));
+    dispatch(createForm({ title: selectedItem, description }));
     setDescription("");
   };
 
@@ -200,7 +200,7 @@ const StudentHomeForm = ({ navigation }) => {
 
                   <TextInput
                     style={styles.textArea}
-                    placeholder="Description"
+                    placeholder={"Description"}
                     placeholderTextColor="#999"
                     multiline
                     numberOfLines={4}

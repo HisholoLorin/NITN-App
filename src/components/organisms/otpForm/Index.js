@@ -21,18 +21,18 @@ import { previousScreen } from "../../../navigations/navigationRef";
 
 const OTPForm = (props) => {
   const { navigation, route } = props;
-  const { userName } = route.params;
+  const { email } = route.params;
   const [otp, setOTP] = useState(["", "", "", ""]);
   const dispatch = useDispatch();
 
   const verifyOTPAction = () => {
-    dispatch(verifyOTP({ otp, userName }));
+    dispatch(verifyOTP({ otp, email }));
   };
 
   const { error } = useSelector((state) => state.AuthReducer);
 
   const resendOTP = () => {
-    dispatch(forgotPassword({ userName }));
+    dispatch(forgotPassword({ email }));
     setOTP(["", "", "", ""]);
   };
 
@@ -43,7 +43,7 @@ const OTPForm = (props) => {
       <EditContainer
         onPress={previousScreen}
         icon="pencil"
-        text={userName}
+        text={email}
         size={18}
       />
       <OTPCodeInput otp={otp} setOTP={setOTP} />

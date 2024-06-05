@@ -16,16 +16,19 @@ import { changePassword } from "../../../redux/auth";
 import { FormContainer } from "./Styles";
 
 const ResetPasswordForm = ({ route }) => {
+  const { email, otp } = route.params;
   const [password, setPassword] = useState("");
-  const [retypePassword, setRetypePassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
   const { error } = useSelector((state) => state.AuthReducer);
 
   const navigateTo = () => {
     dispatch(
       changePassword({
+        email,
+        otp,
         password,
-        retypePassword,
+        confirmPassword,
       })
     );
   };
@@ -43,10 +46,10 @@ const ResetPasswordForm = ({ route }) => {
       <PasswordInput
         label="Confirm Password"
         placeholder="Re-Enter your password"
-        value={retypePassword}
-        onChangeText={setRetypePassword}
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
       />
-      <Error>{error}</Error>
+      {error && <Error>{error}</Error>}
       <PrimaryButton text="Reset Password" onPress={navigateTo} />
     </FormContainer>
   );

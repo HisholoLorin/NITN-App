@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { RefreshControl, FlatList } from "react-native";
 
 // Components
@@ -9,17 +9,21 @@ import FormEmpty from "../../molecules/formEmpty/Index";
 // Styled Components
 import { FormContainer } from "./Styles";
 
-// Redux
+//Redux
 import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails } from "../../../redux/user";
 import { fetchFormList } from "../../../redux/form";
 
-const StudentForm = ({ navigation }) => {
+const ManagerHomeForm = ({ navigation }) => {
   const dispatch = useDispatch();
-  const [refreshing, setRefreshing] = useState(false);
+  const { formList, next } = useSelector((state) => state.FormReducer);
   const [page, setPage] = useState(1);
+  const [refreshing, setRefreshing] = useState(false);
+  console.log(formList, next);
 
   useEffect(() => {
-    dispatch(fetchFormList({ page }));
+    dispatch(getUserDetails());
+    dispatch(fetchFormList({ page: 1 }));
   }, []);
 
   const onRefresh = useCallback(() => {
@@ -29,13 +33,10 @@ const StudentForm = ({ navigation }) => {
     setRefreshing(false);
   }, []);
 
-  const { formList, next } = useSelector((state) => state.FormReducer);
-
   const onEndReached = () => {
     dispatch(fetchFormList({ page: page + 1 }));
     setPage(page + 1);
   };
-  console.log(formList);
 
   return (
     <FormContainer>
@@ -46,7 +47,7 @@ const StudentForm = ({ navigation }) => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
           renderItem={({ item }) => (
-            <MainForm {...item} navigation={navigation} hasDeleteOption={true}/>
+            <MainForm {...item} navigation={navigation} />
           )}
           keyExtractor={(item) => item?.uuid}
           ListFooterComponent={next ? PaginateLoader : null}
@@ -61,4 +62,4 @@ const StudentForm = ({ navigation }) => {
   );
 };
 
-export default StudentForm;
+export default ManagerHomeForm;

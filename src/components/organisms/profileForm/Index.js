@@ -25,12 +25,12 @@ import {
   ProfileBackground,
 } from "./Styles";
 
-const ProfileForm = () => {
+const ProfileForm = ({ route }) => {
+  
   const dispatch = useDispatch();
   const [studentForm, setStudentForm] = useState({});
   const [maintenanceForm, setMaintenanceForm] = useState(false);
-  const { userDetails } = useSelector((state) => state.UserReducer);
-  const { edit } = useSelector((state) => state.UserReducer);
+  const { edit, userDetails } = useSelector((state) => state.UserReducer);
   const { user, student, maintenance } = userDetails || {};
   const { userName, mobileNo, email } = user || {};
   const {
@@ -48,38 +48,39 @@ const ProfileForm = () => {
     address,
   } = student || {};
   const { identificationNo, designation, department } = maintenance || {};
+  const studentDetails = {
+    userName,
+    mobileNo,
+    email,
+    registrationNo,
+    hostelName,
+    deptName,
+    batch,
+    dateOfBirth,
+    gender,
+    bloodType,
+    medicalConditions,
+    guardianMobileNumber,
+    ethnicity,
+    address,
+  };
+
+  const maintenanceDetails = {
+    userName,
+    mobileNo,
+    email,
+    dateOfBirth: maintenance?.dateOfBirth,
+    image: maintenance?.image,
+    gender: maintenance?.gender,
+    address: maintenance?.address,
+    identificationNo,
+    designation,
+    department,
+  };
 
   useEffect(() => {
-    student &&
-      setStudentForm({
-        userName,
-        mobileNo,
-        email,
-        registrationNo,
-        hostelName,
-        deptName,
-        batch,
-        dateOfBirth,
-        gender,
-        bloodType,
-        medicalConditions,
-        guardianMobileNumber,
-        ethnicity,
-        address,
-      });
-      maintenance &&
-      setMaintenanceForm({
-        userName,
-        mobileNo,
-        email,
-        dateOfBirth: maintenance?.dateOfBirth,
-        image: maintenance?.image,
-        gender: maintenance?.gender,
-        address: maintenance?.address,
-        identificationNo,
-        designation,
-        department,
-      });
+    student && setStudentForm(studentDetails);
+    maintenance && setMaintenanceForm(maintenanceDetails);
   }, []);
 
   const bottomSheetModalRef = useRef(null);

@@ -8,8 +8,8 @@ export default () => {
     return (
       <View style={styles.loader}>
           <Image
-            source={require("../../../assets/Loader/processing-circle.gif")}
-            style={{ height: 70, width: 70 }}
+            source={require("../../../assets/Loader/Dots Loader.gif")}
+            style={{ height: 100, width: 100 }}
           />
       </View>
     );
