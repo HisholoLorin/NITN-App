@@ -13,8 +13,9 @@ import { FormContainer } from "./Styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../../redux/user";
 import { fetchFormList } from "../../../redux/form";
+import FormEmpty from "../../molecules/formEmpty/Index";
 
-const MaintenanceHormForm = ({ navigation }) => {
+const MaintenanceHomeForm = ({ navigation }) => {
   const dispatch = useDispatch();
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
@@ -40,7 +41,7 @@ const MaintenanceHormForm = ({ navigation }) => {
 
   return (
     <FormContainer>
-      {formList && (
+      {formList && formList.length != 0 ? (
         <FlatList
           data={formList}
           refreshControl={
@@ -55,9 +56,11 @@ const MaintenanceHormForm = ({ navigation }) => {
           onEndReached={next ? onEndReached : null}
           onEndReachedThreshold={0}
         />
+      ) : (
+        <FormEmpty />
       )}
     </FormContainer>
   );
 };
 
-export default MaintenanceHormForm;
+export default MaintenanceHomeForm;

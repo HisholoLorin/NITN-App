@@ -23,6 +23,8 @@ const truncatedText = (text, length = 30) => {
 
 const MainForm = ({
   uuid,
+  userName,
+  hostelName,
   title,
   description,
   timeSinceCreated,
@@ -65,6 +67,8 @@ const MainForm = ({
       <FormContainer
         onPress={() =>
           navigation.navigate("StudentFormDetails", {
+            userName,
+            hostelName,
             title,
             description,
             stage,

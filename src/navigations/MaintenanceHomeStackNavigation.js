@@ -7,6 +7,7 @@ import DrawerButton from "../components/atoms/drawerButton/Index";
 
 // Screens
 import MaintenanceHomeScreen from "../screens/drawer/maintenanceHomeStack/MaintenanceHomeScreen";
+import StudentFormDetailsScreen from "../screens/drawer/studentBottomTab/studentFormStack/StudentFormDetails";
 
 //helper
 import { previousScreen } from "./navigationRef";
@@ -27,11 +28,20 @@ const MaintenanceHomeStackNavigation = ({ navigation }) => {
         component={MaintenanceHomeScreen}
         options={{
           headerLeft: () => (
-            <DrawerButton
-              onPress={() => navigation.openDrawer()}
-            />
+            <DrawerButton onPress={() => navigation.openDrawer()} />
           ),
           title: "Home",
+        }}
+      />
+
+      <MaintenanceHomeStack.Screen
+        name="StudentFormDetails"
+        component={StudentFormDetailsScreen}
+        options={{
+          headerLeft: () => (
+            <DrawerButton onPress={() => navigation.openDrawer()} />
+          ),
+          title: "Student Form",
         }}
       />
     </MaintenanceHomeStack.Navigator>
