@@ -13,6 +13,7 @@ import {
   STUDENT_CREATE_FORM,
   STUDENT_DELETE_FORM,
   MANAGER_FORM_LIST,
+  MAINTENANCE_FORM_LIST,
 } from "../constant/endpoint";
 
 //Action
@@ -21,6 +22,7 @@ import { runLoader, stopLoader } from "./process";
 export const fetchFormList = createAsyncThunk(
   "fetchFormList",
   async ({ page }, { dispatch }) => {
+    console.log(page);
     try {
       dispatch(runLoader());
       const usertype = await AsyncStorage.getItem("UserType");
@@ -30,6 +32,9 @@ export const fetchFormList = createAsyncThunk(
       switch (usertype) {
         case "student":
           response = await Api.get(getEndPoint(STUDENT_FORM_LIST, page));
+          break;
+        case "maintenance":
+          response = await Api.get(getEndPoint(MAINTENANCE_FORM_LIST, page));
           break;
         case "management":
           response = await Api.get(getEndPoint(MANAGER_FORM_LIST, page));

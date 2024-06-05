@@ -2,45 +2,62 @@ import React from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import StatusProgress from "./StatusProgress";
 
+//Component
+import Spacer from "../../atoms/spacer/Index";
+
+//Styled
+import { FormContainer } from "./Styles";
+
 const { width, height } = Dimensions.get("window");
 
 const StudentFormDetails = ({ route }) => {
   const {
+    userName = "Empty",
+    hostelName = "Empty",
     title = "No title provided",
     description = "No description provided",
-    stage
+    stage,
   } = route.params;
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Title:</Text>
-      <Text style={styles.value}>{title}</Text>
+    <FormContainer>
+      <Spacer>
+        <Text style={styles.label}>Username:</Text>
+        <Text style={styles.value}>{userName}</Text>
+      </Spacer>
 
-      <Text style={styles.label}>Description:</Text>
-      <Text style={styles.value}>{description}</Text>
+      <Spacer>
+        <Text style={styles.label}>Hostel Name:</Text>
+        <Text style={styles.value}>{hostelName}</Text>
+      </Spacer>
 
-      <Text style={styles.label}>Status Progress:</Text>
-      <StatusProgress stage={stage}/>
-    </View>
+      <Spacer>
+        <Text style={styles.label}>Title:</Text>
+        <Text style={styles.value}>{title}</Text>
+      </Spacer>
+
+      <Spacer>
+        <Text style={styles.label}>Description:</Text>
+        <Text style={styles.value}>{description}</Text>
+      </Spacer>
+
+      <Spacer>
+        <Text style={styles.label}>Status Progress:</Text>
+        <StatusProgress stage={stage} />
+      </Spacer>
+    </FormContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: width * 0.05,
-    backgroundColor: "#f8f8f8",
-  },
   label: {
     fontSize: width * 0.045,
     color: "#333",
     fontWeight: "bold",
-    marginTop: height * 0.02,
   },
   value: {
     fontSize: width * 0.045,
     color: "#555",
-    marginTop: height * 0.01,
   },
 });
 
