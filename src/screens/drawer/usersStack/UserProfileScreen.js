@@ -1,12 +1,13 @@
 //Components
 import AppView from "../../../components/atoms/AppView";
+import UserProfileForm from "../../../components/organisms/UserProfileForm/Index";
 
-const UsersScreen = (props) => {
+const UserProfileScreen = (props) => {
   return (
     <AppView {...props}>
-
+      <UserProfileForm {...props}/>
     </AppView>
   );
 };
 
-export default UsersScreen;
+export default UserProfileScreen;
