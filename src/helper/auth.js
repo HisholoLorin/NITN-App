@@ -50,6 +50,10 @@ export const capitalizedFirstLetter = (value) => {
   return value.join(" ");
 };
 
+export const toUpperFirstLetter = (value) => {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
 export const saveToken = async ({ access, refresh, usertype } = {}) => {
   await AsyncStorage.setItem("AccessToken", access);
   await AsyncStorage.setItem("RefreshToken", refresh);

@@ -1,14 +1,20 @@
 import SimpleIcon from "react-native-vector-icons/SimpleLineIcons";
 
-import { AntDesign, Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Entypo,
+  MaterialCommunityIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
 
 //Components
 import CustomInput from "../../molecules/customInput/Index";
-import CustomPicker from "../../molecules/customPicker/Index";
-import PasswordInput from "../../molecules/passwordInput/Index";
-import CustomDatePicker from "../../molecules/customDatePicker/Index";
 
-const MaintenanceEdit = ({ maintenanceForm, setMaintenanceForm, edit }) => {
+//Helper
+import { convertToShortDateFormat } from "../../../helper/dateTimeFormats";
+import { toUpperFirstLetter } from "../../../helper/auth";
+
+const MaintenanceView = ({ maintenanceForm, edit }) => {
   return (
     <>
       {/* Username */}
@@ -16,13 +22,8 @@ const MaintenanceEdit = ({ maintenanceForm, setMaintenanceForm, edit }) => {
         icon={() => <SimpleIcon name="user" size={20} color="#999" />}
         placeholder="Username"
         value={maintenanceForm?.userName}
-        onChangeText={(value) =>
-          setMaintenanceForm({
-            ...maintenanceForm,
-            userName: value,
-          })
-        }
         editable={edit}
+        color="#000"
       />
 
       {/* Identification Number */}
@@ -30,13 +31,8 @@ const MaintenanceEdit = ({ maintenanceForm, setMaintenanceForm, edit }) => {
         icon={() => <AntDesign name="idcard" size={20} color="#999" />}
         placeholder="Identification No"
         value={maintenanceForm?.identificationNo}
-        onChangeText={(value) =>
-          setMaintenanceForm({
-            ...maintenanceForm,
-            identificationNo: value,
-          })
-        }
         editable={edit}
+        color="#000"
       />
 
       {/* Designation */}
@@ -50,13 +46,8 @@ const MaintenanceEdit = ({ maintenanceForm, setMaintenanceForm, edit }) => {
         )}
         placeholder="Designation"
         value={maintenanceForm?.designation}
-        onChangeText={(value) =>
-          setMaintenanceForm({
-            ...maintenanceForm,
-            designation: value,
-          })
-        }
         editable={edit}
+        color="#000"
       />
 
       {/* Mobile Number */}
@@ -66,14 +57,9 @@ const MaintenanceEdit = ({ maintenanceForm, setMaintenanceForm, edit }) => {
         )}
         placeholder="Mobile Number"
         value={maintenanceForm?.mobileNo}
-        onChangeText={(value) =>
-          setMaintenanceForm({
-            ...maintenanceForm,
-            mobileNo: value,
-          })
-        }
         keyboardType="number-pad"
         editable={edit}
+        color="#000"
       />
 
       {/* Email */}
@@ -83,28 +69,23 @@ const MaintenanceEdit = ({ maintenanceForm, setMaintenanceForm, edit }) => {
         )}
         placeholder="Email"
         value={maintenanceForm?.email}
-        onChangeText={(value) =>
-          setMaintenanceForm({ ...maintenanceForm, email: value })
-        }
         keyboardType="email-address"
         editable={edit}
+        color="#000"
       />
 
       {/* Date of Birth */}
-      <CustomDatePicker
-        state={maintenanceForm?.dateOfBirth}
-        setState={(value) =>
-          setMaintenanceForm({
-            ...maintenanceForm,
-            dateOfBirth: value,
-          })
-        }
-        edit={edit}
+      <CustomInput
+        icon={() => <FontAwesome name="calendar" size={20} color="#999" />}
+        placeholder="Date of Birth"
+        value={convertToShortDateFormat(maintenanceForm?.dateOfBirth)}
+        keyboardType="email-address"
+        editable={edit}
+        color="#000"
       />
 
-      {/* Gender */}
-      <CustomPicker
-        placeholder="Gender"
+      {/* Gender*/}
+      <CustomInput
         icon={() => (
           <MaterialCommunityIcons
             name="gender-male-female"
@@ -112,18 +93,13 @@ const MaintenanceEdit = ({ maintenanceForm, setMaintenanceForm, edit }) => {
             color="#999"
           />
         )}
-        state={maintenanceForm?.gender}
-        setState={(value) =>
-          setMaintenanceForm({
-            ...maintenanceForm,
-            gender: value,
-          })
+        placeholder="Gender"
+        value={
+          maintenanceForm?.gender && toUpperFirstLetter(maintenanceForm?.gender)
         }
-        data={[
-          { label: "Male", value: "male" },
-          { label: "Female", value: "female" },
-        ]}
-        edit={edit}
+        keyboardType="email-address"
+        editable={edit}
+        color="#000"
       />
 
       {/* Address */}
@@ -133,13 +109,8 @@ const MaintenanceEdit = ({ maintenanceForm, setMaintenanceForm, edit }) => {
         )}
         placeholder="Address"
         value={maintenanceForm?.address}
-        onChangeText={(value) =>
-          setMaintenanceForm({
-            ...maintenanceForm,
-            address: value,
-          })
-        }
         editable={edit}
+        color="#000"
       />
 
       {/* Department */}
@@ -147,16 +118,11 @@ const MaintenanceEdit = ({ maintenanceForm, setMaintenanceForm, edit }) => {
         placeholder="Department"
         icon={() => <Entypo name="flow-tree" size={20} color="#999" />}
         value={maintenanceForm?.department}
-        onChangeText={(value) =>
-          setMaintenanceForm({
-            ...maintenanceForm,
-            department: value,
-          })
-        }
         editable={edit}
+        color="#000"
       />
     </>
   );
 };
 
-export default MaintenanceEdit;
+export default MaintenanceView;

@@ -11,24 +11,12 @@ import {
 
 //Components
 import CustomInput from "../../molecules/customInput/Index";
-import CustomPicker from "../../molecules/customPicker/Index";
-import CustomDatePicker from "../../molecules/customDatePicker/Index";
 
 //Helper
 import { convertToShortDateFormat } from "../../../helper/dateTimeFormats";
+import { toUpperFirstLetter } from "../../../helper/auth";
 
-const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
-  const department = [
-    { label: "B.Tech, CE" },
-    { label: "B.Tech, CSE" },
-    { label: "B.Tech, ECE" },
-    { label: "B.Tech, EEE" },
-    { label: "B.Tech, EIE" },
-    { label: "B.Tech, ME" },
-    { label: "M.Tech, CSE" },
-    { label: "M.Tech, EEE" },
-    { label: "M.Sc, SH" },
-  ];
+const StudentView = ({ studentForm, edit }) => {
   return (
     <>
       {/* Username */}
@@ -36,10 +24,8 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         icon={() => <SimpleIcon name="user" size={20} color="#999" />}
         placeholder="Username"
         value={studentForm?.userName}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, userName: value })
-        }
         editable={edit}
+        color="#000"
       />
 
       {/* Registration Number */}
@@ -47,11 +33,9 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         icon={() => <AntDesign name="idcard" size={20} color="#999" />}
         placeholder="Registration No"
         value={studentForm?.registrationNo}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, registrationNo: value })
-        }
         keyboardType="number-pad"
         editable={edit}
+        color="#000"
       />
 
       {/* Mobile Number */}
@@ -61,11 +45,9 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         )}
         placeholder="Mobile Number"
         value={studentForm?.mobileNo}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, mobileNo: value })
-        }
         keyboardType="number-pad"
         editable={edit}
+        color="#000"
       />
 
       {/* Email */}
@@ -75,28 +57,23 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         )}
         placeholder="Email"
         value={studentForm?.email}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, email: value })
-        }
         keyboardType="email-address"
         editable={edit}
+        color="#000"
       />
 
-      {/* Date of Birth */}
-      <CustomDatePicker
-        state={convertToShortDateFormat(studentForm?.dateOfBirth)}
-        setState={(value) =>
-          setStudentForm({
-            ...studentForm,
-            dateOfBirth: value,
-          })
-        }
-        edit={edit}
+      {/* Date of Birth*/}
+      <CustomInput
+        icon={() => <FontAwesome name="calendar" size={20} color="#999" />}
+        placeholder="Date of Birth"
+        value={convertToShortDateFormat(studentForm?.dateOfBirth)}
+        keyboardType="email-address"
+        editable={edit}
+        color="#000"
       />
 
-      {/* Gender */}
-      <CustomPicker
-        placeholder="Gender"
+      {/* Gender*/}
+      <CustomInput
         icon={() => (
           <MaterialCommunityIcons
             name="gender-male-female"
@@ -104,18 +81,11 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
             color="#999"
           />
         )}
-        state={studentForm?.gender}
-        setState={(value) =>
-          setStudentForm({
-            ...studentForm,
-            gender: value,
-          })
-        }
-        data={[
-          { label: "Male", value: "male" },
-          { label: "Female", value: "female" },
-        ]}
-        edit={edit}
+        placeholder="Gender"
+        value={studentForm?.gender && toUpperFirstLetter(studentForm?.gender)}
+        keyboardType="email-address"
+        editable={edit}
+        color="#000"
       />
 
       {/* Blood Type */}
@@ -123,10 +93,8 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         icon={() => <MaterialIcons name="bloodtype" size={20} color="#999" />}
         placeholder="Blood Type"
         value={studentForm?.bloodType}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, bloodType: value })
-        }
         editable={edit}
+        color="#000"
       />
 
       {/* Medical Conditions */}
@@ -136,10 +104,8 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         )}
         placeholder="Medical Conditions"
         value={studentForm?.medicalConditions}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, medicalConditions: value })
-        }
         editable={edit}
+        color="#000"
       />
 
       {/* Ethnicity */}
@@ -147,10 +113,8 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         icon={() => <FontAwesome6 name="people-group" size={20} color="#999" />}
         placeholder="Ethnicity"
         value={studentForm.ethnicity}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, ethnicity: value })
-        }
         editable={edit}
+        color="#000"
       />
 
       {/* Address */}
@@ -160,10 +124,8 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         )}
         placeholder="Address"
         value={studentForm?.address}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, address: value })
-        }
         editable={edit}
+        color="#000"
       />
 
       {/* Guardian's Name */}
@@ -173,26 +135,19 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         )}
         placeholder="Guardian's Mobile Number"
         value={studentForm?.guardianMobileNumber}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, guardianMobileNumber: value })
-        }
         keyboardType="number-pad"
         editable={edit}
+        color="#000"
       />
 
       {/* Department */}
-      <CustomPicker
-        placeholder="Department"
+      <CustomInput
         icon={() => <Entypo name="flow-tree" size={20} color="#999" />}
-        state={studentForm?.deptName}
-        setState={(value) =>
-          setStudentForm({
-            ...studentForm,
-            deptName: value,
-          })
-        }
-        data={department}
-        edit={edit}
+        placeholder="Department"
+        value={studentForm?.deptName}
+        keyboardType="number-pad"
+        editable={edit}
+        color="#000"
       />
 
       {/* Batch */}
@@ -206,11 +161,9 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         )}
         placeholder="Batch"
         value={studentForm?.batch}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, batch: value })
-        }
         keyboardType="number-pad"
         editable={edit}
+        color="#000"
       />
 
       {/* Hostel Name */}
@@ -218,13 +171,11 @@ const StudentEdit = ({ studentForm, setStudentForm, edit }) => {
         icon={() => <FontAwesome5 name="building" size={20} color="#999" />}
         placeholder="Hostel Name"
         value={studentForm?.hostelName}
-        onChangeText={(value) =>
-          setStudentForm({ ...studentForm, hostelName: value })
-        }
         editable={edit}
+        color="#000"
       />
     </>
   );
 };
 
-export default StudentEdit;
+export default StudentView;
