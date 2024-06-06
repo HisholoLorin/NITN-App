@@ -7,6 +7,7 @@ import Spacer from "../../atoms/spacer/Index";
 
 //Styled
 import { FormContainer } from "./Styles";
+import Checkbox from "../../molecules/checkbox/Index";
 
 const { width, height } = Dimensions.get("window");
 
@@ -42,6 +43,15 @@ const StudentFormDetails = ({ route }) => {
       </Spacer>
 
       <Spacer>
+        <Text style={styles.label}>Maintenance Progress:</Text>
+        <View style={styles.checkboxContainer}>
+          <Checkbox label="Option 1" />
+          <Checkbox label="Option 2" />
+          <Checkbox label="Option 3" />
+        </View>
+      </Spacer>
+
+      <Spacer>
         <Text style={styles.label}>Status Progress:</Text>
         <StatusProgress stage={stage} />
       </Spacer>
@@ -50,6 +60,10 @@ const StudentFormDetails = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+  checkboxContainer: {
+    justifyContent: "center",
+    paddingTop: width * 0.05,
+  },
   label: {
     fontSize: width * 0.045,
     color: "#333",
