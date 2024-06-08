@@ -8,6 +8,7 @@ import Spacer from "../../atoms/spacer/Index";
 //Styled
 import { FormContainer } from "./Styles";
 import Checkbox from "../../molecules/checkbox/Index";
+import CustomRadio from "../../molecules/customRadio/Index";
 
 const { width, height } = Dimensions.get("window");
 
@@ -55,6 +56,16 @@ const StudentFormDetails = ({ route }) => {
         <Text style={styles.label}>Status Progress:</Text>
         <StatusProgress stage={stage} />
       </Spacer>
+
+      <Spacer>
+        <Text style={styles.label}>Maintenance Progress:</Text>
+        <View style={styles.radioContainer}>
+          <CustomRadio label="Option 1" />
+          <CustomRadio label="Option 2" />
+          <CustomRadio label="Option 3" />
+        </View>
+      </Spacer>
+
     </FormContainer>
   );
 };
@@ -72,6 +83,10 @@ const styles = StyleSheet.create({
   value: {
     fontSize: width * 0.045,
     color: "#555",
+  },
+  radioContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
 });
 
