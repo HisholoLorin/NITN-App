@@ -15,7 +15,7 @@ const generateAccessToken = async (refresh) => {
   await AsyncStorage.setItem("AccessToken", response.data.access_token);
 };
 
-const decodeToken = (refreshToken) => {
+export const decodeToken = (refreshToken) => {
   const arrayToken = refreshToken.split(".");
   const tokenPayload = JSON.parse(
     Buffer.from(arrayToken[1], "base64").toString("utf8")
@@ -25,6 +25,7 @@ const decodeToken = (refreshToken) => {
 
 export const isTokenExpired = (refreshToken) => {
   const tokenPayload = decodeToken(refreshToken);
+  console.log(tokenPayload);
   const currentTime = Math.floor(Date.now() / 1000);
   return currentTime + 60 > tokenPayload.exp;
 };

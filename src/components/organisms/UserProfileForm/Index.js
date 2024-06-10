@@ -1,37 +1,26 @@
 import React from "react";
-import { View, TouchableWithoutFeedback, BackHandler } from "react-native";
-import { useState, useEffect, useRef, useCallback } from "react";
-import { BottomSheetModal, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import { useState, useEffect } from "react";
 
 //Components
-import PrimaryButton from "../../molecules/primaryButton/Index";
-import ChangePicture from "../../molecules/changePicture/Index";
-import StudentEdit from "./StudentEdit";
-import MaintenanceEdit from "./MaintenanceEdit";
+import StudentView from "./StudentView";
+import MaintenanceView from "./MaintenanceView";
 
 //Redux
-import { useSelector, useDispatch } from "react-redux";
-import { updateProfile } from "../../../redux/user";
-
-//Helper
-import { previousScreen } from "../../../navigations/navigationRef";
+import { useSelector } from "react-redux";
 
 //Styled Components
 import {
   ViewContainer,
   ProfilePicture,
-  CameraIcon,
   ProfilePictureContainer,
   ProfileBackground,
 } from "./Styles";
 
-const ProfileForm = () => {
-  const dispatch = useDispatch();
+const UserProfileForm = ({ route }) => {
   const [studentForm, setStudentForm] = useState({});
   const [maintenanceForm, setMaintenanceForm] = useState(false);
-  const { userDetails } = useSelector((state) => state.UserReducer);
   const { edit } = useSelector((state) => state.UserReducer);
-  const { user, student, maintenance } = userDetails || {};
+  const { user, student, maintenance } = route?.params || {};
   const { userName, mobileNo, email } = user || {};
   const {
     image,
@@ -67,7 +56,7 @@ const ProfileForm = () => {
         ethnicity,
         address,
       });
-      maintenance &&
+    maintenance &&
       setMaintenanceForm({
         userName,
         mobileNo,
@@ -82,83 +71,23 @@ const ProfileForm = () => {
       });
   }, []);
 
-  const bottomSheetModalRef = useRef(null);
-  const [currentIndex, setCurrentIndex] = useState(-1);
-
-  const handlePress = () => {
-    setCurrentIndex(0);
-    bottomSheetModalRef.current?.present();
-  };
-
-  const renderBackdrop = useCallback(
-    (props) => (
-      <BottomSheetBackdrop
-        appearsOnIndex={0}
-        disappearsOnIndex={-1}
-        {...props}
-        onPress={onBackPress}
-      />
-    ),
-    []
-  );
-
-  const onBackPress = () => {
-    if (bottomSheetModalRef) {
-      bottomSheetModalRef.current?.close();
-      setCurrentIndex(-1);
-      return BackHandler.addEventListener("hardwareBackPress", () => {
-        previousScreen();
-        return true;
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (currentIndex !== -1) {
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
-    }
-  }, [currentIndex]);
-
-  const handleSave = () => {
-    student && dispatch(updateProfile({ data: studentForm }));
-    maintenance && dispatch(updateProfile({ data: maintenanceForm }));
-  };
-
   return (
     <>
       <ProfilePictureContainer>
         <ProfileBackground />
-        <View>
-          <ProfilePicture
-            source={
-              image
-                ? { uri: image }
-                : require("../../../../assets/profilePhoto.jpg")
-            }
-          />
-          <TouchableWithoutFeedback onPress={handlePress}>
-            <CameraIcon name="camera" />
-          </TouchableWithoutFeedback>
-        </View>
-      </ProfilePictureContainer>
 
-      <BottomSheetModal
-        ref={bottomSheetModalRef}
-        index={currentIndex}
-        snapPoints={["25%"]}
-        backgroundStyle={{
-          borderTopRightRadius: 30,
-          borderTopLeftRadius: 30,
-        }}
-        backdropComponent={renderBackdrop}
-        onDismiss={onBackPress}
-      >
-        <ChangePicture onPress={onBackPress} image={image} />
-      </BottomSheetModal>
+        <ProfilePicture
+          source={
+            image
+              ? { uri: image }
+              : require("../../../../assets/profilePhoto.jpg")
+          }
+        />
+      </ProfilePictureContainer>
 
       <ViewContainer>
         {student && (
-          <StudentEdit
+          <StudentView
             studentForm={studentForm}
             setStudentForm={setStudentForm}
             edit={edit}
@@ -166,17 +95,16 @@ const ProfileForm = () => {
         )}
 
         {maintenance && (
-          <MaintenanceEdit
+          <MaintenanceView
             maintenanceForm={maintenanceForm}
             setMaintenanceForm={setMaintenanceForm}
             edit={edit}
           />
         )}
 
-        {edit && <PrimaryButton text="Save Changes" onPress={handleSave} />}
       </ViewContainer>
     </>
   );
 };
 
-export default ProfileForm;
+export default UserProfileForm;

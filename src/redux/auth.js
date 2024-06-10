@@ -26,10 +26,15 @@ import {
   CHANGE_PASSWORD,
 } from "../constant/endpoint";
 
+//Notification
+import { APP_ID, APP_TOKEN } from "../constant/notification";
+import { registerIndieID, unregisterIndieDevice } from "native-notify";
+
 //Helper
 import temporarySessionEvent from "../helper/temporarySessionEvent";
 import { saveToken, checkSignUp, isEmail, isPassword } from "../helper/auth";
 import { convertToShortDateFormatReverse } from "../helper/dateTimeFormats";
+import { getUserId } from "../helper/getUserId";
 
 //Local login when there is a token in the async storage
 export const localLogin = createAsyncThunk("localLogin", async () => {
@@ -69,6 +74,8 @@ export const logout = createAsyncThunk("logout", async () => {
           const response = await Api.post(getEndPoint(LOGOUT), {
             refresh,
           });
+          const userId = await getUserId();
+          unregisterIndieDevice(userId, APP_ID, APP_TOKEN);
           console.log(response.data);
           await AsyncStorage.removeItem("AccessToken");
           await AsyncStorage.removeItem("RefreshToken");
@@ -122,6 +129,8 @@ export const login = createAsyncThunk(
             : reset("ManagerDrawer");
           break;
       }
+      const userId = await getUserId();
+      registerIndieID(userId, APP_ID, APP_TOKEN);
     } catch (err) {
       console.log(err.response);
       if (!err.response)
@@ -248,6 +257,8 @@ export const signup = createAsyncThunk(
           reset("MaintenanceDrawer");
           break;
       }
+      const userId = await getUserId();
+      registerIndieID(userId, APP_ID, APP_TOKEN);
     } catch (err) {
       if (!err.response)
         Alert.alert("Alert!", "No Internet Connection", [

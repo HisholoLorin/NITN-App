@@ -199,7 +199,17 @@ export const getUserList = createAsyncThunk(
           break;
       }
       console.log(response.data);
-      return response.data;
+      const { results, next } = response.data;
+      const sortedArray = results.sort((a, b) => {
+        if (a.user.userName < b.user.userName) {
+          return -1;
+        }
+        if (a.user.userName > b.user.userName) {
+          return 1;
+        }
+        return 0;
+      });
+      return { results: sortedArray, next };
     } catch (err) {
       console.log(err.response.data);
     } finally {
@@ -272,7 +282,7 @@ const userSlice = createSlice({
       .addCase(getUserList.fulfilled, (state, action) => {
         state.userList = action?.payload?.results;
         state.next = action?.payload?.next;
-      })
+      });
   },
 });
 
