@@ -20,6 +20,8 @@ import ManagerDrawerNavigation from "./ManagerDrawerNavigation";
 
 // Reference to navigation for programmatic access
 import { navigationRef } from "./navigationRef";
+import Swiper from "../screens/introScreen/Index";
+import SplashScreen from "../screens/splashScreen/Index";
 
 const RootNavigation = () => {
   // Create a stack navigator for root navigation
@@ -29,7 +31,7 @@ const RootNavigation = () => {
     // Navigation container for the entire app
     <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator
-        initialRouteName="Drawer"
+        initialRouteName="SplashScreen"
         screenOptions={{
           headerBackTitleVisible: true, // Hide the default back button title
           headerLeft: ({ onPress }) => (
@@ -37,6 +39,16 @@ const RootNavigation = () => {
           ),
         }}
       >
+        <RootStack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
+        <RootStack.Screen
+          name="Swiper"
+          component={Swiper}
+          options={{ headerShown: false }}
+        />
         <RootStack.Screen
           name="LocalLoginTrigger"
           component={LocalLoginTrigger}

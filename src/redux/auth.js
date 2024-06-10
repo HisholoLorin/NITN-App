@@ -51,7 +51,11 @@ export const localLogin = createAsyncThunk("localLogin", async () => {
       default:
         reset("Login");
     }
-  } else reset("Login");
+  } else {
+    const introShown = await AsyncStorage.getItem("IntroShown");
+    if (introShown) reset("Login");
+    reset("Swiper");
+  }
 });
 
 export const logout = createAsyncThunk("logout", async () => {
@@ -78,7 +82,6 @@ export const logout = createAsyncThunk("logout", async () => {
                 text: "Ok",
               },
             ]);
-        
         }
       },
     },
