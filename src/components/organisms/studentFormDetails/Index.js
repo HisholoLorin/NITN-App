@@ -11,25 +11,23 @@ import { FormContainer } from "./Styles";
 const { width, height } = Dimensions.get("window");
 
 const StudentFormDetails = ({ route }) => {
-  const {
-    userName = "Empty",
-    hostelName = "Empty",
-    title = "No title provided",
-    description = "No description provided",
-    stage,
-  } = route.params;
+  const { userName, hostelName, title, description, stage } = route.params;
 
   return (
     <FormContainer>
-      <Spacer>
-        <Text style={styles.label}>Username:</Text>
-        <Text style={styles.value}>{userName}</Text>
-      </Spacer>
+      {userName && (
+        <Spacer>
+          <Text style={styles.label}>Username:</Text>
+          <Text style={styles.value}>{userName}</Text>
+        </Spacer>
+      )}
 
-      <Spacer>
-        <Text style={styles.label}>Hostel Name:</Text>
-        <Text style={styles.value}>{hostelName}</Text>
-      </Spacer>
+      {hostelName && (
+        <Spacer>
+          <Text style={styles.label}>Hostel Name:</Text>
+          <Text style={styles.value}>{hostelName}</Text>
+        </Spacer>
+      )}
 
       <Spacer>
         <Text style={styles.label}>Title:</Text>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "816733243348",
+    "project_id": "nitnnotification",
+    "storage_bucket": "nitnnotification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816733243348:android:941de35a7657bdae3e3841",
+        "android_client_info": {
+          "package_name": "com.NITN_App"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXWN6vTDD6oQhVyUWQLOI9B1gfvYFmwqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
