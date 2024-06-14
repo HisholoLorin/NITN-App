@@ -1,9 +1,24 @@
 // CustomCheckBox.js
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { CheckBox } from "@rneui/themed";
-import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing } from "react-native-reanimated";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
 import { Fontisto } from "@expo/vector-icons";
+
+//Redux
+import { useDispatch } from "react-redux";
+import { updateStage } from "../../../redux/form";
 
 const { width } = Dimensions.get("window");
 
@@ -25,7 +40,12 @@ const AnimatedStrikeThroughText = ({ children, strikeThrough }) => {
 
   return (
     <View style={styles.textContainer}>
-      <Text style={[styles.labelText, strikeThrough ? styles.strikeThroughText : null]}>
+      <Text
+        style={[
+          styles.labelText,
+          strikeThrough ? styles.strikeThroughText : null,
+        ]}
+      >
         {children}
       </Text>
       <Animated.View style={[styles.strikeThrough, animatedStyle]} />
@@ -33,11 +53,17 @@ const AnimatedStrikeThroughText = ({ children, strikeThrough }) => {
   );
 };
 
-const CustomRadio = ({ label }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
+const CustomRadio = ({ label, value, stageUuid, stage }) => {
+  console.log(value);
+  const [isChecked, setIsChecked] = useState(value);
+  const dispatch = useDispatch();
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
+    console.log(isChecked);
+    if(isChecked)
+      dispatch(updateStage({ stageUuid, stage }));
+    else
+      dispatch(updateStage({ stageUuid, stage: stage - 1 }));
   };
 
   return (
@@ -46,22 +72,18 @@ const CustomRadio = ({ label }) => {
         checked={isChecked}
         onPress={toggleCheckbox}
         checkedIcon={
-          <Fontisto
-            name="radio-btn-active"
-            size={20}
-            color="#F06449"
-          />
+          <Fontisto name="radio-btn-active" size={20} color="#F06449" />
         }
         uncheckedIcon={
-          <Fontisto
-            name="radio-btn-passive"
-            size={25}
-            color="black"
-          />
+          <Fontisto name="radio-btn-passive" size={20} color="black" />
         }
         containerStyle={styles.checkboxContainer}
       />
-      <TouchableOpacity onPress={toggleCheckbox} activeOpacity={0.6}>
+      <TouchableOpacity
+        style={{ marginLeft: -7 }}
+        onPress={toggleCheckbox}
+        activeOpacity={0.6}
+      >
         <AnimatedStrikeThroughText strikeThrough={isChecked}>
           {label}
         </AnimatedStrikeThroughText>
@@ -89,7 +111,7 @@ const styles = StyleSheet.create({
   },
   strikeThroughText: {
     color: "#ccc",
-    fontSize: width * 0.035
+    fontSize: width * 0.035,
   },
   strikeThrough: {
     position: "absolute",

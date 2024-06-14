@@ -1,3 +1,5 @@
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 //Components
 import AppView from "../../../../components/atoms/AppView";
 import StudentFormDetails from "../../../../components/organisms/studentFormDetails/Index";
@@ -5,7 +7,12 @@ import StudentFormDetails from "../../../../components/organisms/studentFormDeta
 const StudentFormDetailsScreen = (props) => {
   return (
     <AppView {...props}>
-      <StudentFormDetails {...props}/>
+      <KeyboardAwareScrollView
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <StudentFormDetails {...props} />
+      </KeyboardAwareScrollView>
     </AppView>
   );
 };

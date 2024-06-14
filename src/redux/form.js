@@ -14,6 +14,7 @@ import {
   STUDENT_DELETE_FORM,
   MANAGER_FORM_LIST,
   MAINTENANCE_FORM_LIST,
+  MAINTENANCE_STAGE,
 } from "../constant/endpoint";
 
 //Action
@@ -94,6 +95,31 @@ export const deleteForm = createAsyncThunk(
       dispatch(runLoader());
       await temporarySessionEvent();
       const response = await Api.delete(getEndPoint(STUDENT_DELETE_FORM, uuid));
+      console.log(response.data);
+      dispatch(fetchFormList({ page: 1 }));
+    } catch (error) {
+      console.log(error.response.data);
+      if (!err.response)
+        Alert.alert("Alert!", "No Internet Connection", [
+          {
+            text: "Ok",
+          },
+        ]);
+    } finally {
+      dispatch(stopLoader());
+    }
+  }
+);
+
+export const updateStage = createAsyncThunk(
+  "updateForm",
+  async ({ stageUuid, stage }, { rejectWithValue, dispatch }) => {
+    try {
+      dispatch(runLoader());
+      await temporarySessionEvent();
+      const response = await Api.put(getEndPoint(MAINTENANCE_STAGE, stageUuid), {
+        stageNumber: stage,
+      });
       console.log(response.data);
       dispatch(fetchFormList({ page: 1 }));
     } catch (error) {

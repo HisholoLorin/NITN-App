@@ -35,7 +35,6 @@ const StudentForm = ({ navigation }) => {
     dispatch(fetchFormList({ page: page + 1 }));
     setPage(page + 1);
   };
-  console.log(formList);
 
   return (
     <FormContainer>
@@ -45,8 +44,13 @@ const StudentForm = ({ navigation }) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          renderItem={({ item }) => (
-            <MainForm {...item} navigation={navigation} hasDeleteOption={true}/>
+          renderItem={({ item, index }) => (
+            <MainForm
+              {...item}
+              navigation={navigation}
+              hasDeleteOption={true}
+              key={index}
+            />
           )}
           keyExtractor={(item) => item?.uuid}
           ListFooterComponent={next ? PaginateLoader : null}

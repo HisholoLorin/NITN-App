@@ -33,8 +33,8 @@ const AnimatedStrikeThroughText = ({ children, strikeThrough }) => {
   );
 };
 
-const Checkbox = ({ label }) => {
-  const [isChecked, setIsChecked] = useState(false);
+const Checkbox = ({ label, value }) => {
+  const [isChecked, setIsChecked] = useState(value);
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -44,7 +44,6 @@ const Checkbox = ({ label }) => {
     <View style={styles.container}>
       <CheckBox
         checked={isChecked}
-        onPress={toggleCheckbox}
         checkedIcon={
           <Fontisto
             name="checkbox-active"
@@ -61,7 +60,7 @@ const Checkbox = ({ label }) => {
         }
         containerStyle={styles.checkboxContainer}
       />
-      <TouchableOpacity onPress={toggleCheckbox} activeOpacity={0.6}>
+      <TouchableOpacity activeOpacity={0.6}>
         <AnimatedStrikeThroughText strikeThrough={isChecked}>
           {label}
         </AnimatedStrikeThroughText>

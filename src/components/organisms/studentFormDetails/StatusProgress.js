@@ -10,6 +10,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+// Helper
+import { getStageNumber } from "../../../helper/getStageNumber";
+
+// Redux
+import { useDispatch } from "react-redux";
+import { updateStage } from "../../../redux/form";
+
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -20,12 +27,14 @@ const status = ["Issued", "         Received", "      Dispatched", "Completed"];
 const activeColor = "#F06449";
 const { width, height } = Dimensions.get("window");
 
-export default ({stage}) => {
-  const [activeIndex, setActive] = useState(0);
-
+export default ({ stage, usertype, stageUuid }) => {
+  const dispatch = useDispatch();
+  const stageNumber = getStageNumber(stage) - 1;
+  const [activeIndex, setActive] = useState(stageNumber);
   const setActiveIndex = (val) => {
     LayoutAnimation.easeInEaseOut();
     setActive(val);
+    dispatch(updateStage({ stageUuid, stage: val+1}));
   };
 
   const marginLeft = (100 / (status.length - 1)) * activeIndex - 100 + "%";
@@ -37,9 +46,9 @@ export default ({stage}) => {
           <View style={[styles.activeLine, { marginLeft }]} />
         </View>
         {status.map((status, index) => (
-          <TouchableOpacity /* Change to <TouchableOpacity> in Maintenance */
+          <TouchableOpacity
             key={status}
-            onPress={() => setActiveIndex(index)}
+            onPress={() => usertype != "student" && setActiveIndex(index)}
             style={styles.dot}
           >
             <View
@@ -69,7 +78,7 @@ export default ({stage}) => {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -27,8 +27,10 @@ const MainForm = ({
   hostelName,
   title,
   description,
+  mobileNo,
   timeSinceCreated,
   stage,
+  stageUuid,
   navigation,
   hasDeleteOption,
 }) => {
@@ -63,6 +65,7 @@ const MainForm = ({
       animation="bounceInRight"
       useNativeDriver
       style={{ padding: 5 }}
+      key={uuid}
     >
       <FormContainer
         onPress={() =>
@@ -72,6 +75,8 @@ const MainForm = ({
             title,
             description,
             stage,
+            mobileNo,
+            stageUuid,
           })
         }
       >
@@ -80,9 +85,11 @@ const MainForm = ({
           <Description>{description && truncatedText(description)}</Description>
           <Date>{timeSinceCreated}</Date>
         </View>
-        {hasDeleteOption && <IconContainer onPress={handleDelete}>
-          <MaterialCommunityIcons name="delete" size={24} color="red" />
-        </IconContainer>}
+        {hasDeleteOption && (
+          <IconContainer onPress={handleDelete}>
+            <MaterialCommunityIcons name="delete" size={24} color="red" />
+          </IconContainer>
+        )}
       </FormContainer>
     </Animatable.View>
   );
