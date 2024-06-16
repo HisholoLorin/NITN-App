@@ -17,7 +17,7 @@ const SplashScreen = (props) => {
   return (
     <AppView {...props}>
       <ImageBackground
-        source={require("../../../../assets/splash.gif")}
+        source={require("../../../assets/splash.gif")}
         style={{ height: "100%" }}
       />
     </AppView>

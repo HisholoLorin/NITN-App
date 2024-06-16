@@ -13,28 +13,30 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 //helper
 import { reset } from "../../navigations/navigationRef";
 
+const { width } = Dimensions.get("window");
+
 const data = [
   {
     color: "#FF6500",
-    animation: require("../../../../assets/lottie/pervasive.json"),
+    animation: require("../../../assets/lottie/pervasive.json"),
     title: "Complaint Forms at Your Fingertips",
     text: "Quickly and conveniently issue complaint forms from the comfort of your own room.",
   },
   {
     color: "#FF5580",
-    animation: require("../../../../assets/lottie/form.json"),
+    animation: require("../../../assets/lottie/form.json"),
     title: "Organizing and Maintaining Forms",
     text: "Effortlessly manage and maintain your forms with automated systems and easy-to-use interfaces.",
   },
   {
     color: "#711DB0",
-    animation: require("../../../../assets/lottie/tracker.json"),
+    animation: require("../../../assets/lottie/tracker.json"),
     title: "Monitoring Your Form Status",
     text: "Stay updated on the progress and status of your forms in real-time.",
   },
   {
     color: "#FFD23F",
-    animation: require("../../../../assets/lottie/final.json"),
+    animation: require("../../../assets/lottie/final.json"),
     title: "Welcome to the app!",
     text: "Proceed on your journey to keep the hostel at its peak condition.",
   },
