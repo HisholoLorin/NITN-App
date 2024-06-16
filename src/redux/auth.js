@@ -59,7 +59,7 @@ export const localLogin = createAsyncThunk("localLogin", async () => {
   } else {
     const introShown = await AsyncStorage.getItem("IntroShown");
     if (introShown) reset("Login");
-    reset("Swiper");
+    else reset("Swiper");
   }
 });
 

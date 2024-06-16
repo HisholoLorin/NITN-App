@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
       borderRadius: 10,
     },
     getStarted: {
-      backgroundColor: "#FFBF00",
+      backgroundColor: "transparentq",
       width: "110%",
       height: "30%",
       alignItems: "center",

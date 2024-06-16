@@ -49,7 +49,7 @@ export default (type, params) => {
     case endpoint.MAINTENANCE_FORM_LIST:
       return "/maintenance/list/forms/";
     case endpoint.MAINTENANCE_STAGE:
-      return `/maintenance/update/stage/${params}`;
+      return `/maintenance/update/stage/${params}/`;
     //Manager
     case endpoint.MANAGER_DETAILS:
       return "/management/account/details/";

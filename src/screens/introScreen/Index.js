@@ -11,6 +11,8 @@ import LottieView from "lottie-react-native";
 import {styles} from "./Styles"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const { width } = Dimensions.get("window");
+
 //helper
 import { reset } from "../../navigations/navigationRef";
 
