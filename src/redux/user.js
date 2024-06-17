@@ -136,6 +136,7 @@ export const updateProfilePicture = createAsyncThunk(
           );
           break;
       }
+      console.log(response.data);
       dispatch(getUserDetails());
     } catch (err) {
       console.log(err.response.data);

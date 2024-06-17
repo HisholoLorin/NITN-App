@@ -23,7 +23,6 @@ const UserProfileForm = ({ route }) => {
   const { user, student, maintenance } = route?.params || {};
   const { userName, mobileNo, email } = user || {};
   const {
-    image,
     registrationNo,
     hostelName,
     deptName,
@@ -62,7 +61,6 @@ const UserProfileForm = ({ route }) => {
         mobileNo,
         email,
         dateOfBirth: maintenance?.dateOfBirth,
-        image: maintenance?.image,
         gender: maintenance?.gender,
         address: maintenance?.address,
         identificationNo,
@@ -70,6 +68,8 @@ const UserProfileForm = ({ route }) => {
         department,
       });
   }, []);
+
+  const { image } = student || maintenance || {};
 
   return (
     <>

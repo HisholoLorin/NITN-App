@@ -124,13 +124,15 @@ export const login = createAsyncThunk(
           console.log(response.data);
           const { usertype } = response.data;
           await saveToken(response.data);
-          usertype === "maintenance"
-            ? reset("MaintenanceDrawer")
-            : reset("ManagerDrawer");
+          const userId = await getUserId();
+          if (usertype === "maintenance") reset("MaintenanceDrawer");
+          else {
+            console.log(userId, APP_ID, APP_TOKEN);
+            registerIndieID(userId, APP_ID, APP_TOKEN);
+            reset("ManagerDrawer");
+          }
           break;
       }
-      const userId = await getUserId();
-      registerIndieID(userId, APP_ID, APP_TOKEN);
     } catch (err) {
       console.log(err.response);
       if (!err.response)

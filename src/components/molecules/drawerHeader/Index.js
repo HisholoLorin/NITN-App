@@ -7,9 +7,9 @@ import Spacer from "../../atoms/spacer/Index";
 import { Container, ProfilePicture, Bold, Usertype } from "./Styles";
 
 const DrawerHeader = ({ userDetails, usertype }) => {
-  const { user, student } = userDetails || {};
+  const { user, student, maintenance } = userDetails || {};
   const { userName } = user || userDetails || {};
-  const { image } = student || {};
+  const { image } = student || maintenance || {};
   // First name and Last name Logic
   const temp = userName?.split(" ");
   let firstName = null,

@@ -34,7 +34,6 @@ const ProfileForm = ({ route }) => {
   const { user, student, maintenance } = userDetails || {};
   const { userName, mobileNo, email } = user || {};
   const {
-    image,
     registrationNo,
     hostelName,
     deptName,
@@ -76,12 +75,13 @@ const ProfileForm = ({ route }) => {
     identificationNo,
     designation,
     department,
+    
   };
 
   useEffect(() => {
     student && setStudentForm(studentDetails);
     maintenance && setMaintenanceForm(maintenanceDetails);
-  }, []);
+  }, [userDetails, edit]);
 
   const bottomSheetModalRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
@@ -124,6 +124,8 @@ const ProfileForm = ({ route }) => {
     student && dispatch(updateProfile({ data: studentForm }));
     maintenance && dispatch(updateProfile({ data: maintenanceForm }));
   };
+
+  const { image } = student || maintenance || {};
 
   return (
     <>
