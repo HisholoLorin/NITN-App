@@ -9,7 +9,7 @@ const SplashScreen = (props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       reset("LocalLoginTrigger");
-    }, 5000);
+    }, 1500);
 
     return () => clearTimeout(timer); // This will clear the timer when the component unmounts.
   }, []);

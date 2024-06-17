@@ -83,7 +83,7 @@ const SignupForm = (props) => {
         <Description>Already have an account? </Description>
         <NavLink
           navigation={navigation}
-          color="#EF9F27"
+          color="#F06449"
           size={15}
           text="Login"
           routeName="Login"

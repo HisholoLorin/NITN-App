@@ -32,7 +32,7 @@ const ContactForm = (props) => {
           data={contactList}
           renderItem={({ item }) => <Contact {...item} />}
           keyExtractor={(item) => item?.mobileNo}
-          showsVerticalScrollIndicator={true}
+          showsVerticalScrollIndicator={false}
           onEndReached={next ? onEndReached : null}
           onEndReachedThreshold={0}
         />
