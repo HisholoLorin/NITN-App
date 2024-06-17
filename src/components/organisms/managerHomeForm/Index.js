@@ -51,7 +51,7 @@ const ManagerHomeForm = ({ navigation }) => {
           )}
           keyExtractor={(item) => item?.uuid}
           ListFooterComponent={next ? PaginateLoader : null}
-          showsVerticalScrollIndicator={true}
+          showsVerticalScrollIndicator={false}
           onEndReached={next ? onEndReached : null}
           onEndReachedThreshold={0}
         />

@@ -16,7 +16,7 @@ const { width } = Dimensions.get("window");
 //helper
 import { reset } from "../../navigations/navigationRef";
 
-const { width } = Dimensions.get("window");
+
 
 const data = [
   {
@@ -40,7 +40,7 @@ const data = [
   {
     color: "#FFD23F",
     animation: require("../../../assets/lottie/final.json"),
-    title: "Welcome to the app!",
+    title: "Welcome to NITN Hub!",
     text: "Proceed on your journey to keep the hostel at its peak condition.",
   },
 ];

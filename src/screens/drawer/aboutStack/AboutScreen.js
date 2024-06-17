@@ -23,7 +23,7 @@ const AboutScreen = (props) => {
             style={styles.logo}
             resizeMode="contain"
           />
-          <Text style={styles.appName}>Application Name</Text>
+          <Text style={styles.appName}>NITN Hub</Text>
         </View>
         <View style={styles.section}>
           <View style={styles.row}>
@@ -33,12 +33,12 @@ const AboutScreen = (props) => {
               color="#4CAF50"
               style={styles.icon}
             />
-            <Text style={styles.title}>About the App</Text>
+            <Text style={styles.title}>About NITN Hub</Text>
           </View>
           <Text style={styles.text}>
-            Welcome to our mobile application designed to assist students in
+            Welcome to NITN Hub, designed to assist students in
             handling repair issues in their hostel rooms. Whether it's
-            electrical appliances, plumbing, or other maintenance needs, our app
+            electrical appliances, plumbing, or other maintenance needs, NITN Hub
             provides a convenient way for students to report these issues
             without having to leave their rooms.
           </Text>
@@ -68,7 +68,7 @@ const AboutScreen = (props) => {
               <Text style={styles.text}>
                 Students can easily report any issues with their hostel
                 facilities directly through the app. Whether it's a broken
-                electrical switch or a plumbing problem, our app ensures that
+                electrical switch or a plumbing problem, NITN Hub ensures that
                 the report reaches the management promptly.
               </Text>
             </View>
@@ -86,7 +86,7 @@ const AboutScreen = (props) => {
                 <Text style={styles.subtitle}>Contact Management Staff</Text>
               </View>
               <Text style={styles.text}>
-                The app provides a comprehensive contact list of management
+                NITN Hub provides a comprehensive contact list of management
                 staff, including electricians, plumbers, and other relevant
                 personnel, along with their contact information.
               </Text>

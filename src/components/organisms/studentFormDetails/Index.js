@@ -73,17 +73,6 @@ const StudentFormDetails = ({ route }) => {
           <Text style={styles.value}>{description}</Text>
         </Spacer>
 
-        {/* {usertype == "management" && (
-          <Spacer>
-            <Text style={styles.label}>Maintenance Progress:</Text>
-            <View style={styles.checkboxContainer}>
-              <Checkbox label="Received" value={maintenanceStages[0]} />
-              <Checkbox label="Dispatched" value={maintenanceStages[1]} />
-              <Checkbox label="Completed" value={maintenanceStages[2]} />
-            </View>
-          </Spacer>
-        )} */}
-
         <Spacer>
           <Text style={styles.label}>Status Progress:</Text>
           <StatusProgress
@@ -92,30 +81,6 @@ const StudentFormDetails = ({ route }) => {
             stageUuid={stageUuid}
           />
         </Spacer>
-
-        {/* <Spacer>
-          <Text style={styles.label}>Maintenance Progress:</Text>
-          <View style={styles.radioContainer}>
-            <CustomRadio
-              label="Received"
-              value={maintenanceStages[0]}
-              stageUuid={stageUuid}
-              stage={2}
-            />
-            <CustomRadio
-              label="Dispatched"
-              value={maintenanceStages[1]}
-              stageUuid={stageUuid}
-              stage={3}
-            />
-            <CustomRadio
-              label="Completed"
-              value={maintenanceStages[2]}
-              stageUuid={stageUuid}
-              stage={4}
-            />
-          </View>
-        </Spacer> */}
       </FormContainer>
     )
   );
