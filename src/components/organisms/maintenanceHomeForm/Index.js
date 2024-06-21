@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { RefreshControl, FlatList } from "react-native";
+import { RefreshControl, FlatList, ScrollView } from "react-native";
 
 // Components
-import Spacer from "../../atoms/spacer/Index";
 import MainForm from "../../molecules/mainForm/Index";
 import PaginateLoader from "../../atoms/paginateLoader/Index";
 
@@ -57,7 +56,13 @@ const MaintenanceHomeForm = ({ navigation }) => {
           onEndReachedThreshold={0}
         />
       ) : (
-        <FormEmpty />
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <FormEmpty />
+        </ScrollView>
       )}
     </FormContainer>
   );

@@ -31,7 +31,6 @@ import { APP_ID, APP_TOKEN } from "../constant/notification";
 import { registerIndieID, unregisterIndieDevice } from "native-notify";
 
 //Helper
-import temporarySessionEvent from "../helper/temporarySessionEvent";
 import { saveToken, checkSignUp, isEmail, isPassword } from "../helper/auth";
 import { convertToShortDateFormatReverse } from "../helper/dateTimeFormats";
 import { getUserId } from "../helper/getUserId";
@@ -40,9 +39,7 @@ import { getUserId } from "../helper/getUserId";
 export const localLogin = createAsyncThunk("localLogin", async () => {
   const accessToken = await AsyncStorage.getItem("AccessToken");
   const usertype = await AsyncStorage.getItem("UserType");
-  console.log(usertype);
   if (accessToken) {
-    await temporarySessionEvent();
     switch (usertype) {
       case "maintenance":
         reset("MaintenanceDrawer");
@@ -69,13 +66,14 @@ export const logout = createAsyncThunk("logout", async () => {
       text: "Yes",
       onPress: async () => {
         const refresh = await AsyncStorage.getItem("RefreshToken");
-        console.log(refresh);
         try {
           const response = await Api.post(getEndPoint(LOGOUT), {
             refresh,
           });
           const userId = await getUserId();
-          unregisterIndieDevice(userId, APP_ID, APP_TOKEN);
+          const usertype = await AsyncStorage.getItem("UserType");
+          usertype === "management" &&
+            unregisterIndieDevice(userId, APP_ID, APP_TOKEN);
           console.log(response.data);
           await AsyncStorage.removeItem("AccessToken");
           await AsyncStorage.removeItem("RefreshToken");
@@ -112,7 +110,6 @@ export const login = createAsyncThunk(
       switch (type) {
         case "Students":
           response = await Api.post(getEndPoint(STUDENT_LOGIN), values);
-          console.log(response.data);
           await saveToken(response.data);
           reset("StudentDrawer");
           break;
@@ -121,13 +118,12 @@ export const login = createAsyncThunk(
             getEndPoint(INSTITUTE_PERSONNEL_LOGIN),
             values
           );
-          console.log(response.data);
           const { usertype } = response.data;
           await saveToken(response.data);
           const userId = await getUserId();
+          console.log(userId);
           if (usertype === "maintenance") reset("MaintenanceDrawer");
           else {
-            console.log(userId, APP_ID, APP_TOKEN);
             registerIndieID(userId, APP_ID, APP_TOKEN);
             reset("ManagerDrawer");
           }
@@ -159,7 +155,6 @@ export const forgotPassword = createAsyncThunk(
       const response = await Api.post(getEndPoint(FORGOT_PASSWORD), {
         email,
       });
-      console.log(response.data);
       navigate("OTP", { email });
     } catch (err) {
       console.log(err.response.data);
@@ -254,13 +249,10 @@ export const signup = createAsyncThunk(
             dateOfBirth: convertToShortDateFormatReverse(dateOfBirth),
             userType: "maintenance",
           });
-          await saveToken(response.data);
-          console.log(response?.data);
+          await saveToken({...response.data, usertype: "maintenance"});
           reset("MaintenanceDrawer");
           break;
       }
-      const userId = await getUserId();
-      registerIndieID(userId, APP_ID, APP_TOKEN);
     } catch (err) {
       if (!err.response)
         Alert.alert("Alert!", "No Internet Connection", [

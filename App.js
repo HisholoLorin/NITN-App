@@ -13,6 +13,7 @@ import Loader from "./src/components/atoms/Loader";
 import { configureNotifications } from "./Notifications";
 
 export default function App() {
+  configureNotifications();
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <StatusBar style="light" backgroundColor="black" />

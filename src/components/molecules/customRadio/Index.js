@@ -54,12 +54,10 @@ const AnimatedStrikeThroughText = ({ children, strikeThrough }) => {
 };
 
 const CustomRadio = ({ label, value, stageUuid, stage }) => {
-  console.log(value);
   const [isChecked, setIsChecked] = useState(value);
   const dispatch = useDispatch();
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
-    console.log(isChecked);
     if(isChecked)
       dispatch(updateStage({ stageUuid, stage }));
     else

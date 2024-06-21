@@ -8,7 +8,6 @@ import { getColor } from "../../../helper/getColor";
 const RenderUsers = ({ item, index, userList, navigation }) => {
   let showInitial = true;
   const { user, student, maintenance } = item || {};
-  console.log(item);
   const initialLetter = user?.userName.charAt(0).toUpperCase();
   for (let i = 0; i < userList.length; i++) {
     if (userList[i]?.user?.userName.charAt(0).toUpperCase() === initialLetter) {

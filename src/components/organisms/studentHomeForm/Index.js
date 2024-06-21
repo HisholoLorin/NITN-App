@@ -14,11 +14,13 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import * as Animatable from "react-native-animatable";
 import { useFocusEffect } from "@react-navigation/native";
+import Error from "../../atoms/Error";
 
 //Redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../../../redux/user";
 import { createForm } from "../../../redux/form";
+import { clearError } from "../../../redux/form";
 
 const { width, height } = Dimensions.get("window");
 const MAX_CHARACTERS = 50;
@@ -52,6 +54,7 @@ const GridItem = ({ item, selected, toggleSelection }) => (
 const StudentHomeForm = ({ navigation }) => {
   const dispatch = useDispatch();
   const animationRef = useRef(null);
+  const { error } = useSelector((state) => state.FormReducer);
 
   useEffect(() => {
     dispatch(getUserDetails());
@@ -107,7 +110,6 @@ const StudentHomeForm = ({ navigation }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [description, setDescription] = useState("");
-  console.log(selectedItem);
 
   const toggleSelection = (itemName) => {
     setSelectedItem((prev) => (prev === itemName ? null : itemName));
@@ -123,6 +125,7 @@ const StudentHomeForm = ({ navigation }) => {
 
   const handleIssueComplain = () => {
     if (selectedItem) {
+      dispatch(clearError());
       setModalVisible(true);
     } else {
       alert("Please select an item first.");
@@ -130,10 +133,7 @@ const StudentHomeForm = ({ navigation }) => {
   };
 
   const handleSend = () => {
-    console.log("Title:", selectedItem);
-    console.log("Description:", description);
-    setModalVisible(false);
-    dispatch(createForm({ title: selectedItem, description }));
+    dispatch(createForm({ title: selectedItem, description, setModalVisible }));
     setDescription("");
   };
 
@@ -200,7 +200,7 @@ const StudentHomeForm = ({ navigation }) => {
 
                   <TextInput
                     style={styles.textArea}
-                    placeholder={"Description"}
+                    placeholder={"Description ( Include Hostel Room No. )"}
                     placeholderTextColor="#999"
                     multiline
                     numberOfLines={4}
@@ -208,6 +208,8 @@ const StudentHomeForm = ({ navigation }) => {
                     value={description}
                     onChangeText={setDescription}
                   />
+
+                  <Error>{error}</Error>
 
                   <TouchableOpacity style={styles.button} onPress={handleSend}>
                     <Text style={styles.buttonText}>Send</Text>
@@ -313,7 +315,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: height * 0.02,
     paddingHorizontal: width * 0.05,
-    alignItems: "center",
+  
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

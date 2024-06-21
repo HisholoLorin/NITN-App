@@ -22,7 +22,6 @@ import globalStyles, { IconStyle } from "../../../components/globalStyles";
 
 export default ({ navigation, usertype }) => {
   const { userDetails } = useSelector((state) => state.UserReducer);
-  console.log(userDetails);
   const dispatch = useDispatch();
   handleLogout = () => {
     navigation.closeDrawer();

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "NIT App",
+    "name": "NITN Hub",
     "slug": "NIT_App",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,15 +15,17 @@
     "ios": {
       "buildNumber": "1.0.0",
       "supportsTablet": false,
-      "bundleIdentifier": "NITApp"
+      "bundleIdentifier": "NITNHub"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.NITN_App"
+      "package": "com.nativenotify.NITN_Hub",
+      "googleServicesFile": "./google-services.json",
     },
+    "permissions": ["NOTIFICATIONS"],
     "web": {
       "favicon": "./assets/favicon.png"
     },
@@ -38,6 +40,14 @@
         "expo-notifications",
         {
           "icon": "./assets/icon.png"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
       ]
     ]

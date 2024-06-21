@@ -3,9 +3,6 @@ import { Alert } from "react-native";
 import Api from "../api/API";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-//Helper Functions
-import temporarySessionEvent from "../helper/temporarySessionEvent";
-
 //EndPoints
 import getEndPoint from "../api/getEndPoint";
 import {
@@ -23,12 +20,9 @@ import { runLoader, stopLoader } from "./process";
 export const fetchFormList = createAsyncThunk(
   "fetchFormList",
   async ({ page }, { dispatch }) => {
-    console.log(page);
     try {
       dispatch(runLoader());
       const usertype = await AsyncStorage.getItem("UserType");
-      await temporarySessionEvent();
-      console.log(usertype);
       let response;
       switch (usertype) {
         case "student":
@@ -41,7 +35,6 @@ export const fetchFormList = createAsyncThunk(
           response = await Api.get(getEndPoint(MANAGER_FORM_LIST, page));
           break;
       }
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error.response.data);
@@ -59,15 +52,14 @@ export const fetchFormList = createAsyncThunk(
 
 export const createForm = createAsyncThunk(
   "createForm",
-  async ({ title, description }, { rejectWithValue, dispatch }) => {
+  async ({ title, description, setModalVisible }, { rejectWithValue, dispatch }) => {
+    if (!description) return rejectWithValue("*Description is required");
     try {
       dispatch(runLoader());
-      await temporarySessionEvent();
       const response = await Api.post(getEndPoint(STUDENT_CREATE_FORM), {
         title,
         description,
       });
-      console.log(response.data);
       Alert.alert("", response.data, [
         {
           text: "Ok",
@@ -83,6 +75,7 @@ export const createForm = createAsyncThunk(
           },
         ]);
     } finally {
+      setModalVisible(false);
       dispatch(stopLoader());
     }
   }
@@ -93,9 +86,7 @@ export const deleteForm = createAsyncThunk(
   async ({ uuid }, { rejectWithValue, dispatch }) => {
     try {
       dispatch(runLoader());
-      await temporarySessionEvent();
       const response = await Api.delete(getEndPoint(STUDENT_DELETE_FORM, uuid));
-      console.log(response.data);
       dispatch(fetchFormList({ page: 1 }));
     } catch (error) {
       console.log(error.response.data);
@@ -116,11 +107,12 @@ export const updateStage = createAsyncThunk(
   async ({ stageUuid, stage }, { rejectWithValue, dispatch }) => {
     try {
       dispatch(runLoader());
-      await temporarySessionEvent();
-      const response = await Api.put(getEndPoint(MAINTENANCE_STAGE, stageUuid), {
-        stageNumber: stage,
-      });
-      console.log(response.data);
+      const response = await Api.put(
+        getEndPoint(MAINTENANCE_STAGE, stageUuid),
+        {
+          stageNumber: stage,
+        }
+      );
       dispatch(fetchFormList({ page: 1 }));
     } catch (error) {
       console.log(error.response.data);
@@ -141,10 +133,22 @@ const formSlice = createSlice({
   initialState: {
     formList: null,
     next: null,
+    error: null,
   },
-  reducers: {},
+  reducers: {
+    clearError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers(builder) {
     builder
+      //Create Form
+      .addCase(createForm.fulfilled, (state, action) => {
+        state.error = null;
+      })
+      .addCase(createForm.rejected, (state, action) => {
+        state.error = action?.payload;
+      })
       //Form List
       .addCase(fetchFormList.fulfilled, (state, action) => {
         state.formList = action?.payload?.results;
@@ -153,5 +157,5 @@ const formSlice = createSlice({
   },
 });
 
-export const {} = formSlice.actions;
+export const { clearError } = formSlice.actions;
 export default formSlice.reducer;

@@ -20,7 +20,6 @@ const UsersForm = ({ navigation }) => {
   const [usertype, setUsertype] = useState("Student");
 
   const dispatch = useDispatch();
-  console.log(userList);
   useEffect(() => {
     dispatch(getUserList({ page, usertype }));
   }, [usertype]);

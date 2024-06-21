@@ -4,9 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { navigate, reset } from "../navigations/navigationRef";
 import Api from "../api/API";
 
-//Helper Functions
-import temporarySessionEvent from "../helper/temporarySessionEvent";
-
 //EndPoints
 import getEndPoint from "../api/getEndPoint";
 import {
@@ -35,7 +32,6 @@ import { isMobileNumber, isEmail, isDob } from "../helper/auth";
 export const getUserDetails = createAsyncThunk("getUserDetails", async () => {
   console.log("User Details trigger");
   try {
-    await temporarySessionEvent();
     let response;
     const usertype = await AsyncStorage.getItem("UserType");
     switch (usertype) {
@@ -49,10 +45,8 @@ export const getUserDetails = createAsyncThunk("getUserDetails", async () => {
         response = await Api.get(getEndPoint(MANAGER_DETAILS));
         break;
     }
-    console.log(response.data);
     return response.data;
   } catch (err) {
-    console.log(response.data);
     if (!err.response)
       Alert.alert("Alert!", "No Internet Connection", [
         {
@@ -69,7 +63,6 @@ export const updateProfile = createAsyncThunk(
       Keyboard.dismiss();
       dispatch(runLoader());
       const usertype = await AsyncStorage.getItem("UserType");
-      await temporarySessionEvent();
       let response;
       switch (usertype) {
         case "student":
@@ -84,7 +77,6 @@ export const updateProfile = createAsyncThunk(
           break;
       }
       dispatch(getUserDetails());
-      console.log(response.data);
     } catch (err) {
       console.log(err.response.data);
       if (!err.response)
@@ -118,7 +110,6 @@ export const updateProfilePicture = createAsyncThunk(
     try {
       dispatch(runLoader());
       const usertype = await AsyncStorage.getItem("UserType");
-      await temporarySessionEvent();
       let response;
       switch (usertype) {
         case "student":
@@ -136,7 +127,6 @@ export const updateProfilePicture = createAsyncThunk(
           );
           break;
       }
-      console.log(response.data);
       dispatch(getUserDetails());
     } catch (err) {
       console.log(err.response.data);
@@ -158,7 +148,6 @@ export const deleteProfilePicture = createAsyncThunk(
     try {
       dispatch(runLoader());
       const usertype = await AsyncStorage.getItem("UserType");
-      await temporarySessionEvent();
       let response;
       switch (usertype) {
         case "student":
@@ -169,7 +158,6 @@ export const deleteProfilePicture = createAsyncThunk(
           break;
       }
       dispatch(getUserDetails());
-      console.log(response.data);
     } catch (err) {
       console.log(err.response.data);
       if (!err.response)
@@ -189,7 +177,7 @@ export const getUserList = createAsyncThunk(
   async ({ page, usertype }, { dispatch }) => {
     try {
       dispatch(runLoader());
-      await temporarySessionEvent();
+
       let response;
       switch (usertype) {
         case "Student":
@@ -199,7 +187,6 @@ export const getUserList = createAsyncThunk(
           response = await Api.get(getEndPoint(MAINTENANCE_LIST, page));
           break;
       }
-      console.log(response.data);
       const { results, next } = response.data;
       const sortedArray = results.sort((a, b) => {
         if (a.user.userName < b.user.userName) {
@@ -222,9 +209,7 @@ export const getUserList = createAsyncThunk(
 export const contact = createAsyncThunk("contact", async (_, { dispatch }) => {
   try {
     dispatch(runLoader());
-    await temporarySessionEvent();
     const response = await Api.get(getEndPoint(CONTACT));
-    console.log(response.data);
     return response.data;
   } catch (err) {
     console.log(err.response.data);

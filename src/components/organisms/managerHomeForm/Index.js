@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { RefreshControl, FlatList } from "react-native";
+import { RefreshControl, FlatList, ScrollView } from "react-native";
 
 // Components
 import MainForm from "../../molecules/mainForm/Index";
@@ -19,7 +19,6 @@ const ManagerHomeForm = ({ navigation }) => {
   const { formList, next } = useSelector((state) => state.FormReducer);
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
-  console.log(formList, next);
 
   useEffect(() => {
     dispatch(getUserDetails());
@@ -56,7 +55,13 @@ const ManagerHomeForm = ({ navigation }) => {
           onEndReachedThreshold={0}
         />
       ) : (
-        <FormEmpty />
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <FormEmpty />
+        </ScrollView>
       )}
     </FormContainer>
   );

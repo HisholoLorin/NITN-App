@@ -15,7 +15,7 @@ const StudentLoginForm = ({ studentLoginForm, setStudentLoginForm }) => {
         onChangeText={(value) =>
           setStudentLoginForm({ ...studentLoginForm, email: value })
         }
-        
+        keyboardType="email-address"
       />
 
       {/* Password */}

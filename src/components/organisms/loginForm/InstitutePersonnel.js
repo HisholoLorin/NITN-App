@@ -23,6 +23,7 @@ const InstitutePersonnelLoginForm = ({
             email: value,
           })
         }
+        keyboardType="email-address"
       />
 
       {/* Password */}

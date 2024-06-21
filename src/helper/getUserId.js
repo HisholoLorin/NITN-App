@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //Helper
-import { decodeToken } from "./temporarySessionEvent";
+import { decodeToken } from "./Token";
 
 export const getUserId = async () => {
   const AccessToken = await AsyncStorage.getItem("AccessToken");

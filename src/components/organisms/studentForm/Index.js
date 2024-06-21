@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { RefreshControl, FlatList } from "react-native";
+import { RefreshControl, FlatList, ScrollView } from "react-native";
 
 // Components
 import MainForm from "../../molecules/mainForm/Index";
@@ -59,7 +59,13 @@ const StudentForm = ({ navigation }) => {
           onEndReachedThreshold={0}
         />
       ) : (
-        <FormEmpty />
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          <FormEmpty />
+        </ScrollView>
       )}
     </FormContainer>
   );
